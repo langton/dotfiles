@@ -50,6 +50,13 @@
 (global-set-key [home] 'beginning-of-buffer) 
 (global-set-key [end] 'end-of-buffer)
 (global-set-key "\C-cp" 'ps-print-buffer-with-faces)
+;; gfortran uses tabs, so it helps to be able to toggle
+(defun toggle-tabs-mode ()
+  "Toggle indent-tabs-mode between t and nil."
+  (interactive)
+  (set-variable 'indent-tabs-mode (not indent-tabs-mode))
+  (message "Tabs mode set to %s" indent-tabs-mode))
+(global-set-key "\C-ct" 'toggle-tabs-mode)
 
 
 ;; Modes
