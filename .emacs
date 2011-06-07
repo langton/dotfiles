@@ -38,6 +38,8 @@
 (set-face-foreground 'font-lock-constant-face (symbol-value 'fgcolor))
 (set-face-foreground 'font-lock-warning-face (symbol-value 'fgcolor))
 (make-face-bold 'font-lock-function-name-face)
+(make-face-italic 'font-lock-comment-face)
+(make-face-italic 'font-lock-string-face)
 ;; highlight marked text
 (transient-mark-mode t)
 (delete-selection-mode t)
