@@ -1,0 +1,39 @@
+# Add this to top-level .cshrc:
+# if ( -f $HOME/.cshrc.common ) then
+#   source $HOME/.cshrc.common
+# endif
+
+if ( $?prompt ) then
+    setenv HOSTNAME `hostname | sed -e s/\\..\*//`    
+    set path = ( ~/local/bin $path )
+    setenv CLICOLOR 1
+    set history=2000
+    set filec
+    set savehist=( 2000 merge )
+    set histdup=erase
+    set nobeep
+    set autolist
+    set add suffix
+    set ignoreeof
+    set promptchars = "%#"
+    set prompt = "%B%U${USER}@${HOSTNAME}:%c1(\!)%#%{\033[0m%}%b%u "
+    if ($?TERM) then
+        if ($TERM == xterm || $TERM == xterm-color || $TERM == xterm-256color) then
+            # define 'mytitle' alias to set title bars on xterms
+            alias icon_name 'set icon_name = /`echo $cwd | sed -e s-.\*/--`'
+            alias mytitle 'icon_name; echo -n ]1\;$icon_name\]2\;$USER@$HOSTNAME\: $cwd\'
+            alias name 'echo -n ]0\;\!*\'
+            alias icon 'echo -n ]1\;\!*\'
+            alias title 'echo -n ]2\;\!*\'
+		
+            # use xrs (resize) to reset your window size after you have resized 
+            # an xterm.
+            alias xrs 'set noglob; eval `resize`; unset noglob'
+
+            mytitle
+            alias cd 'chdir \!*; mytitle'
+            alias pushd 'pushd \!*; mytitle'
+            alias popd 'popd \!*; mytitle'
+        endif
+    endif
+endif

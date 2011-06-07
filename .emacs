@@ -12,7 +12,8 @@
 (setq-default tab-width 8)
 (mouse-wheel-mode t)
 (xterm-mouse-mode 1)
-(setq visible-bell t)
+;; No beeps OR visible bell!
+(setq ring-bell-function 'ignore)
 (setq frame-title-format (list (getenv "HOST") ":%f"))
 (setq inhibit-startup-screen t)
 (setq focus-follows-mouse nil)
