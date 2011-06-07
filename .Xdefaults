@@ -1,0 +1,6 @@
+xterm*faceName: monaco
+xterm*faceSize: 10
+XTerm*scrollBar: on
+XTerm*rightScrollBar: True
+xterm*saveLines: 2000
+Xterm*background: white
