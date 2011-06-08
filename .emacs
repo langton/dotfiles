@@ -52,6 +52,9 @@
 (global-set-key [home] 'beginning-of-buffer) 
 (global-set-key [end] 'end-of-buffer)
 (global-set-key "\C-cp" 'ps-print-buffer-with-faces)
+(global-set-key "\C-cs" 'desktop-save)
+(global-set-key "\C-cr" 'desktop-read)
+(global-set-key "\C-ca" 'ansi-term)
 ;; gfortran uses tabs, so it helps to be able to toggle
 (defun toggle-tabs-mode ()
   "Toggle indent-tabs-mode between t and nil."
@@ -77,7 +80,7 @@
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 (add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
 (add-hook 'TeX-mode-hook 'turn-on-auto-fill)
-
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 ;; Auto-indent in C, Python, etc.
 (defun newline-indents ()
   (local-set-key "\C-m" 'newline-and-indent))
