@@ -6,7 +6,8 @@
 (line-number-mode t)
 (column-number-mode t)
 (blink-cursor-mode -1) 
-(tool-bar-mode -1) 
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
 (setq next-line-add-newlines nil)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 8)
@@ -54,7 +55,10 @@
 (global-set-key "\C-cp" 'ps-print-buffer-with-faces)
 (global-set-key "\C-cs" 'desktop-save)
 (global-set-key "\C-cr" 'desktop-read)
-(global-set-key "\C-ca" 'ansi-term)
+(defun launch-ansi-term ()
+   (interactive)
+   (ansi-term "/bin/tcsh" "terminal"))
+(global-set-key "\C-ca" 'launch-ansi-term)
 ;; gfortran uses tabs, so it helps to be able to toggle
 (defun toggle-tabs-mode ()
   "Toggle indent-tabs-mode between t and nil."
@@ -62,6 +66,15 @@
   (set-variable 'indent-tabs-mode (not indent-tabs-mode))
   (message "Tabs mode set to %s" indent-tabs-mode))
 (global-set-key "\C-ct" 'toggle-tabs-mode)
+(defun toggle-current-window-dedication ()
+ (interactive)
+ (let* ((window (selected-window))
+        (dedicated (window-dedicated-p window)))
+   (set-window-dedicated-p window (not dedicated))
+   (message "Window %sdedicated to %s"
+            (if dedicated "no longer " "")
+            (buffer-name))))
+(global-set-key "\C-cw" 'toggle-current-window-dedication)
 
 
 ;; Modes
