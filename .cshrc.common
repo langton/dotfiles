@@ -35,5 +35,13 @@ if ( $?prompt ) then
             alias pushd 'pushd \!*; mytitle'
             alias popd 'popd \!*; mytitle'
         endif
+        if ($TERM == eterm || $TERM == eterm-color) then
+           set cwd_hack='$cwd'
+           foreach temp (cd pushd)
+               alias $temp "$temp \!* ; echo 'AnSiTc' $cwd_hack"
+           end
+           alias popd 'popd ;echo "AnSiTc" $cwd'
+           unset cwd_hack
+        endif
     endif
 endif
