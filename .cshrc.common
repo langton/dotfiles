@@ -17,6 +17,8 @@ if ( $?prompt ) then
     set ignoreeof
     set promptchars = "%#"
     set prompt = "%B%U${USER}@${HOSTNAME}:%c1(\!)%#%{\033[0m%}%b%u "
+    set host = `hostname -f`
+    set user = `whoami`
     if ($?TERM) then
         if ($TERM == xterm || $TERM == xterm-color || $TERM == xterm-256color) then
             # define 'mytitle' alias to set title bars on xterms
@@ -36,12 +38,26 @@ if ( $?prompt ) then
             alias popd 'popd \!*; mytitle'
         endif
         if ($TERM == eterm || $TERM == eterm-color) then
+           # eterm-color causes problems when I ssh out from ansi-term
+           setenv TERM eterm 
            set cwd_hack='$cwd'
+           set host_hack='$host'
+           set user_hack='$user'
            foreach temp (cd pushd)
                alias $temp "$temp \!* ; echo 'AnSiTc' $cwd_hack"
            end
+           foreach temp ( rlogin telnet rsh sh ksh csh tcsh zsh bash tcl su ssh )
+ 	       alias $temp "$temp \!* ; echo 'AnSiTh' $host_hack ; \
+ 		  echo 'AnSiTu' $user_hack ;echo 'AnSiTc' $cwd_hack"
+           end
            alias popd 'popd ;echo "AnSiTc" $cwd'
+           echo "AnSiTu" $user
+           echo "AnSiTh" $host
+           echo "AnSiTc" $cwd
            unset cwd_hack
+           unset host_hack
+           unset user_hack
+ 	   unset temp
         endif
     endif
 endif
