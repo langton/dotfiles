@@ -37,9 +37,7 @@ if ( $?prompt ) then
             alias pushd 'pushd \!*; mytitle'
             alias popd 'popd \!*; mytitle'
         endif
-        if ($TERM == eterm || $TERM == eterm-color) then
-           # eterm-color causes problems when I ssh out from ansi-term
-           setenv TERM eterm 
+        if ($TERM == eterm || $TERM == eterm-color) then 
            set cwd_hack='$cwd'
            set host_hack='$host'
            set user_hack='$user'
