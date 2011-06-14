@@ -75,6 +75,12 @@
             (if dedicated "no longer " "")
             (buffer-name))))
 (global-set-key "\C-cw" 'toggle-current-window-dedication)
+;; Insert date-stamped delimiter in my daily notes file
+(defun note-header ()
+  (interactive)
+  (insert (format-time-string (concat (make-string 77 ?=) 
+                                      "\n[%m/%d/%Y]\n"))))
+(global-set-key "\C-ch" 'note-header)
 
 
 ;; Modes
