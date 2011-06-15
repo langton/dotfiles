@@ -81,6 +81,10 @@
   (insert (format-time-string (concat (make-string 77 ?=) 
                                       "\n[%m/%d/%Y]\n"))))
 (global-set-key "\C-ch" 'note-header)
+(defun dotemacs ()
+  (interactive)
+  (byte-compile-file "~/.emacs")
+  (load-file "~/.emacs.elc"))
 
 
 ;; Modes
