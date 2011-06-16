@@ -94,7 +94,17 @@
   (interactive)
   (byte-compile-file "~/.emacs")
   (load-file "~/.emacs.elc"))
-
+(defun setup-windows ()
+  (interactive)
+  (split-window-horizontally)
+  (other-window 1)
+  (split-window-vertically)
+  (find-file "~/Notes/Notes.txt")
+  (toggle-current-window-dedication)
+  (other-window 1)
+  (launch-ansi-term)
+  (toggle-current-window-dedication))
+(global-set-key "\C-ce" 'setup-windows)
 
 ;; Modes
 (setq auto-mode-alist 
