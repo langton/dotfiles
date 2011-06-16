@@ -1,4 +1,12 @@
-(setq backup-inhibited 1) ;; no x.x~ files !!!
+(setq
+   backup-by-copying t      
+   backup-directory-alist '((".*" . "~/.emacs.d/backups/"))
+   delete-old-versions t
+   kept-new-versions 6
+   kept-old-versions 2
+   version-control t
+   auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves/\\1" t)))
+(make-directory "~/.emacs.d/autosaves/" t)
 (setq enable-local-variables nil)
 (cond ((fboundp 'global-font-lock-mode)
 (global-font-lock-mode t)
@@ -19,7 +27,8 @@
 (setq inhibit-startup-screen t)
 (setq focus-follows-mouse nil)
 (setq mouse-autoselect-window nil)
-
+(setq custom-file "~/.emacs-custom.el")
+(load custom-file 'noerror)
 
 ;; Colors and formatting
 (setq fgcolor "black")
