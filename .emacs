@@ -29,6 +29,10 @@
 (setq mouse-autoselect-window nil)
 (setq custom-file "~/.emacs-custom.el")
 (load custom-file 'noerror)
+(load "jka-compr" t t)
+(when (fboundp 'windmove-default-keybindings)
+  (windmove-default-keybindings))
+
 
 ;; Colors and formatting
 (setq fgcolor "black")
