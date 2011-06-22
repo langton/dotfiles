@@ -1,5 +1,8 @@
+;; My emacs customizations
+
+;; Keep all backups and autosave files hidden away
 (setq
-   backup-by-copying t      
+   backup-by-copying t
    backup-directory-alist '((".*" . "~/.emacs.d/backups/"))
    delete-old-versions t
    kept-new-versions 6
@@ -7,34 +10,38 @@
    version-control t
    auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves/\\1" t)))
 (make-directory "~/.emacs.d/autosaves/" t)
+
+;; Basic customizations
 (setq enable-local-variables nil)
 (cond ((fboundp 'global-font-lock-mode)
 (global-font-lock-mode t)
 (setq font-lock-maximum-decoration t)))
 (line-number-mode t)
 (column-number-mode t)
-(blink-cursor-mode -1) 
+(blink-cursor-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+(menu-bar-mode -1)
 (setq next-line-add-newlines nil)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 8)
 (mouse-wheel-mode t)
 (xterm-mouse-mode 1)
-;; No beeps OR visible bell!
-(setq ring-bell-function 'ignore)
+(setq ring-bell-function 'ignore) ;; No beeps OR visible bell!
 (setq frame-title-format (list (getenv "HOST") ":%f"))
 (setq inhibit-startup-screen t)
 (setq focus-follows-mouse nil)
 (setq mouse-autoselect-window nil)
+;; Don't let Custom modify this .emacs file
 (setq custom-file "~/.emacs-custom.el")
 (load custom-file 'noerror)
-(load "jka-compr" t t)
+(load "jka-compr" t t)  ;; Work with compressed files transparently
+;; Use <shift>+<arrow> to move between windows
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
 
 
-;; Colors and formatting
+;; Colors & syntax highlighting
 (setq fgcolor "black")
 (set-cursor-color (symbol-value 'fgcolor))
 (set-mouse-color (symbol-value 'fgcolor))
@@ -63,22 +70,27 @@
 (global-set-key "\C-cg" 'goto-line)
 (global-set-key "\M-g" 'goto-line)
 (global-set-key "\C-cd" 'normal-erase-is-backspace-mode)
-(global-set-key [home] 'beginning-of-buffer) 
+(global-set-key [home] 'beginning-of-buffer)
 (global-set-key [end] 'end-of-buffer)
 (global-set-key "\C-cp" 'ps-print-buffer-with-faces)
 (global-set-key "\C-cs" 'desktop-save)
 (global-set-key "\C-cr" 'desktop-read)
+
+;; Launch a terminal without being prompted for the shell type
 (defun launch-ansi-term ()
    (interactive)
    (ansi-term "/bin/tcsh" "terminal"))
 (global-set-key "\C-ca" 'launch-ansi-term)
-;; gfortran uses tabs, so it helps to be able to toggle
+
+;; gfortran uses tabs, so it helps to be able to quickly switch to tab mode
 (defun toggle-tabs-mode ()
   "Toggle indent-tabs-mode between t and nil."
   (interactive)
   (set-variable 'indent-tabs-mode (not indent-tabs-mode))
   (message "Tabs mode set to %s" indent-tabs-mode))
 (global-set-key "\C-ct" 'toggle-tabs-mode)
+
+;; Pin buffers to specific windows
 (defun toggle-current-window-dedication ()
  (interactive)
  (let* ((window (selected-window))
@@ -88,16 +100,28 @@
             (if dedicated "no longer " "")
             (buffer-name))))
 (global-set-key "\C-cw" 'toggle-current-window-dedication)
+
 ;; Insert date-stamped delimiter in my daily notes file
 (defun note-header ()
   (interactive)
-  (insert (format-time-string (concat (make-string 77 ?=) 
+  (insert (format-time-string (concat (make-string 77 ?=)
                                       "\n[%m/%d/%Y]\n"))))
 (global-set-key "\C-ch" 'note-header)
+
+;; Quickly byte-compile and load .emacs.
 (defun dotemacs ()
   (interactive)
   (byte-compile-file "~/.emacs")
   (load-file "~/.emacs.elc"))
+
+;; Sets up emacs like this:
+;; ---------
+;; |   |   |
+;; |   |---|
+;; |   |   |
+;; ---------
+;; and starts up terminal in the bottom-right corner and opens 
+;; my note file in the upper-right corner.
 (defun setup-windows ()
   (interactive)
   (split-window-horizontally)
@@ -110,8 +134,12 @@
   (toggle-current-window-dedication))
 (global-set-key "\C-ce" 'setup-windows)
 
+;; Alternate way to get M-x
+(global-set-key "\C-x\C-m" 'execute-extended-command)
+
+
 ;; Modes
-(setq auto-mode-alist 
+(setq auto-mode-alist
       (append '(("\\.f95\\'" . fortran-mode)
       ("\\.m$" . objc-mode)
       ("\\.mm$" . objc-mode)
