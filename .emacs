@@ -35,13 +35,13 @@
 ;; Don't let Custom modify this .emacs file
 (setq custom-file "~/.emacs-custom.el")
 (load custom-file 'noerror)
-(load "jka-compr" t t)  ;; Work with compressed files transparently
+(auto-compression-mode 1)
 ;; Use <shift>+<arrow> to move between windows
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
 ;; follow compilation output
 (setq compilation-scroll-output t)
-
+(setq echo-keystrokes 0.1)
 
 ;; Colors & syntax highlighting
 (setq fgcolor "black")
@@ -63,7 +63,7 @@
 (make-face-bold 'font-lock-function-name-face)
 (make-face-italic 'font-lock-comment-face)
 (make-face-italic 'font-lock-string-face)
-;; highlight marked text
+;; highlight marked text (use C-space C-g to set a mark without highlighting)
 (transient-mark-mode t)
 (delete-selection-mode t)
 
@@ -71,13 +71,17 @@
 ;; Shortcuts
 (global-set-key "\C-cg" 'goto-line)
 (global-set-key "\M-g" 'goto-line)
-(global-set-key "\C-cd" 'normal-erase-is-backspace-mode)
 (global-set-key [home] 'beginning-of-buffer)
 (global-set-key [end] 'end-of-buffer)
 (global-set-key "\C-cp" 'ps-print-buffer-with-faces)
 (global-set-key "\C-cs" 'desktop-save)
 (global-set-key "\C-cr" 'desktop-read)
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
+(defun diff-buffer-against-disk ()
+  "Compare current buffer to saved version on disk"
+  (interactive)
+  (diff-buffer-with-file (current-buffer)))
+(global-set-key "\C-cd" 'diff-buffer-against-disk)
 
 ;; Launch a terminal without being prompted for the shell type
 (defun launch-ansi-term ()
