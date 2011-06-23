@@ -39,6 +39,8 @@
 ;; Use <shift>+<arrow> to move between windows
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
+;; follow compilation output
+(setq compilation-scroll-output t)
 
 
 ;; Colors & syntax highlighting
