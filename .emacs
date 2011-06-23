@@ -77,6 +77,7 @@
 (global-set-key "\C-cp" 'ps-print-buffer-with-faces)
 (global-set-key "\C-cs" 'desktop-save)
 (global-set-key "\C-cr" 'desktop-read)
+(global-set-key (kbd "C-x C-b") 'buffer-menu)
 
 ;; Launch a terminal without being prompted for the shell type
 (defun launch-ansi-term ()
