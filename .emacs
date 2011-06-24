@@ -14,8 +14,8 @@
 ;; Basic customizations
 (setq enable-local-variables nil)
 (cond ((fboundp 'global-font-lock-mode)
-(global-font-lock-mode t)
-(setq font-lock-maximum-decoration t)))
+  (global-font-lock-mode t)
+  (setq font-lock-maximum-decoration t)))
 (line-number-mode t)
 (column-number-mode t)
 (blink-cursor-mode -1)
@@ -63,6 +63,7 @@
 (make-face-bold 'font-lock-function-name-face)
 (make-face-italic 'font-lock-comment-face)
 (make-face-italic 'font-lock-string-face)
+
 ;; highlight marked text (use C-space C-g to set a mark without highlighting)
 (transient-mark-mode t)
 (delete-selection-mode t)
@@ -120,6 +121,7 @@
   (interactive)
   (byte-compile-file "~/.emacs")
   (load-file "~/.emacs.elc"))
+(global-set-key "\C-cl" 'dotemacs)
 
 ;; Sets up emacs like this:
 ;; ---------
@@ -143,6 +145,7 @@
 
 ;; Alternate way to get M-x
 (global-set-key "\C-x\C-m" 'execute-extended-command)
+(global-set-key (kbd "C-`") 'other-window)
 
 
 ;; Modes
@@ -169,6 +172,6 @@
 (add-hook 'c++-mode-hook (function newline-indents))
 (add-hook 'java-mode-hook (function newline-indents))
 (add-hook 'python-mode-hook (function newline-indents))
-(add-hook 'shell-mode-hook (function newline-indents))
+(add-hook 'shell-script-mode-hook (function newline-indents))
 (add-hook 'fortran-mode-hook (function newline-indents))
 (add-hook 'objc-mode-hook (function newline-indents))
