@@ -21,7 +21,6 @@
 (blink-cursor-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-(menu-bar-mode -1)
 (setq next-line-add-newlines nil)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 8)
@@ -109,13 +108,6 @@
             (buffer-name))))
 (global-set-key "\C-cw" 'toggle-current-window-dedication)
 
-;; Insert date-stamped delimiter in my daily notes file
-(defun note-header ()
-  (interactive)
-  (insert (format-time-string (concat (make-string 77 ?=)
-                                      "\n[%m/%d/%Y]\n"))))
-(global-set-key "\C-ch" 'note-header)
-
 ;; Quickly byte-compile and load .emacs.
 (defun dotemacs ()
   (interactive)
@@ -153,6 +145,7 @@
       (append '(("\\.f95\\'" . fortran-mode)
       ("\\.m$" . objc-mode)
       ("\\.mm$" . objc-mode)
+      ("\\.org$" . org-mode)
       ) auto-mode-alist))
 ;; C indentation
 (add-hook 'c-mode-hook '(lambda () (setq c-indent-level 2)))
@@ -175,3 +168,9 @@
 (add-hook 'shell-script-mode-hook (function newline-indents))
 (add-hook 'fortran-mode-hook (function newline-indents))
 (add-hook 'objc-mode-hook (function newline-indents))
+
+(setq org-log-done t)
+(define-key global-map "\C-co" 'org-agenda)
+(setq org-agenda-files (list "~/Notes/work.org"
+                             "~/Notes/home.org"))
+(setq org-export-with-sub-superscripts nil)
