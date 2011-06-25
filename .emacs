@@ -174,3 +174,10 @@
 (setq org-agenda-files (list "~/Notes/work.org"
                              "~/Notes/home.org"))
 (setq org-export-with-sub-superscripts nil)
+(require 'org-faces)
+;; org-level-4 takes its value from font-lock-comment-face
+(make-face-unitalic 'org-level-4)
+(make-face-unitalic 'org-level-8)
+(set-face-foreground 'org-level-2 "ForestGreen")
+(set-face-foreground 'org-level-3 "MidnightBlue")
+(set-face-foreground 'org-level-4 "MediumBlue")
