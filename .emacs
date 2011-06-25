@@ -168,7 +168,7 @@
 (add-hook 'shell-script-mode-hook (function newline-indents))
 (add-hook 'fortran-mode-hook (function newline-indents))
 (add-hook 'objc-mode-hook (function newline-indents))
-
+(require 'org-install)
 (setq org-log-done t)
 (define-key global-map "\C-co" 'org-agenda)
 (setq org-agenda-files (list "~/Notes/work.org"
