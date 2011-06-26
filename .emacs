@@ -135,10 +135,24 @@
   (toggle-current-window-dedication))
 (global-set-key "\C-ce" 'setup-windows)
 
-;; Alternate way to get M-x
+;; Alternate ways to get M-x
 (global-set-key "\C-x\C-m" 'execute-extended-command)
-(global-set-key (kbd "C-`") 'other-window)
+(global-set-key "\C-xm" 'execute-extended-command)
 
+;; Single-key shortcuts
+(global-set-key [f1] 'find-file)
+(global-set-key [f2] 'save-buffer)
+(global-set-key [f3] 'other-window)
+(global-set-key [f4] 'buffer-menu)
+
+(defun switch-to-todo ()
+  (interactive)
+  (find-file "~/Notes/work.org"))
+(defun switch-to-notes ()
+  (interactive)
+  (find-file "~/Notes/notes.org"))
+(global-set-key [f11] 'switch-to-todo)
+(global-set-key [f12] 'switch-to-notes)
 
 ;; Modes
 (setq auto-mode-alist
