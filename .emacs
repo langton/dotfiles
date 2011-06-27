@@ -119,33 +119,13 @@
   (load-file "~/.emacs.elc"))
 (global-set-key "\C-cl" 'dotemacs)
 
-;; Sets up emacs like this:
-;; ---------
-;; |   |   |
-;; |   |---|
-;; |   |   |
-;; ---------
-;; and starts up terminal in the bottom-right corner and opens 
-;; my note file in the upper-right corner.
-(defun setup-windows ()
-  (interactive)
-  (split-window-horizontally)
-  (other-window 1)
-  (split-window-vertically)
-  (find-file "~/Notes/Notes.txt")
-  (toggle-current-window-dedication)
-  (other-window 1)
-  (launch-ansi-term)
-  (toggle-current-window-dedication))
-(global-set-key "\C-ce" 'setup-windows)
-
 ;; Alternate ways to get M-x
 (global-set-key "\C-x\C-m" 'execute-extended-command)
 (global-set-key "\C-xm" 'execute-extended-command)
 
 ;; Single-key shortcuts
-(global-set-key [f1] 'find-file)
-(global-set-key [f2] 'save-buffer)
+(global-set-key [f1] 'save-buffer)
+(global-set-key [f2] 'find-file)
 (global-set-key [f3] 'other-window)
 (global-set-key [f4] 'buffer-menu)
 
