@@ -41,6 +41,10 @@
 ;; follow compilation output
 (setq compilation-scroll-output t)
 (setq echo-keystrokes 0.1)
+;; jump to last location when reopening a file
+(require 'saveplace)
+(setq-default save-place t)
+
 
 ;; Colors & syntax highlighting
 (setq fgcolor "black")
