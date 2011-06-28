@@ -18,6 +18,10 @@
   (setq font-lock-maximum-decoration t)))
 (line-number-mode t)
 (column-number-mode t)
+(which-func-mode t)
+(size-indication-mode t)
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'forward)
 (blink-cursor-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -44,7 +48,6 @@
 ;; jump to last location when reopening a file
 (require 'saveplace)
 (setq-default save-place t)
-
 
 ;; Colors & syntax highlighting
 (setq fgcolor "black")
