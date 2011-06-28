@@ -21,7 +21,7 @@
 (which-func-mode t)
 (size-indication-mode t)
 (require 'uniquify)
-(setq uniquify-buffer-name-style 'forward)
+(setq uniquify-buffer-name-style 'post-forward)
 (blink-cursor-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -31,7 +31,8 @@
 (mouse-wheel-mode t)
 (xterm-mouse-mode 1)
 (setq ring-bell-function 'ignore) ;; No beeps OR visible bell!
-(setq frame-title-format (list (getenv "HOST") ":%f"))
+(setq frame-title-format 
+      (list '(buffer-file-name "%f" ("%b -- " default-directory))))
 (setq inhibit-startup-screen t)
 (setq focus-follows-mouse nil)
 (setq mouse-autoselect-window nil)
@@ -172,6 +173,15 @@
 (add-hook 'objc-mode-hook (function newline-indents))
 (require 'org-install)
 (setq org-log-done t)
+(setq org-todo-keywords (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+                                (sequence "WAITING(w)" "SOMEDAY(s)" "|" "CANCELLED(c)"))))
+(setq org-todo-keyword-faces
+      (quote (("TODO" :foreground "red" :weight bold)
+              ("NEXT" :foreground "blue" :weight bold)
+              ("DONE" :foreground "forest green" :weight bold)
+              ("WAITING" :foreground "orange" :weight bold)
+              ("SOMEDAY" :foreground "magenta" :weight bold)
+              ("CANCELLED" :foreground "forest green" :weight bold))))
 (define-key global-map "\C-co" 'org-agenda)
 (setq org-agenda-files (list "~/Notes/work.org"
                              "~/Notes/home.org"))
