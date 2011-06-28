@@ -81,6 +81,7 @@
 (global-set-key "\C-cs" 'desktop-save)
 (global-set-key "\C-cr" 'desktop-read)
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
+(global-set-key "\C-cy" 'python-shell)
 (defun diff-buffer-against-disk ()
   "Compare current buffer to saved version on disk"
   (interactive)
@@ -128,7 +129,7 @@
 (global-set-key [f2] 'find-file)
 (global-set-key [f3] 'other-window)
 (global-set-key [f4] 'buffer-menu)
-
+(global-set-key [f10] 'kill-buffer)
 (defun switch-to-todo ()
   (interactive)
   (find-file "~/Notes/work.org"))
