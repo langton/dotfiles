@@ -173,6 +173,8 @@
 (add-hook 'objc-mode-hook (function newline-indents))
 (require 'org-install)
 (setq org-log-done t)
+(setq org-hide-leading-stars t)
+
 (setq org-todo-keywords (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
                                 (sequence "WAITING(w)" "SOMEDAY(s)" "|" "CANCELLED(c)"))))
 (setq org-todo-keyword-faces
