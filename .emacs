@@ -2,20 +2,22 @@
 
 ;; Keep all backups and autosave files hidden away
 (setq
-   backup-by-copying t
-   backup-directory-alist '((".*" . "~/.emacs.d/backups/"))
-   delete-old-versions t
-   kept-new-versions 6
-   kept-old-versions 2
-   version-control t
-   auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves/\\1" t)))
+ backup-by-copying t
+ backup-directory-alist '((".*" . "~/.emacs.d/backups/"))
+ delete-old-versions t
+ kept-new-versions 6
+ kept-old-versions 2
+ version-control t
+ auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves/\\1" t)))
 (make-directory "~/.emacs.d/autosaves/" t)
 
 ;; Basic customizations
+(make-directory "~/.emacs.d/site-lisp/" t)
+(add-to-list 'load-path "~/.emacs.d/site-lisp/")
 (setq enable-local-variables nil)
 (cond ((fboundp 'global-font-lock-mode)
-  (global-font-lock-mode t)
-  (setq font-lock-maximum-decoration t)))
+       (global-font-lock-mode t)
+       (setq font-lock-maximum-decoration t)))
 (line-number-mode t)
 (column-number-mode t)
 (which-func-mode t)
@@ -94,8 +96,8 @@
 
 ;; Launch a terminal without being prompted for the shell type
 (defun launch-ansi-term ()
-   (interactive)
-   (ansi-term "/bin/tcsh" "terminal"))
+  (interactive)
+  (ansi-term "/bin/tcsh" "terminal"))
 (global-set-key "\C-ca" 'launch-ansi-term)
 
 ;; gfortran uses tabs, so it helps to be able to quickly switch to tab mode
@@ -108,13 +110,13 @@
 
 ;; Pin buffers to specific windows
 (defun toggle-current-window-dedication ()
- (interactive)
- (let* ((window (selected-window))
-        (dedicated (window-dedicated-p window)))
-   (set-window-dedicated-p window (not dedicated))
-   (message "Window %sdedicated to %s"
-            (if dedicated "no longer " "")
-            (buffer-name))))
+  (interactive)
+  (let* ((window (selected-window))
+         (dedicated (window-dedicated-p window)))
+    (set-window-dedicated-p window (not dedicated))
+    (message "Window %sdedicated to %s"
+             (if dedicated "no longer " "")
+             (buffer-name))))
 (global-set-key "\C-cw" 'toggle-current-window-dedication)
 
 ;; Quickly byte-compile and load .emacs.
@@ -146,14 +148,21 @@
 ;; Modes
 (setq auto-mode-alist
       (append '(("\\.f95\\'" . fortran-mode)
-      ("\\.m$" . objc-mode)
-      ("\\.mm$" . objc-mode)
-      ("\\.org$" . org-mode)
-      ) auto-mode-alist))
+                ("\\.m$" . objc-mode)
+                ("\\.mm$" . objc-mode)
+                ("\\.org$" . org-mode)
+                ) auto-mode-alist))
 ;; C indentation
 (add-hook 'c-mode-hook '(lambda () (setq c-indent-level 2)))
 (add-hook 'c++-mode-hook '(lambda () (setq c-indent-level 2)))
 (add-hook 'java-mode-hook '(lambda () (setq c-indent-level 2)))
+
+;; Use d-mode for D if it exists; otherwise fall back to Java mode
+(if (file-exists-p "~/.emacs.d/site-lisp/d-mode.el")
+    (list (autoload 'd-mode "d-mode" "Major mode for editing D code." t)
+     (add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . d-mode)))
+  (add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . java-mode)))
+
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 ;; auto fill for text, TeX, and LaTeX modes
