@@ -18,36 +18,57 @@
 (cond ((fboundp 'global-font-lock-mode)
        (global-font-lock-mode t)
        (setq font-lock-maximum-decoration t)))
+;; (setq-default mode-line-format
+;;               '("%e-" mode-line-mule-info mode-line-client mode-line-modified 
+;;                 mode-line-remote mode-line-frame-identification
+;;                 mode-line-buffer-identification " " mode-line-position
+;;                 (which-func-mode ("" which-func-format " "))
+;;                 (global-mode-string ("" global-mode-string " "))
+;;                 (vc-mode ("" vc-mode " ")) mode-line-modes
+;;                "-%-"))
 (line-number-mode t)
 (column-number-mode t)
 (which-func-mode t)
 (size-indication-mode t)
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'post-forward)
+(require 'time)
+(setq display-time-24hr-format t
+      display-time-default-load-average nil
+      display-time-day-and-date t)
+(display-time-mode 1)
 (blink-cursor-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+(mouse-wheel-mode t)
+(xterm-mouse-mode 1)
+(setq frame-title-format 
+      (list '(buffer-file-name "%f" ("%b -- " default-directory))))
+
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward)
 (setq next-line-add-newlines nil)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 8)
-(mouse-wheel-mode t)
-(xterm-mouse-mode 1)
+
 (setq ring-bell-function 'ignore) ;; No beeps OR visible bell!
-(setq frame-title-format 
-      (list '(buffer-file-name "%f" ("%b -- " default-directory))))
+
 (setq inhibit-startup-screen t)
 (setq focus-follows-mouse nil)
 (setq mouse-autoselect-window nil)
+
 ;; Don't let Custom modify this .emacs file
 (setq custom-file "~/.emacs-custom.el")
 (load custom-file 'noerror)
+
 (auto-compression-mode 1)
+
 ;; Use <shift>+<arrow> to move between windows
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
+
 ;; follow compilation output
 (setq compilation-scroll-output t)
 (setq echo-keystrokes 0.1)
+
 ;; jump to last location when reopening a file
 (require 'saveplace)
 (setq-default save-place t)
@@ -165,11 +186,13 @@
 
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
 ;; auto fill for text, TeX, and LaTeX modes
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 (add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
 (add-hook 'TeX-mode-hook 'turn-on-auto-fill)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
 ;; Auto-indent in C, Python, etc.
 (defun newline-indents ()
   (local-set-key "\C-m" 'newline-and-indent))
@@ -180,10 +203,10 @@
 (add-hook 'shell-script-mode-hook (function newline-indents))
 (add-hook 'fortran-mode-hook (function newline-indents))
 (add-hook 'objc-mode-hook (function newline-indents))
+
 (require 'org-install)
 (setq org-log-done t)
 (setq org-hide-leading-stars t)
-
 (setq org-todo-keywords (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
                                 (sequence "WAITING(w)" "SOMEDAY(s)" "|" "CANCELLED(c)"))))
 (setq org-todo-keyword-faces
@@ -197,6 +220,7 @@
 (setq org-agenda-files (list "~/Notes/work.org"
                              "~/Notes/home.org"))
 (setq org-export-with-sub-superscripts nil)
+
 (require 'org-faces)
 ;; org-level-4 takes its value from font-lock-comment-face
 (make-face-unitalic 'org-level-4)
