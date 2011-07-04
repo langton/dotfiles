@@ -18,22 +18,17 @@
 (cond ((fboundp 'global-font-lock-mode)
        (global-font-lock-mode t)
        (setq font-lock-maximum-decoration t)))
-;; (setq-default mode-line-format
-;;               '("%e-" mode-line-mule-info mode-line-client mode-line-modified 
-;;                 mode-line-remote mode-line-frame-identification
-;;                 mode-line-buffer-identification " " mode-line-position
-;;                 (which-func-mode ("" which-func-format " "))
-;;                 (global-mode-string ("" global-mode-string " "))
-;;                 (vc-mode ("" vc-mode " ")) mode-line-modes
-;;                "-%-"))
+
 (line-number-mode t)
 (column-number-mode t)
 (which-func-mode t)
 (size-indication-mode t)
-(require 'time)
-(setq display-time-24hr-format t
-      display-time-default-load-average nil
-      display-time-day-and-date t)
+
+(eval-after-load 'time
+  '(progn
+     (setq display-time-24hr-format t
+           display-time-default-load-average nil
+           display-time-day-and-date t)))
 (display-time-mode 1)
 (blink-cursor-mode -1)
 (tool-bar-mode -1)
@@ -43,14 +38,14 @@
 (setq frame-title-format 
       (list '(buffer-file-name "%f" ("%b -- " default-directory))))
 
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'post-forward)
+(eval-after-load 'uniquify
+  '(progn
+     (setq uniquify-buffer-name-style 'post-forward)))
+
 (setq next-line-add-newlines nil)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 8)
-
 (setq ring-bell-function 'ignore) ;; No beeps OR visible bell!
-
 (setq inhibit-startup-screen t)
 (setq focus-follows-mouse nil)
 (setq mouse-autoselect-window nil)
@@ -70,8 +65,8 @@
 (setq echo-keystrokes 0.1)
 
 ;; jump to last location when reopening a file
-(require 'saveplace)
-(setq-default save-place t)
+(eval-after-load 'saveplace
+  '(setq-default save-place t))
 
 ;; Colors & syntax highlighting
 (setq fgcolor "black")
@@ -173,15 +168,11 @@
                 ("\\.mm$" . objc-mode)
                 ("\\.org$" . org-mode)
                 ) auto-mode-alist))
-;; C indentation
-(add-hook 'c-mode-hook '(lambda () (setq c-indent-level 2)))
-(add-hook 'c++-mode-hook '(lambda () (setq c-indent-level 2)))
-(add-hook 'java-mode-hook '(lambda () (setq c-indent-level 2)))
 
 ;; Use d-mode for D if it exists; otherwise fall back to Java mode
-(if (file-exists-p "~/.emacs.d/site-lisp/d-mode.el")
+(if (locate-library "d-mode")
     (list (autoload 'd-mode "d-mode" "Major mode for editing D code." t)
-     (add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . d-mode)))
+          (add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . d-mode)))
   (add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . java-mode)))
 
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
@@ -205,26 +196,31 @@
 (add-hook 'objc-mode-hook (function newline-indents))
 
 (require 'org-install)
-(setq org-log-done t)
-(setq org-hide-leading-stars t)
-(setq org-todo-keywords (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-                                (sequence "WAITING(w)" "SOMEDAY(s)" "|" "CANCELLED(c)"))))
-(setq org-todo-keyword-faces
-      (quote (("TODO" :foreground "red" :weight bold)
-              ("NEXT" :foreground "blue" :weight bold)
-              ("DONE" :foreground "forest green" :weight bold)
-              ("WAITING" :foreground "orange" :weight bold)
-              ("SOMEDAY" :foreground "magenta" :weight bold)
-              ("CANCELLED" :foreground "forest green" :weight bold))))
-(define-key global-map "\C-co" 'org-agenda)
-(setq org-agenda-files (list "~/Notes/work.org"
-                             "~/Notes/home.org"))
-(setq org-export-with-sub-superscripts nil)
+(eval-after-load 'org
+  '(progn
+     (setq org-log-done t)
+     (setq org-hide-leading-stars t)
+     (setq org-todo-keywords (quote ((sequence "TODO(t)" "NEXT(n)" "|" 
+                                               "DONE(d)")
+                                     (sequence "WAITING(w)" "SOMEDAY(s)" "|" 
+                                               "CANCELLED(c)"))))
+     (setq org-todo-keyword-faces
+           (quote (("TODO" :foreground "red" :weight bold)
+                   ("NEXT" :foreground "blue" :weight bold)
+                   ("DONE" :foreground "forest green" :weight bold)
+                   ("WAITING" :foreground "orange" :weight bold)
+                   ("SOMEDAY" :foreground "magenta" :weight bold)
+                   ("CANCELLED" :foreground "forest green" :weight bold))))
+     (define-key global-map "\C-co" 'org-agenda)
+     (setq org-agenda-files (list "~/Notes/work.org"
+                                  "~/Notes/home.org"))
+     (setq org-export-with-sub-superscripts nil)))
 
-(require 'org-faces)
-;; org-level-4 takes its value from font-lock-comment-face
-(make-face-unitalic 'org-level-4)
-(make-face-unitalic 'org-level-8)
-(set-face-foreground 'org-level-2 "ForestGreen")
-(set-face-foreground 'org-level-3 "MidnightBlue")
-(set-face-foreground 'org-level-4 "MediumBlue")
+(eval-after-load 'org-faces
+  '(progn
+     ;; org-level-4 takes its value from font-lock-comment-face
+     (make-face-unitalic 'org-level-4)
+     (make-face-unitalic 'org-level-8)
+     (set-face-foreground 'org-level-2 "ForestGreen")
+     (set-face-foreground 'org-level-3 "MidnightBlue")
+     (set-face-foreground 'org-level-4 "MediumBlue")))
