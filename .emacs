@@ -31,8 +31,12 @@
            display-time-day-and-date t)))
 (display-time-mode 1)
 (blink-cursor-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
+
+;; No toolbar or scrollbar; no menubar in console mode 
+(if window-system
+    (list (tool-bar-mode -1)
+          (scroll-bar-mode -1))
+  (menu-bar-mode -1))
 (mouse-wheel-mode t)
 (xterm-mouse-mode 1)
 (setq frame-title-format 
@@ -194,9 +198,9 @@
 (add-hook 'fortran-mode-hook (function newline-indents))
 (add-hook 'objc-mode-hook (function newline-indents))
 
-(require 'org-install)
 (eval-after-load 'org
   '(progn
+     (require 'org-install)
      (setq org-log-done t)
      (setq org-hide-leading-stars t)
      (setq org-todo-keywords (quote ((sequence "TODO(t)" "NEXT(n)" "|" 
