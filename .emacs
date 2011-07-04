@@ -72,7 +72,7 @@
 (setq fgcolor "black")
 (set-cursor-color (symbol-value 'fgcolor))
 (set-mouse-color (symbol-value 'fgcolor))
-(add-to-list 'default-frame-alist '(background-color . "white"))
+(add-to-list 'default-frame-alist '(background-color . "brightwhite"))
 (add-to-list 'default-frame-alist '(foreground-color . "black"))
 (set-face-foreground 'font-lock-string-face "gray33")
 (set-face-foreground 'font-lock-comment-face "forest green")
