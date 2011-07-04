@@ -75,20 +75,18 @@
 (set-mouse-color "black")
 (add-to-list 'default-frame-alist '(background-color . "white"))
 (add-to-list 'default-frame-alist '(foreground-color . "black"))
-(set-face-foreground 'font-lock-string-face "gray33")
+(set-face-foreground 'font-lock-string-face "DarkRed")
 (set-face-foreground 'font-lock-comment-face "forest green")
 (set-face-foreground 'font-lock-keyword-face "MidnightBlue")
 (set-face-foreground 'font-lock-function-name-face "blue")
 (set-face-foreground 'font-lock-preprocessor-face "red")
+(set-face-foreground 'font-lock-warning-face "red")
 ;; override all other syntax highlighting:
 (set-face-foreground 'font-lock-type-face "black")
 (set-face-foreground 'font-lock-variable-name-face "black")
 (set-face-foreground 'font-lock-builtin-face "black")
 (set-face-foreground 'font-lock-constant-face "black")
-(set-face-foreground 'font-lock-warning-face "black")
 (make-face-bold 'font-lock-function-name-face)
-(make-face-italic 'font-lock-comment-face)
-(make-face-italic 'font-lock-string-face)
 
 ;; highlight marked text (use C-space C-g to set a mark without highlighting)
 (transient-mark-mode t)
@@ -219,9 +217,6 @@
 
 (eval-after-load 'org-faces
   '(progn
-     ;; org-level-4 takes its value from font-lock-comment-face
-     (make-face-unitalic 'org-level-4)
-     (make-face-unitalic 'org-level-8)
      (set-face-foreground 'org-level-2 "ForestGreen")
      (set-face-foreground 'org-level-3 "MidnightBlue")
      (set-face-foreground 'org-level-4 "MediumBlue")))
