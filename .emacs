@@ -23,6 +23,7 @@
 (column-number-mode t)
 (which-func-mode t)
 (size-indication-mode t)
+(show-paren-mode 1)
 
 (eval-after-load 'time
   '(progn
@@ -48,6 +49,7 @@
 
 (setq next-line-add-newlines nil)
 (setq-default indent-tabs-mode nil)
+(setq sentence-end-double-space nil)
 (setq-default tab-width 8)
 (setq ring-bell-function 'ignore) ;; No beeps OR visible bell!
 (setq inhibit-startup-screen t)
