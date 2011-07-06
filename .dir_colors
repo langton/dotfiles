@@ -31,6 +31,7 @@ TERM cons25
 TERM xterm
 TERM rxvt
 TERM xterm-color
+TERM xterm-256color
 TERM color-xterm
 TERM vt100
 TERM dtterm

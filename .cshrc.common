@@ -11,6 +11,7 @@ if ( $?prompt ) then
     set filec
     set savehist=( 2000 merge )
     set histdup=erase
+    stty erase '^?'
     set nobeep
     set autolist
     set add suffix

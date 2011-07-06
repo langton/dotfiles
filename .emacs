@@ -38,6 +38,7 @@
     (list (tool-bar-mode -1)
           (scroll-bar-mode -1))
   (menu-bar-mode -1))
+
 (mouse-wheel-mode t)
 (xterm-mouse-mode 1)
 (setq frame-title-format 
@@ -182,6 +183,7 @@
 
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+(setq term-buffer-maximum-size 100000)
 
 ;; auto fill for text, TeX, and LaTeX modes
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
@@ -199,10 +201,18 @@
 (add-hook 'shell-script-mode-hook (function newline-indents))
 (add-hook 'fortran-mode-hook (function newline-indents))
 (add-hook 'objc-mode-hook (function newline-indents))
-
 (eval-after-load 'org
   '(progn
      (require 'org-install)
+     ;; Make windmove work in org-mode:
+     (setq org-disputed-keys '(([(shift up)] . [(meta p)])
+                               ([(shift down)] . [(meta n)])
+                               ([(shift left)] . [(meta -)])
+                               ([(shift right)] . [(meta +)])
+                               ([(meta return)] . [(control meta return)])
+                               ([(control shift right)] . [(meta shift +)])
+                               ([(control shift left)] . [(meta shift -)])))
+     (setq org-replace-disputed-keys t)
      (setq org-log-done t)
      (setq org-hide-leading-stars t)
      (setq org-todo-keywords (quote ((sequence "TODO(t)" "NEXT(n)" "|" 
