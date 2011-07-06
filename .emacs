@@ -68,12 +68,13 @@
   (windmove-default-keybindings))
 
 ;; follow compilation output
-(setq compilation-scroll-output t)
+(eval-after-load 'compile
+  '(setq compilation-scroll-output t))
 (setq echo-keystrokes 0.1)
 
 ;; jump to last location when reopening a file
-(eval-after-load 'saveplace
-  '(setq-default save-place t))
+(require 'saveplace)
+(setq-default save-place t)
 
 ;; Colors & syntax highlighting
 (set-foreground-color "black")
@@ -183,7 +184,8 @@
 
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-(setq term-buffer-maximum-size 100000)
+(eval-after-load 'term
+  '(setq term-buffer-maximum-size 100000))
 
 ;; auto fill for text, TeX, and LaTeX modes
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
