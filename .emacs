@@ -167,12 +167,19 @@
 (global-set-key [f11] 'switch-to-todo)
 (global-set-key [f12] 'switch-to-notes)
 
+(defun now()
+  "Insert string for the current date time to be used as a filename, tag, etc."
+  (interactive)
+  (insert (format-time-string "%Y_%m_%d_%H_%M_%S")))
+(global-set-key "\C-cn" 'now)
+
 ;; Modes
 (setq auto-mode-alist
       (append '(("\\.f95\\'" . fortran-mode)
                 ("\\.m$" . objc-mode)
                 ("\\.mm$" . objc-mode)
                 ("\\.org$" . org-mode)
+                ("\\.build\\'" . compilation-minor-mode)
                 ) auto-mode-alist))
 
 ;; Use d-mode for D if it exists; otherwise fall back to Java mode
