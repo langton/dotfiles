@@ -11,13 +11,24 @@
  auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves/\\1" t)))
 (make-directory "~/.emacs.d/autosaves/" t)
 
-;; Basic customizations
 (make-directory "~/.emacs.d/site-lisp/" t)
 (add-to-list 'load-path "~/.emacs.d/site-lisp/")
-(setq enable-local-variables nil)
-(cond ((fboundp 'global-font-lock-mode)
-       (global-font-lock-mode t)
-       (setq font-lock-maximum-decoration t)))
+
+(setq enable-local-variables nil
+      initial-scratch-message nil
+      next-line-add-newlines nil
+      sentence-end-double-space nil
+      ring-bell-function 'ignore ;; No beeps OR visible bell!
+      inhibit-startup-screen t
+      focus-follows-mouse nil
+      mouse-autoselect-window nil)
+
+(setq-default tab-width 8
+              indent-tabs-mode nil)
+
+(when (fboundp 'global-font-lock-mode)
+    (global-font-lock-mode t)
+          (setq font-lock-maximum-decoration t))
 
 (line-number-mode t)
 (column-number-mode t)
@@ -31,12 +42,14 @@
            display-time-default-load-average nil
            display-time-day-and-date t)))
 (display-time-mode 1)
-(blink-cursor-mode -1)
 
-;; No toolbar or scrollbar; no menubar in console mode 
-(if window-system
-    (list (tool-bar-mode -1)
-          (scroll-bar-mode -1))
+(if (fboundp 'blink-cursor-mode)
+    (blink-cursor-mode -1))
+(if (fboundp 'tool-bar-mode)
+    (tool-bar-mode -1))
+(if (fboundp 'scroll-bar-mode)
+    (scroll-bar-mode -1))
+(unless window-system
   (menu-bar-mode -1))
 
 (mouse-wheel-mode t)
@@ -46,15 +59,6 @@
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)
-
-(setq next-line-add-newlines nil)
-(setq-default indent-tabs-mode nil)
-(setq sentence-end-double-space nil)
-(setq-default tab-width 8)
-(setq ring-bell-function 'ignore) ;; No beeps OR visible bell!
-(setq inhibit-startup-screen t)
-(setq focus-follows-mouse nil)
-(setq mouse-autoselect-window nil)
 
 ;; Don't let Custom modify this .emacs file
 (setq custom-file "~/.emacs-custom.el")
@@ -118,6 +122,7 @@
 
 ;; Launch a terminal without being prompted for the shell type
 (defun launch-ansi-term ()
+  "Launch an ansi-term running /bin/tcsh with no prompts"
   (interactive)
   (ansi-term "/bin/tcsh" "terminal"))
 (global-set-key "\C-ca" 'launch-ansi-term)
@@ -141,8 +146,8 @@
              (buffer-name))))
 (global-set-key "\C-cw" 'toggle-current-window-dedication)
 
-;; Quickly byte-compile and load .emacs.
 (defun dotemacs ()
+  "Byte-compile and load ~/.emacs"
   (interactive)
   (byte-compile-file "~/.emacs")
   (load-file "~/.emacs.elc"))
@@ -159,9 +164,11 @@
 (global-set-key [f4] 'buffer-menu)
 (global-set-key [f10] 'kill-buffer)
 (defun switch-to-todo ()
+  "Switch to todo list."
   (interactive)
   (find-file "~/Notes/work.org"))
 (defun switch-to-notes ()
+  "Switch to note file."
   (interactive)
   (find-file "~/Notes/notes.org"))
 (global-set-key [f11] 'switch-to-todo)
@@ -184,8 +191,9 @@
 
 ;; Use d-mode for D if it exists; otherwise fall back to Java mode
 (if (locate-library "d-mode")
-    (list (autoload 'd-mode "d-mode" "Major mode for editing D code." t)
-          (add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . d-mode)))
+    (progn 
+      (autoload 'd-mode "d-mode" "Major mode for editing D code." t)
+      (add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . d-mode)))
   (add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . java-mode)))
 
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
