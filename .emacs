@@ -44,9 +44,8 @@
 (setq frame-title-format 
       (list '(buffer-file-name "%f" ("%b -- " default-directory))))
 
-(eval-after-load 'uniquify
-  '(progn
-     (setq uniquify-buffer-name-style 'post-forward)))
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward)
 
 (setq next-line-add-newlines nil)
 (setq-default indent-tabs-mode nil)
