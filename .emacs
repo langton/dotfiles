@@ -230,7 +230,14 @@
 
 (require 'org-install)
 ;; Make windmove work in org-mode:
-(setq org-CUA-compatible t)
+(setq org-disputed-keys '(([(shift up)] . [(meta p)])
+                          ([(shift down)] . [(meta n)])
+                          ([(shift left)] . [(meta -)])
+                          ([(shift right)] . [(meta +)])
+                          ([(meta return)] . [(control meta return)])
+                          ([(control shift right)] . [(meta shift +)])
+                          ([(control shift left)] . [(meta shift -)])))
+(setq org-replace-disputed-keys t)
 (setq org-log-done t)
 (setq org-hide-leading-stars t)
 (setq org-todo-keywords (quote ((sequence "TODO(t)" "NEXT(n)" "|" 
@@ -244,10 +251,11 @@
               ("WAITING" :foreground "orange" :weight bold)
               ("SOMEDAY" :foreground "magenta" :weight bold)
               ("CANCELLED" :foreground "forest green" :weight bold))))
-(define-key global-map "\C-co" 'org-agenda)
 (setq org-agenda-files (list "~/Notes/work.org"
                              "~/Notes/home.org"))
 (setq org-export-with-sub-superscripts nil)
+
+(define-key global-map "\C-co" 'org-agenda)
 
 (eval-after-load 'org-faces
   '(progn
