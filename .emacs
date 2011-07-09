@@ -124,8 +124,17 @@
 (defun launch-ansi-term ()
   "Launch an ansi-term running /bin/tcsh with no prompts"
   (interactive)
-  (ansi-term "/bin/tcsh" "terminal"))
+  (ansi-term "/bin/tcsh"))
 (global-set-key "\C-ca" 'launch-ansi-term)
+
+;; Launch 3 ansi-terms, titled source, build, and test
+(defun launch-sbt-terms ()
+  "Launch an ansi-term running /bin/tcsh with no prompts"
+  (interactive)
+  (ansi-term "/bin/tcsh" "source")
+  (ansi-term "/bin/tcsh" "build")
+  (ansi-term "/bin/tcsh" "test"))
+(global-set-key "\C-cm" 'launch-sbt-terms)
 
 ;; gfortran uses tabs, so it helps to be able to quickly switch to tab mode
 (defun toggle-tabs-mode ()
@@ -161,7 +170,8 @@
 (global-set-key [f1] 'save-buffer)
 (global-set-key [f2] 'find-file)
 (global-set-key [f3] 'other-window)
-(global-set-key [f4] 'buffer-menu)
+(global-set-key [f4] 'other-frame)
+(global-set-key [f5] 'buffer-menu)
 (global-set-key [f10] 'kill-buffer)
 (defun switch-to-todo ()
   "Switch to todo list."
@@ -217,35 +227,27 @@
 (add-hook 'shell-script-mode-hook (function newline-indents))
 (add-hook 'fortran-mode-hook (function newline-indents))
 (add-hook 'objc-mode-hook (function newline-indents))
-(eval-after-load 'org
-  '(progn
-     (require 'org-install)
-     ;; Make windmove work in org-mode:
-     (setq org-disputed-keys '(([(shift up)] . [(meta p)])
-                               ([(shift down)] . [(meta n)])
-                               ([(shift left)] . [(meta -)])
-                               ([(shift right)] . [(meta +)])
-                               ([(meta return)] . [(control meta return)])
-                               ([(control shift right)] . [(meta shift +)])
-                               ([(control shift left)] . [(meta shift -)])))
-     (setq org-replace-disputed-keys t)
-     (setq org-log-done t)
-     (setq org-hide-leading-stars t)
-     (setq org-todo-keywords (quote ((sequence "TODO(t)" "NEXT(n)" "|" 
-                                               "DONE(d)")
-                                     (sequence "WAITING(w)" "SOMEDAY(s)" "|" 
-                                               "CANCELLED(c)"))))
-     (setq org-todo-keyword-faces
-           (quote (("TODO" :foreground "red" :weight bold)
-                   ("NEXT" :foreground "blue" :weight bold)
-                   ("DONE" :foreground "forest green" :weight bold)
-                   ("WAITING" :foreground "orange" :weight bold)
-                   ("SOMEDAY" :foreground "magenta" :weight bold)
-                   ("CANCELLED" :foreground "forest green" :weight bold))))
-     (define-key global-map "\C-co" 'org-agenda)
-     (setq org-agenda-files (list "~/Notes/work.org"
-                                  "~/Notes/home.org"))
-     (setq org-export-with-sub-superscripts nil)))
+
+(require 'org-install)
+;; Make windmove work in org-mode:
+(setq org-CUA-compatible t)
+(setq org-log-done t)
+(setq org-hide-leading-stars t)
+(setq org-todo-keywords (quote ((sequence "TODO(t)" "NEXT(n)" "|" 
+                                          "DONE(d)")
+                                (sequence "WAITING(w)" "SOMEDAY(s)" "|" 
+                                          "CANCELLED(c)"))))
+(setq org-todo-keyword-faces
+      (quote (("TODO" :foreground "red" :weight bold)
+              ("NEXT" :foreground "blue" :weight bold)
+              ("DONE" :foreground "forest green" :weight bold)
+              ("WAITING" :foreground "orange" :weight bold)
+              ("SOMEDAY" :foreground "magenta" :weight bold)
+              ("CANCELLED" :foreground "forest green" :weight bold))))
+(define-key global-map "\C-co" 'org-agenda)
+(setq org-agenda-files (list "~/Notes/work.org"
+                             "~/Notes/home.org"))
+(setq org-export-with-sub-superscripts nil)
 
 (eval-after-load 'org-faces
   '(progn

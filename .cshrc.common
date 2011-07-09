@@ -16,8 +16,9 @@ if ( $?prompt ) then
     set autolist
     set add suffix
     set ignoreeof
-    set promptchars = "%#"
-    set prompt = "%B%U${USER}@${HOSTNAME}:%c1(\!)%#%{\033[0m%}%b%u "
+    set promptchars = '$#'
+    set ellipsis
+    set prompt = "%B%U${HOSTNAME}:%c3(\!)%#%b%u "
     set host = `hostname -f`
     set user = `whoami`
     if ($?TERM) then
