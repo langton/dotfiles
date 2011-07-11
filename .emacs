@@ -1,4 +1,5 @@
-;; My emacs customizations
+;; Asher Langton
+;; langton@gmail.com
 
 ;; Keep all backups and autosave files hidden away
 (setq
@@ -14,7 +15,8 @@
 (make-directory "~/.emacs.d/site-lisp/" t)
 (add-to-list 'load-path "~/.emacs.d/site-lisp/")
 
-(setq enable-local-variables nil
+(setq enable-local-variables :safe
+      enable-local-eval nil
       initial-scratch-message nil
       next-line-add-newlines nil
       sentence-end-double-space nil
@@ -51,9 +53,11 @@
     (scroll-bar-mode -1))
 (unless window-system
   (menu-bar-mode -1))
-
 (mouse-wheel-mode t)
 (xterm-mouse-mode 1)
+
+;; For files, show the full path in the frame title. For all other buffers,
+;; show the buffer name and default directory. 
 (setq frame-title-format 
       (list '(buffer-file-name "%f" ("%b -- " default-directory))))
 
@@ -102,7 +106,6 @@
 ;; highlight marked text (use C-space C-g to set a mark without highlighting)
 (transient-mark-mode t)
 (delete-selection-mode t)
-
 
 ;; Shortcuts
 (global-set-key "\C-cg" 'goto-line)
@@ -184,7 +187,7 @@
 (global-set-key [f11] 'switch-to-todo)
 (global-set-key [f12] 'switch-to-notes)
 
-(defun now()
+(defun now ()
   "Insert string for the current date time to be used as a filename, tag, etc."
   (interactive)
   (insert (format-time-string "%Y_%m_%d_%H_%M_%S")))
@@ -256,9 +259,3 @@
 (setq org-export-with-sub-superscripts nil)
 
 (define-key global-map "\C-co" 'org-agenda)
-
-(eval-after-load 'org-faces
-  '(progn
-     (set-face-foreground 'org-level-2 "ForestGreen")
-     (set-face-foreground 'org-level-3 "MidnightBlue")
-     (set-face-foreground 'org-level-4 "MediumBlue")))

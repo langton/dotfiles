@@ -1,3 +1,5 @@
+# -*- mode: shell-script; -*-
+
 # Add this to top-level .cshrc:
 # if ( -f $HOME/.cshrc.common ) then
 #   source $HOME/.cshrc.common
