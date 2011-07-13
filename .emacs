@@ -29,8 +29,11 @@
               indent-tabs-mode nil)
 
 (when (fboundp 'global-font-lock-mode)
-    (global-font-lock-mode t)
-          (setq font-lock-maximum-decoration t))
+    (global-font-lock-mode 1))
+
+(setq font-lock-maximum-decoration 
+      '((c-mode . 2) (c++-mode . 2) (python-mode . 2)
+        (java-mode . 2) (t . 1)))
 
 (line-number-mode t)
 (column-number-mode t)
