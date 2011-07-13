@@ -197,6 +197,25 @@
   (insert (format-time-string "%Y_%m_%d_%H_%M_%S")))
 (global-set-key "\C-cn" 'now)
 
+;; Stolen from Steve Yegge's .emacs, slightly modified
+(defun swap-windows ()
+ "If you have 2 windows, it swaps them."
+ (interactive)
+ (cond ((not (= (count-windows) 2)) 
+        (message "You need exactly 2 windows to do this."))
+       (t
+        (let* ((w1 (elt (window-list) 0))
+               (w2 (elt (window-list) 1))
+               (b1 (window-buffer w1))
+               (b2 (window-buffer w2))
+               (s1 (window-start w1))
+               (s2 (window-start w2)))
+          (set-window-buffer w1 b2)
+          (set-window-buffer w2 b1)
+          (set-window-start w1 s2)
+          (set-window-start w2 s1)))))
+(global-set-key "\C-cu" 'swap-windows)
+
 ;; Modes
 (setq auto-mode-alist
       (append '(("\\.f95\\'" . fortran-mode)
