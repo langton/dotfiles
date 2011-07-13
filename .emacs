@@ -119,6 +119,7 @@
 (global-set-key "\C-cs" 'desktop-save)
 (global-set-key "\C-cr" 'desktop-read)
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
+(global-set-key "\C-cb" 'bury-buffer)
 (global-set-key "\C-cy" 'python-shell)
 (defun diff-buffer-against-disk ()
   "Compare current buffer to saved version on disk"
