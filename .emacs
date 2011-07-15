@@ -179,7 +179,11 @@
 (global-set-key [f3] 'other-window)
 (global-set-key [f4] 'other-frame)
 (global-set-key [f5] 'buffer-menu)
-(global-set-key [f10] 'kill-buffer)
+(global-set-key [f9] 'kill-buffer)
+(defun switch-to-personal ()
+  "Switch to personal todo list."
+  (interactive)
+  (find-file "~/personal/personal.org"))
 (defun switch-to-todo ()
   "Switch to todo list."
   (interactive)
@@ -188,6 +192,7 @@
   "Switch to note file."
   (interactive)
   (find-file "~/Notes/notes.org"))
+(global-set-key [f10] 'switch-to-personal)
 (global-set-key [f11] 'switch-to-todo)
 (global-set-key [f12] 'switch-to-notes)
 
@@ -278,7 +283,7 @@
               ("SOMEDAY" :foreground "magenta" :weight bold)
               ("CANCELLED" :foreground "forest green" :weight bold))))
 (setq org-agenda-files (list "~/Notes/work.org"
-                             "~/Notes/home.org"))
+                             "~/personal/personal.org"))
 (setq org-export-with-sub-superscripts nil)
 
 (define-key global-map "\C-co" 'org-agenda)
