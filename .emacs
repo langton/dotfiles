@@ -221,6 +221,16 @@
           (set-window-start w2 s1)))))
 (global-set-key "\C-cu" 'swap-windows)
 
+(defun wrap-org-ex (b e)
+  "Wraps selection in an org-mode example box"
+  (interactive "r")
+  (save-excursion
+    (goto-char e)
+    (insert "\n#+END_EXAMPLE")
+    (goto-char b)
+    (insert "#+BEGIN_EXAMPLE\n")))
+(global-set-key "\C-ce" 'wrap-org-ex)
+
 ;; Modes
 (setq auto-mode-alist
       (append '(("\\.f95\\'" . fortran-mode)
@@ -285,5 +295,6 @@
 (setq org-agenda-files (list "~/Notes/work.org"
                              "~/personal/personal.org"))
 (setq org-export-with-sub-superscripts nil)
+(setq org-export-copy-to-kill-ring nil)
 
 (define-key global-map "\C-co" 'org-agenda)
