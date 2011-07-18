@@ -261,13 +261,17 @@
 ;; Auto-indent in C, Python, etc.
 (defun newline-indents ()
   (local-set-key "\C-m" 'newline-and-indent))
-(add-hook 'c-mode-hook (function newline-indents))
-(add-hook 'c++-mode-hook (function newline-indents))
-(add-hook 'java-mode-hook (function newline-indents))
+(add-hook 'c-mode-common-hook (function newline-indents))
 (add-hook 'python-mode-hook (function newline-indents))
 (add-hook 'shell-script-mode-hook (function newline-indents))
 (add-hook 'fortran-mode-hook (function newline-indents))
-(add-hook 'objc-mode-hook (function newline-indents))
+
+(defun hl-todo-fixme ()
+  (font-lock-add-keywords 
+   nil
+   '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t))))
+(add-hook 'c-mode-common-hook 'hl-todo-fixme)
+(add-hook 'python-mode-hook 'hl-todo-fixme)
 
 (require 'org-install)
 ;; Make windmove work in org-mode:
