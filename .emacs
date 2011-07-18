@@ -302,3 +302,5 @@
 (setq org-export-copy-to-kill-ring nil)
 
 (define-key global-map "\C-co" 'org-agenda)
+
+(server-start)
