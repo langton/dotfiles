@@ -221,16 +221,6 @@
           (set-window-start w2 s1)))))
 (global-set-key "\C-cu" 'swap-windows)
 
-(defun wrap-org-ex (b e)
-  "Wraps selection in an org-mode example box"
-  (interactive "r")
-  (save-excursion
-    (goto-char e)
-    (insert "\n#+END_EXAMPLE")
-    (goto-char b)
-    (insert "#+BEGIN_EXAMPLE\n")))
-(global-set-key "\C-ce" 'wrap-org-ex)
-
 ;; Modes
 (setq auto-mode-alist
       (append '(("\\.f95\\'" . fortran-mode)
@@ -302,5 +292,22 @@
 (setq org-export-copy-to-kill-ring nil)
 
 (define-key global-map "\C-co" 'org-agenda)
+
+
+(defun wrap-org-ex (b e)
+  "Wraps selection in an org-mode example box"
+  (interactive "r")
+  (save-excursion
+    (goto-char e)
+    (insert "\n#+END_EXAMPLE")
+    (goto-char b)
+    (insert "#+BEGIN_EXAMPLE\n")))
+
+(add-hook 'org-mode-hook (lambda ()
+                           (local-set-key "\C-ce" 'wrap-org-ex)
+                           (local-set-key "\C-c0" 'org-export-as-html)))
+
+;; I use perforce for some work projects, so load p4.el if available
+(require 'p4 nil t)
 
 (server-start)

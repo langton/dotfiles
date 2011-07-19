@@ -8,6 +8,7 @@
 if ( $?prompt ) then
     setenv HOSTNAME `hostname | sed -e s/\\..\*//`
     setenv EDITOR "emacsclient --alternate-editor emacs +%d %s"
+    alias ecl "emacsclient --alternate-editor emacs"
     set path = ( ~/local/bin $path )
     setenv CLICOLOR 1
     set history=2000
