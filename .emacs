@@ -59,6 +59,8 @@
 (mouse-wheel-mode t)
 (xterm-mouse-mode 1)
 
+(server-start)
+
 ;; For files, show the full path in the frame title. For all other buffers,
 ;; show the buffer name and default directory. 
 (setq frame-title-format 
@@ -222,6 +224,7 @@
 (global-set-key "\C-cu" 'swap-windows)
 
 ;; Modes
+(require 'xscheme)
 (setq auto-mode-alist
       (append '(("\\.f95\\'" . fortran-mode)
                 ("\\.m$" . objc-mode)
@@ -307,7 +310,5 @@
                            (local-set-key "\C-ce" 'wrap-org-ex)
                            (local-set-key "\C-c0" 'org-export-as-html)))
 
-;; I use perforce for some work projects, so load p4.el if available
+;; need perforce for some work projects, so load p4.el if available
 (require 'p4 nil t)
-
-(server-start)
