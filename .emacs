@@ -1,5 +1,4 @@
-;; Asher Langton
-;; langton@gmail.com
+;; Asher Langton <langton@gmail.com>
 
 ;; Keep all backups and autosave files hidden away
 (setq
@@ -266,49 +265,48 @@
 (add-hook 'c-mode-common-hook 'hl-todo-fixme)
 (add-hook 'python-mode-hook 'hl-todo-fixme)
 
-(require 'org-install)
-;; Make windmove work in org-mode:
-(setq org-disputed-keys '(([(shift up)] . [(meta p)])
-                          ([(shift down)] . [(meta n)])
-                          ([(shift left)] . [(meta -)])
-                          ([(shift right)] . [(meta +)])
-                          ([(meta return)] . [(control meta return)])
-                          ([(control shift right)] . [(meta shift +)])
-                          ([(control shift left)] . [(meta shift -)])))
-(setq org-replace-disputed-keys t)
-(setq org-log-done t)
-(setq org-hide-leading-stars t)
-(setq org-todo-keywords (quote ((sequence "TODO(t)" "NEXT(n)" "|" 
-                                          "DONE(d)")
-                                (sequence "WAITING(w)" "SOMEDAY(s)" "|" 
-                                          "CANCELLED(c)"))))
-(setq org-todo-keyword-faces
-      (quote (("TODO" :foreground "red" :weight bold)
-              ("NEXT" :foreground "blue" :weight bold)
-              ("DONE" :foreground "forest green" :weight bold)
-              ("WAITING" :foreground "orange" :weight bold)
-              ("SOMEDAY" :foreground "magenta" :weight bold)
-              ("CANCELLED" :foreground "forest green" :weight bold))))
-(setq org-agenda-files (list "~/Notes/work.org"
-                             "~/personal/personal.org"))
-(setq org-export-with-sub-superscripts nil)
-(setq org-export-copy-to-kill-ring nil)
+(when (require 'org-install nil t)
+  ;; Make windmove work in org-mode:
+  (setq org-disputed-keys '(([(shift up)] . [(meta p)])
+                            ([(shift down)] . [(meta n)])
+                            ([(shift left)] . [(meta -)])
+                            ([(shift right)] . [(meta +)])
+                            ([(meta return)] . [(control meta return)])
+                            ([(control shift right)] . [(meta shift +)])
+                            ([(control shift left)] . [(meta shift -)])))
+  (setq org-replace-disputed-keys t)
+  (setq org-log-done t)
+  (setq org-hide-leading-stars t)
+  (setq org-todo-keywords (quote ((sequence "TODO(t)" "NEXT(n)" "|" 
+                                            "DONE(d)")
+                                  (sequence "WAITING(w)" "SOMEDAY(s)" "|" 
+                                            "CANCELLED(c)"))))
+  (setq org-todo-keyword-faces
+        (quote (("TODO" :foreground "red" :weight bold)
+                ("NEXT" :foreground "blue" :weight bold)
+                ("DONE" :foreground "forest green" :weight bold)
+                ("WAITING" :foreground "orange" :weight bold)
+                ("SOMEDAY" :foreground "magenta" :weight bold)
+                ("CANCELLED" :foreground "forest green" :weight bold))))
+  (setq org-agenda-files (list "~/Notes/work.org"
+                               "~/personal/personal.org"))
+  (setq org-export-with-sub-superscripts nil)
+  (setq org-export-copy-to-kill-ring nil)
+  
+  (define-key global-map "\C-co" 'org-agenda)
 
-(define-key global-map "\C-co" 'org-agenda)
+  (defun wrap-org-ex (b e)
+    "Wraps selection in an org-mode example box"
+    (interactive "r")
+    (save-excursion
+      (goto-char e)
+      (insert "\n#+END_EXAMPLE")
+      (goto-char b)
+      (insert "#+BEGIN_EXAMPLE\n")))
 
-
-(defun wrap-org-ex (b e)
-  "Wraps selection in an org-mode example box"
-  (interactive "r")
-  (save-excursion
-    (goto-char e)
-    (insert "\n#+END_EXAMPLE")
-    (goto-char b)
-    (insert "#+BEGIN_EXAMPLE\n")))
-
-(add-hook 'org-mode-hook (lambda ()
-                           (local-set-key "\C-ce" 'wrap-org-ex)
-                           (local-set-key "\C-c0" 'org-export-as-html)))
+  (add-hook 'org-mode-hook (lambda ()
+                             (local-set-key "\C-ce" 'wrap-org-ex)
+                             (local-set-key "\C-c0" 'org-export-as-html))))
 
 ;; need perforce for some work projects, so load p4.el if available
 (require 'p4 nil t)
