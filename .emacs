@@ -121,7 +121,6 @@
 (global-set-key "\C-cr" 'desktop-read)
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
 (global-set-key "\C-cb" 'bury-buffer)
-(global-set-key "\C-cy" 'python-shell)
 (defun diff-buffer-against-disk ()
   "Compare current buffer to saved version on disk"
   (interactive)
@@ -304,9 +303,16 @@
       (goto-char b)
       (insert "#+BEGIN_EXAMPLE\n")))
 
+  (defun org-yank-code ()
+    (interactive)
+    (insert "#+BEGIN_EXAMPLE\n")
+    (yank)
+    (insert "\n#+END_EXAMPLE\n"))
+  
   (add-hook 'org-mode-hook (lambda ()
                              (local-set-key "\C-ce" 'wrap-org-ex)
-                             (local-set-key "\C-c0" 'org-export-as-html))))
+                             (local-set-key "\C-c0" 'org-export-as-html)
+                             (local-set-key "\C-cy" 'org-yank-code))))
 
 ;; need perforce for some work projects, so load p4.el if available
 (require 'p4 nil t)
