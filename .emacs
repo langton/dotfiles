@@ -304,6 +304,7 @@
       (insert "#+BEGIN_EXAMPLE\n")))
 
   (defun org-yank-code ()
+    "Yanks text from kill-ring, wrapped in an org-mode example box"
     (interactive)
     (insert "#+BEGIN_EXAMPLE\n")
     (yank)
@@ -315,4 +316,5 @@
                              (local-set-key "\C-cy" 'org-yank-code))))
 
 ;; need perforce for some work projects, so load p4.el if available
-(require 'p4 nil t)
+(when (locate-library "p4")
+  (load-library "p4"))
