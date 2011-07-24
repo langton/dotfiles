@@ -309,6 +309,12 @@
     (yank)
     (insert "\n#+END_EXAMPLE\n"))
   
+  ;; Dropbox support for MobileOrg
+  (when (file-accessible-directory-p "~/Dropbox")
+    (setq org-directory "~/personal")
+    (setq org-mobile-inbox-for-pull "~/personal/flagged.org")
+    (setq org-mobile-directory "~/Dropbox/MobileOrg"))
+  
   (add-hook 'org-mode-hook (lambda ()
                              (local-set-key "\C-ce" 'wrap-org-ex)
                              (local-set-key "\C-c0" 'org-export-as-html)
