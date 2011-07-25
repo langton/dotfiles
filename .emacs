@@ -54,11 +54,19 @@
 (if (fboundp 'scroll-bar-mode)
     (scroll-bar-mode -1))
 (unless window-system
-  (menu-bar-mode -1))
+  (menu-bar-mode -1)
+  (xterm-mouse-mode 1)
+  (global-set-key [mouse-4] '(lambda ()
+                               (interactive)
+                               (scroll-down 1)))
+  (global-set-key [mouse-5] '(lambda ()
+                               (interactive)
+                               (scroll-up 1))))
 (mouse-wheel-mode t)
-(xterm-mouse-mode 1)
 
-(server-start)
+(require 'server)
+(unless (server-running-p)
+  (server-start))
 
 ;; For files, show the full path in the frame title. For all other buffers,
 ;; show the buffer name and default directory. 
