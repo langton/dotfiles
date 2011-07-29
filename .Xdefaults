@@ -4,3 +4,4 @@ XTerm*scrollBar: on
 XTerm*rightScrollBar: True
 xterm*saveLines: 2000
 Xterm*background: white
+XTerm*termName:  xterm-256color
