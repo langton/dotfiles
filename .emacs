@@ -22,7 +22,8 @@
       ring-bell-function 'ignore ;; No beeps OR visible bell!
       inhibit-startup-screen t
       focus-follows-mouse nil
-      mouse-autoselect-window nil)
+      mouse-autoselect-window nil
+      vc-follow-symlinks t)
 
 (setq-default tab-width 8
               indent-tabs-mode nil)
@@ -30,9 +31,7 @@
 (when (fboundp 'global-font-lock-mode)
     (global-font-lock-mode 1))
 
-(setq font-lock-maximum-decoration 
-      '((c-mode . 2) (c++-mode . 2) (python-mode . 2)
-        (java-mode . 2) (t . 1)))
+(setq font-lock-maximum-decoration 2)
 
 (line-number-mode t)
 (column-number-mode t)
@@ -65,8 +64,9 @@
 (mouse-wheel-mode t)
 
 (require 'server)
-(unless (server-running-p)
-  (server-start))
+(if (fboundp 'server-running-p)
+    (unless (server-running-p)
+      (server-start)))
 
 ;; For files, show the full path in the frame title. For all other buffers,
 ;; show the buffer name and default directory. 
