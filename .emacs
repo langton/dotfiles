@@ -23,7 +23,8 @@
       inhibit-startup-screen t
       focus-follows-mouse nil
       mouse-autoselect-window nil
-      vc-follow-symlinks t)
+      vc-follow-symlinks t
+      word-wrap t)
 
 (setq-default tab-width 8
               indent-tabs-mode nil)
@@ -258,6 +259,11 @@
 (add-hook 'TeX-mode-hook 'turn-on-auto-fill)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
+;;Turn on documentation in elisp mode
+(add-hook 'emacs-lisp-mode-hook
+          '(lambda ()
+	     (turn-on-eldoc-mode)))
+
 ;; Auto-indent in C, Python, etc.
 (defun newline-indents ()
   (local-set-key "\C-m" 'newline-and-indent))
@@ -333,3 +339,8 @@
 ;; need perforce for some work projects, so load p4.el if available
 (when (locate-library "p4")
   (load-library "p4"))
+
+;(when (file-accessible-directory-p "~/.emacs.d/site-lisp/cedet-1.0pre7")
+;  (load-file "~/.emacs.d/site-lisp/cedet-1.0pre7/common/cedet.el")
+;  (global-ede-mode 1)
+;  (semantic-load-enable-code-helpers))
