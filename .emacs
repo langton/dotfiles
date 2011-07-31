@@ -40,13 +40,6 @@
 (size-indication-mode t)
 (show-paren-mode 1)
 
-(eval-after-load 'time
-  '(progn
-     (setq display-time-24hr-format t
-           display-time-default-load-average nil
-           display-time-day-and-date t)))
-(display-time-mode 1)
-
 (if (fboundp 'blink-cursor-mode)
     (blink-cursor-mode -1))
 (if (fboundp 'tool-bar-mode)
