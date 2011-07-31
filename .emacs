@@ -340,12 +340,18 @@
 (when (locate-library "p4")
   (load-library "p4"))
 
-;(when (file-accessible-directory-p "~/.emacs.d/site-lisp/cedet-1.0pre7")
-;  (load-file "~/.emacs.d/site-lisp/cedet-1.0pre7/common/cedet.el")
-;  (global-ede-mode 1)
-;  (semantic-load-enable-code-helpers))
+;; load recent version of CEDET if possible
+(if (file-exists-p "~/.emacs.d/site-lisp/cedet/common/cedet.el")
+    (load-file "~/.emacs.d/site-lisp/cedet/common/cedet.el")
+  (require 'cedet nil t))
 
-(when (require 'cedet nil t)
-  (semantic-mode 1)
-  (global-semantic-idle-completions-mode 1)
-  (global-semantic-idle-summary-mode 1))
+;; if we managed to load cedet, set things up
+(when (featurep 'cedet)
+  (if (require 'cedet-load nil t)
+      (semantic-load-enable-code-helpers)
+    (progn
+      (semantic-mode 1)
+      ;; semantic-load.el isn't available in some of the versions of CEDET
+      ;; that are built into emacs, so load some useful things
+      (global-semantic-idle-completions-mode 1)
+      (global-semantic-idle-summary-mode 1))))
