@@ -176,12 +176,14 @@
 (global-set-key "\C-x\C-m" 'execute-extended-command)
 (global-set-key "\C-xm" 'execute-extended-command)
 
+(global-set-key [C-tab] 'other-window)
+
 ;; Single-key shortcuts
 (global-set-key [f1] 'save-buffer)
 (global-set-key [f2] 'find-file)
-(global-set-key [f3] 'other-window)
-(global-set-key [f4] 'other-frame)
-(global-set-key [f5] 'buffer-menu)
+(global-set-key [f3] 'buffer-menu)
+(global-set-key [f4] 'other-window)
+(global-set-key [f5] 'other-frame)
 (global-set-key [f9] 'kill-buffer)
 (defun switch-to-personal ()
   "Switch to personal todo list."
