@@ -11,6 +11,7 @@
  auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves/\\1" t)))
 (make-directory "~/.emacs.d/autosaves/" t)
 
+;; Local lisp files
 (make-directory "~/.emacs.d/site-lisp/" t)
 (add-to-list 'load-path "~/.emacs.d/site-lisp/")
 
@@ -34,10 +35,11 @@
 
 (setq font-lock-maximum-decoration 2)
 
+;; Some mode-line settings
 (line-number-mode t)
 (column-number-mode t)
 (which-func-mode t)
-(size-indication-mode t)
+
 (show-paren-mode 1)
 
 (if (fboundp 'blink-cursor-mode)
@@ -46,6 +48,8 @@
     (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode)
     (scroll-bar-mode -1))
+
+;; when running in a terminal
 (unless window-system
   (menu-bar-mode -1)
   (xterm-mouse-mode 1)
@@ -57,6 +61,7 @@
                                (scroll-up 1))))
 (mouse-wheel-mode t)
 
+;; use server/emacsclient when possible
 (require 'server)
 (if (fboundp 'server-running-p)
     (unless (server-running-p)
@@ -83,6 +88,8 @@
 ;; follow compilation output
 (eval-after-load 'compile
   '(setq compilation-scroll-output t))
+
+;; Show unfinished commands in the minibufer
 (setq echo-keystrokes 0.1)
 
 ;; jump to last location when reopening a file
@@ -113,29 +120,17 @@
 (transient-mark-mode t)
 (delete-selection-mode t)
 
-;; Shortcuts
-(global-set-key "\C-cg" 'goto-line)
-(global-set-key "\M-g" 'goto-line)
-(global-set-key [home] 'beginning-of-buffer)
-(global-set-key [end] 'end-of-buffer)
-(global-set-key "\C-cp" 'ps-print-buffer-with-faces)
-(global-set-key "\C-cs" 'desktop-save)
-(global-set-key "\C-cr" 'desktop-read)
-(global-set-key (kbd "C-x C-b") 'buffer-menu)
-(global-set-key "\C-cb" 'bury-buffer)
-(global-set-key "\M- " 'hippie-expand)
+;; Some handy functions
 (defun diff-buffer-against-disk ()
   "Compare current buffer to saved version on disk"
   (interactive)
   (diff-buffer-with-file (current-buffer)))
-(global-set-key "\C-cd" 'diff-buffer-against-disk)
 
 ;; Launch a terminal without being prompted for the shell type
 (defun launch-ansi-term ()
   "Launch an ansi-term running /bin/tcsh with no prompts"
   (interactive)
   (ansi-term "/bin/tcsh"))
-(global-set-key "\C-ca" 'launch-ansi-term)
 
 ;; Launch 3 ansi-terms, titled source, build, and test
 (defun launch-sbt-terms ()
@@ -144,7 +139,6 @@
   (ansi-term "/bin/tcsh" "source")
   (ansi-term "/bin/tcsh" "build")
   (ansi-term "/bin/tcsh" "test"))
-(global-set-key "\C-cm" 'launch-sbt-terms)
 
 ;; gfortran uses tabs, so it helps to be able to quickly switch to tab mode
 (defun toggle-tabs-mode ()
@@ -152,7 +146,6 @@
   (interactive)
   (set-variable 'indent-tabs-mode (not indent-tabs-mode))
   (message "Tabs mode set to %s" indent-tabs-mode))
-(global-set-key "\C-ct" 'toggle-tabs-mode)
 
 ;; Pin buffers to specific windows
 (defun toggle-current-window-dedication ()
@@ -163,49 +156,32 @@
     (message "Window %sdedicated to %s"
              (if dedicated "no longer " "")
              (buffer-name))))
-(global-set-key "\C-cw" 'toggle-current-window-dedication)
 
 (defun dotemacs ()
   "Byte-compile and load ~/.emacs"
   (interactive)
   (byte-compile-file "~/.emacs")
   (load-file "~/.emacs.elc"))
-(global-set-key "\C-cl" 'dotemacs)
 
-;; Alternate ways to get M-x
-(global-set-key "\C-x\C-m" 'execute-extended-command)
-(global-set-key "\C-xm" 'execute-extended-command)
-
-(global-set-key [C-tab] 'other-window)
-
-;; Single-key shortcuts
-(global-set-key [f1] 'save-buffer)
-(global-set-key [f2] 'find-file)
-(global-set-key [f3] 'buffer-menu)
-(global-set-key [f4] 'other-window)
-(global-set-key [f5] 'other-frame)
-(global-set-key [f9] 'kill-buffer)
 (defun switch-to-personal ()
   "Switch to personal todo list."
   (interactive)
   (find-file "~/personal/personal.org"))
+
 (defun switch-to-todo ()
   "Switch to todo list."
   (interactive)
   (find-file "~/Notes/work.org"))
+
 (defun switch-to-notes ()
   "Switch to note file."
   (interactive)
   (find-file "~/Notes/notes.org"))
-(global-set-key [f10] 'switch-to-personal)
-(global-set-key [f11] 'switch-to-todo)
-(global-set-key [f12] 'switch-to-notes)
 
 (defun now ()
   "Insert string for the current date time to be used as a filename, tag, etc."
   (interactive)
   (insert (format-time-string "%Y_%m_%d_%H_%M_%S")))
-(global-set-key "\C-cn" 'now)
 
 ;; Stolen from Steve Yegge's .emacs, slightly modified
 (defun swap-windows ()
@@ -224,9 +200,45 @@
           (set-window-buffer w2 b1)
           (set-window-start w1 s2)
           (set-window-start w2 s1)))))
+
+;; Global shortcuts
+(global-set-key "\C-cg" 'goto-line)
+(global-set-key "\M-g" 'goto-line)
+(global-set-key [home] 'beginning-of-buffer)
+(global-set-key [end] 'end-of-buffer)
+(global-set-key "\C-cp" 'ps-print-buffer-with-faces)
+(global-set-key "\C-cs" 'desktop-save)
+(global-set-key "\C-cr" 'desktop-read)
+(global-set-key (kbd "C-x C-b") 'buffer-menu)
+(global-set-key "\C-cb" 'bury-buffer)
+(global-set-key "\M- " 'hippie-expand)
+(global-set-key "\C-cd" 'diff-buffer-against-disk)
+(global-set-key "\C-ca" 'launch-ansi-term)
+(global-set-key "\C-cm" 'launch-sbt-terms)
+(global-set-key "\C-ct" 'toggle-tabs-mode)
+(global-set-key "\C-cw" 'toggle-current-window-dedication)
+(global-set-key "\C-cl" 'dotemacs)
+;; Alternate ways to get M-x
+(global-set-key "\C-x\C-m" 'execute-extended-command)
+(global-set-key "\C-xm" 'execute-extended-command)
+(global-set-key [C-tab] 'other-window)
+(global-set-key "\C-cn" 'now)
 (global-set-key "\C-cu" 'swap-windows)
 
-;; Modes
+;; Single-key shortcuts
+(global-set-key [f1] 'save-buffer)
+(global-set-key [f2] 'find-file)
+(global-set-key [f3] 'buffer-menu)
+(global-set-key [f4] 'bury-buffer)
+(global-set-key [f5] 'other-window)
+(global-set-key [f6] 'other-frame)
+(global-set-key [f9] 'kill-buffer)
+(global-set-key [f10] 'switch-to-personal)
+(global-set-key [f11] 'switch-to-todo)
+(global-set-key [f12] 'switch-to-notes)
+
+
+;; Modes and language-specific settings
 (require 'xscheme)
 (setq auto-mode-alist
       (append '(("\\.f95\\'" . fortran-mode)
@@ -267,6 +279,7 @@
 (add-hook 'shell-script-mode-hook (function newline-indents))
 (add-hook 'fortran-mode-hook (function newline-indents))
 
+;; Make TODO, FIXME, BUG easy to spot
 (defun hl-todo-fixme ()
   (font-lock-add-keywords 
    nil
@@ -274,6 +287,7 @@
 (add-hook 'c-mode-common-hook 'hl-todo-fixme)
 (add-hook 'python-mode-hook 'hl-todo-fixme)
 
+;; org-mode setup
 (when (require 'org-install nil t)
   ;; Make windmove work in org-mode:
   (setq org-disputed-keys '(([(shift up)] . [(meta p)])
@@ -335,6 +349,7 @@
 (when (locate-library "p4")
   (load-library "p4"))
 
+;; CEDET setup
 ;; load recent version of CEDET if possible
 (if (file-exists-p "~/.emacs.d/site-lisp/cedet/common/cedet.el")
     (load-file "~/.emacs.d/site-lisp/cedet/common/cedet.el")
