@@ -344,3 +344,8 @@
 ;  (load-file "~/.emacs.d/site-lisp/cedet-1.0pre7/common/cedet.el")
 ;  (global-ede-mode 1)
 ;  (semantic-load-enable-code-helpers))
+
+(when (require 'cedet nil t)
+  (semantic-mode 1)
+  (global-semantic-idle-completions-mode 1)
+  (global-semantic-idle-summary-mode 1))
