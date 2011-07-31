@@ -358,10 +358,6 @@
 ;; if we managed to load cedet, set things up
 (when (featurep 'cedet)
   (if (require 'cedet-load nil t)
-      (semantic-load-enable-code-helpers)
-    (progn
-      (semantic-mode 1)
-      ;; semantic-load.el isn't available in some of the versions of CEDET
-      ;; that are built into emacs, so load some useful things
-      (global-semantic-idle-completions-mode 1)
-      (global-semantic-idle-summary-mode 1))))
+      (semantic-load-enable-code-helpers))
+  (global-semantic-idle-summary-mode 1)
+  (global-set-key "\C-c\t" 'semantic-ia-complete-symbol-menu))
