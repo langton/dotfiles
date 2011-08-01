@@ -224,6 +224,7 @@
 (global-set-key [C-tab] 'other-window)
 (global-set-key "\C-cn" 'now)
 (global-set-key "\C-cu" 'swap-windows)
+(global-set-key "\C-ch" 'python-shell)
 
 ;; Single-key shortcuts
 (global-set-key [f1] 'save-buffer)
