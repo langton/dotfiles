@@ -8,7 +8,10 @@
  kept-new-versions 6
  kept-old-versions 2
  version-control t
- auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves/\\1" t)))
+ auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves/\\1" t))
+ desktop-path '("~/.emacs.d/")
+ desktop-dirname "~/.emacs.d/"
+ desktop-base-file-name "emacs-desktop")
 (make-directory "~/.emacs.d/autosaves/" t)
 
 ;; Local lisp files
@@ -207,7 +210,7 @@
 (global-set-key [home] 'beginning-of-buffer)
 (global-set-key [end] 'end-of-buffer)
 (global-set-key "\C-cp" 'ps-print-buffer-with-faces)
-(global-set-key "\C-cs" 'desktop-save)
+(global-set-key "\C-cs" 'desktop-save-in-desktop-dir)
 (global-set-key "\C-cr" 'desktop-read)
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
 (global-set-key "\C-cb" 'bury-buffer)
