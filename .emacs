@@ -28,7 +28,8 @@
       focus-follows-mouse nil
       mouse-autoselect-window nil
       vc-follow-symlinks t
-      word-wrap t)
+      word-wrap t
+      comment-start nil) ;; work-around for org-mode bug
 
 (setq-default tab-width 8
               indent-tabs-mode nil)
