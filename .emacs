@@ -363,5 +363,6 @@
 (when (featurep 'cedet)
   (if (require 'cedet-load nil t)
       (semantic-load-enable-code-helpers))
-  (global-semantic-idle-summary-mode 1)
+  (when (fboundp 'global-semantic-idle-summary-mode)
+    (global-semantic-idle-summary-mode 1))
   (global-set-key "\C-c\t" 'semantic-ia-complete-symbol-menu))
