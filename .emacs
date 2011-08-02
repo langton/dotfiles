@@ -28,8 +28,7 @@
       focus-follows-mouse nil
       mouse-autoselect-window nil
       vc-follow-symlinks t
-      word-wrap t
-      comment-start nil) ;; work-around for org-mode bug
+      word-wrap t)
 
 (setq-default tab-width 8
               indent-tabs-mode nil)
@@ -348,7 +347,9 @@
   (add-hook 'org-mode-hook (lambda ()
                              (local-set-key "\C-ce" 'wrap-org-ex)
                              (local-set-key "\C-c0" 'org-export-as-html)
-                             (local-set-key "\C-cy" 'org-yank-code))))
+                             (local-set-key "\C-cy" 'org-yank-code)
+                             (make-local-variable 'comment-start)
+                             (setq comment-start nil))))
 
 ;; need perforce for some work projects, so load p4.el if available
 (when (locate-library "p4")
