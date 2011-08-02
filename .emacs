@@ -228,8 +228,6 @@
 (global-set-key "\C-cn" 'now)
 (global-set-key "\C-cu" 'swap-windows)
 (global-set-key "\C-ch" 'python-shell)
-
-;; Single-key shortcuts
 (global-set-key [f1] 'save-buffer)
 (global-set-key [f2] 'find-file)
 (global-set-key [f3] 'buffer-menu)
@@ -242,14 +240,17 @@
 (global-set-key [f12] 'switch-to-notes)
 
 
+
 ;; Modes and language-specific settings
 (require 'xscheme)
+
 (setq auto-mode-alist
       (append '(("\\.f95\\'" . fortran-mode)
                 ("\\.m$" . objc-mode)
                 ("\\.mm$" . objc-mode)
                 ("\\.org$" . org-mode)
                 ("\\.build\\'" . compilation-minor-mode)
+                ("\\.h\\'" . c++-mode)
                 ) auto-mode-alist))
 
 ;; Use d-mode for D if it exists; otherwise fall back to Java mode
@@ -259,6 +260,7 @@
       (add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . d-mode)))
   (add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . java-mode)))
 
+;; ansi-term mode
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (eval-after-load 'term
@@ -268,7 +270,6 @@
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 (add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
 (add-hook 'TeX-mode-hook 'turn-on-auto-fill)
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;;Turn on documentation in elisp mode
 (add-hook 'emacs-lisp-mode-hook
@@ -291,7 +292,8 @@
 (add-hook 'c-mode-common-hook 'hl-todo-fixme)
 (add-hook 'python-mode-hook 'hl-todo-fixme)
 
-;; org-mode setup
+
+;; BEGIN ORG-MODE CUSTOMIZATIONS ----------------------------------
 (when (require 'org-install nil t)
   ;; Make windmove work in org-mode:
   (setq org-disputed-keys '(([(shift up)] . [(meta p)])
@@ -350,17 +352,19 @@
                              (local-set-key "\C-cy" 'org-yank-code)
                              (make-local-variable 'comment-start)
                              (setq comment-start nil))))
+;; END ORG-MODE CUSTOMIZATIONS ------------------------------------
+
 
 ;; need perforce for some work projects, so load p4.el if available
 (when (locate-library "p4")
   (load-library "p4"))
+
 
 ;; CEDET setup
 ;; load recent version of CEDET if possible
 (if (file-exists-p "~/.emacs.d/site-lisp/cedet/common/cedet.el")
     (load-file "~/.emacs.d/site-lisp/cedet/common/cedet.el")
   (require 'cedet nil t))
-
 ;; if we managed to load cedet, set things up
 (when (featurep 'cedet)
   (if (require 'cedet-load nil t)
