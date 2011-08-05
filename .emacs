@@ -246,11 +246,13 @@
 
 (setq auto-mode-alist
       (append '(("\\.f95\\'" . fortran-mode)
-                ("\\.m$" . objc-mode)
-                ("\\.mm$" . objc-mode)
-                ("\\.org$" . org-mode)
+                ("\\.m\\'" . objc-mode)
+                ("\\.mm\\'" . objc-mode)
+                ("\\.org\\'" . org-mode)
                 ("\\.build\\'" . compilation-minor-mode)
                 ("\\.h\\'" . c++-mode)
+                ("Makefile.*" . makefile-mode)
+                ("Make\\..*" . makefile-mode)
                 ) auto-mode-alist))
 
 ;; Use d-mode for D if it exists; otherwise fall back to Java mode
