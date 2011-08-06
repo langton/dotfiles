@@ -366,6 +366,7 @@
 (when (locate-library "p4")
   (load-library "p4"))
 
+(require 'magit nil t)
 
 ;; CEDET setup
 ;; load recent version of CEDET if possible
