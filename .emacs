@@ -142,9 +142,9 @@
 (defun launch-sbt-terms ()
   "Launch an ansi-term running /bin/tcsh with no prompts"
   (interactive)
-  (ansi-term "/bin/tcsh" "source")
-  (ansi-term "/bin/tcsh" "build")
-  (ansi-term "/bin/tcsh" "test"))
+  (ansi-term "/bin/tcsh" "term-source")
+  (ansi-term "/bin/tcsh" "term-build")
+  (ansi-term "/bin/tcsh" "term-test"))
 
 ;; gfortran uses tabs, so it helps to be able to quickly switch to tab mode
 (defun toggle-tabs-mode ()
@@ -207,6 +207,12 @@
           (set-window-start w1 s2)
           (set-window-start w2 s1)))))
 
+;; Don't let vc-next-action mess with my window layout
+;; TODO: not quite right yet
+;(defadvice vc-next-action (around keep-windows activate)
+;  (save-window-excursion
+;    ad-do-it))
+
 ;; Global shortcuts
 (global-set-key "\C-cg" 'goto-line)
 (global-set-key "\M-g" 'goto-line)
@@ -249,11 +255,13 @@
 
 (setq auto-mode-alist
       (append '(("\\.f95\\'" . fortran-mode)
-                ("\\.m$" . objc-mode)
-                ("\\.mm$" . objc-mode)
-                ("\\.org$" . org-mode)
+                ("\\.m\\'" . objc-mode)
+                ("\\.mm\\'" . objc-mode)
+                ("\\.org\\'" . org-mode)
                 ("\\.build\\'" . compilation-minor-mode)
                 ("\\.h\\'" . c++-mode)
+                ("Makefile.*" . makefile-mode)
+                ("Make\\..*" . makefile-mode)
                 ) auto-mode-alist))
 
 ;; Use d-mode for D if it exists; otherwise fall back to Java mode
