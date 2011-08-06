@@ -28,7 +28,8 @@
       focus-follows-mouse nil
       mouse-autoselect-window nil
       vc-follow-symlinks t
-      word-wrap t)
+      word-wrap t
+      winner-mode 1)
 
 (setq-default tab-width 8
               indent-tabs-mode nil)
@@ -206,12 +207,6 @@
           (set-window-buffer w2 b1)
           (set-window-start w1 s2)
           (set-window-start w2 s1)))))
-
-;; Don't let vc-next-action mess with my window layout
-;; TODO: not quite right yet
-;(defadvice vc-next-action (around keep-windows activate)
-;  (save-window-excursion
-;    ad-do-it))
 
 ;; Global shortcuts
 (global-set-key "\C-cg" 'goto-line)
