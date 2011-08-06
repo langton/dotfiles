@@ -204,6 +204,11 @@
           (set-window-start w1 s2)
           (set-window-start w2 s1)))))
 
+;; Don't let vc-next-action mess with my window layout
+(defadvice vc-next-action (around keep-windows activate)
+  (save-window-excursion
+    ad-do-it))
+
 ;; Global shortcuts
 (global-set-key "\C-cg" 'goto-line)
 (global-set-key "\M-g" 'goto-line)
