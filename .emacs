@@ -28,8 +28,7 @@
       focus-follows-mouse nil
       mouse-autoselect-window nil
       vc-follow-symlinks t
-      word-wrap t
-      winner-mode 1)
+      word-wrap t)
 
 (setq-default tab-width 8
               indent-tabs-mode nil)
@@ -48,6 +47,8 @@
 
 (savehist-mode 1)
 (setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
+
+(winner-mode 1)
 
 (if (fboundp 'blink-cursor-mode)
     (blink-cursor-mode -1))
