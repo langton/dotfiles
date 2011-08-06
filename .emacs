@@ -139,9 +139,9 @@
 (defun launch-sbt-terms ()
   "Launch an ansi-term running /bin/tcsh with no prompts"
   (interactive)
-  (ansi-term "/bin/tcsh" "source")
-  (ansi-term "/bin/tcsh" "build")
-  (ansi-term "/bin/tcsh" "test"))
+  (ansi-term "/bin/tcsh" "term-source")
+  (ansi-term "/bin/tcsh" "term-build")
+  (ansi-term "/bin/tcsh" "term-test"))
 
 ;; gfortran uses tabs, so it helps to be able to quickly switch to tab mode
 (defun toggle-tabs-mode ()
