@@ -217,7 +217,7 @@
 (global-set-key "\C-cp" 'ps-print-buffer-with-faces)
 (global-set-key "\C-cs" 'desktop-save-in-desktop-dir)
 (global-set-key "\C-cr" 'desktop-read)
-(global-set-key (kbd "C-x C-b") 'buffer-menu)
+(global-set-key "\C-x\C-b" 'buffer-menu)
 (global-set-key "\C-cb" 'bury-buffer)
 (global-set-key "\M- " 'hippie-expand)
 (global-set-key "\C-cd" 'diff-buffer-against-disk)
