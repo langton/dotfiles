@@ -111,7 +111,7 @@
 (set-mouse-color "black")
 (add-to-list 'default-frame-alist '(background-color . "white"))
 (add-to-list 'default-frame-alist '(foreground-color . "black"))
-(set-face-foreground 'font-lock-string-face "DarkRed")
+(set-face-foreground 'font-lock-string-face "chocolate4")
 (set-face-foreground 'font-lock-comment-face "forest green")
 (set-face-foreground 'font-lock-keyword-face "MidnightBlue")
 (set-face-foreground 'font-lock-function-name-face "blue")
