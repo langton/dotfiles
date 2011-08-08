@@ -209,6 +209,12 @@
           (set-window-start w1 s2)
           (set-window-start w2 s1)))))
 
+;; Work-around to maximize frame on OS X
+(defun maximize-frame () 
+  (interactive)
+  (set-frame-position (selected-frame) 0 0)
+  (set-frame-size (selected-frame) 1000 1000))
+
 ;; Global shortcuts
 (global-set-key "\C-cg" 'goto-line)
 (global-set-key "\M-g" 'goto-line)
@@ -222,7 +228,8 @@
 (global-set-key "\M- " 'hippie-expand)
 (global-set-key "\C-cd" 'diff-buffer-against-disk)
 (global-set-key "\C-ca" 'launch-ansi-term)
-(global-set-key "\C-cm" 'launch-sbt-terms)
+(global-set-key "\C-c1" 'launch-sbt-terms)
+(global-set-key "\C-cm" 'maximize-frame)
 (global-set-key "\C-ct" 'toggle-tabs-mode)
 (global-set-key "\C-cw" 'toggle-current-window-dedication)
 (global-set-key "\C-cl" 'dotemacs)
