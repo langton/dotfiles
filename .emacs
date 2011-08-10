@@ -263,9 +263,12 @@
                 ("\\.org\\'" . org-mode)
                 ("\\.build\\'" . compilation-minor-mode)
                 ("\\.h\\'" . c++-mode)
-                ("Makefile.*" . makefile-mode)
-                ("Make\\..*" . makefile-mode)
                 ) auto-mode-alist))
+
+;; I want Makefile.foobar to open in makefile-gmake-mode, but not
+;; Makefile.py.
+(add-to-list 'auto-mode-alist '("[Mm]akefile.*" . makefile-gmake-mode) t)
+(add-to-list 'auto-mode-alist '("[Mm]ake\\..*" . makefile-gmake-mode) t)
 
 ;; Use d-mode for D if it exists; otherwise fall back to Java mode
 (if (locate-library "d-mode")
