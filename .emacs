@@ -1,22 +1,28 @@
 ;; Asher Langton <langton@gmail.com>
 
-;; Keep all backups and autosave files hidden away
-(setq
- backup-by-copying t
- backup-directory-alist '((".*" . "~/.emacs.d/backups/"))
- delete-old-versions t
- kept-new-versions 6
- kept-old-versions 2
- version-control t
- auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves/\\1" t))
- desktop-path '("~/.emacs.d/")
- desktop-dirname "~/.emacs.d/"
- desktop-base-file-name "emacs-desktop")
-(make-directory "~/.emacs.d/autosaves/" t)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Basic settings and preferences
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Local lisp files
 (make-directory "~/.emacs.d/site-lisp/" t)
 (add-to-list 'load-path "~/.emacs.d/site-lisp/")
+
+;; Keep all backups and autosave files hidden away
+(setq backup-by-copying t
+      backup-directory-alist '((".*" . "~/.emacs.d/backups/"))
+      delete-old-versions t
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control t
+      auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves/\\1" t))
+      desktop-path '("~/.emacs.d/")
+      desktop-dirname "~/.emacs.d/"
+      desktop-base-file-name "emacs-desktop")
+(make-directory "~/.emacs.d/autosaves/" t)
+
+(require 'saveplace)
+(require 'uniquify)
 
 (setq enable-local-variables :safe
       enable-local-eval nil
@@ -28,36 +34,41 @@
       focus-follows-mouse nil
       mouse-autoselect-window nil
       vc-follow-symlinks t
-      word-wrap t)
+      word-wrap t
+      font-lock-maximum-decoration 2
+      echo-keystrokes 0.1
+      uniquify-buffer-name-style 'post-forward
+      custom-file "~/.emacs-custom.el")
+
+(load custom-file 'noerror)
 
 (setq-default tab-width 8
-              indent-tabs-mode nil)
+              indent-tabs-mode nil
+              save-place t)
 
 (when (fboundp 'global-font-lock-mode)
     (global-font-lock-mode 1))
 
-(setq font-lock-maximum-decoration 2)
-
-;; Some mode-line settings
+;; Some mode-line settings and other preferences
 (line-number-mode t)
 (column-number-mode t)
 (which-func-mode t)
-
 (show-paren-mode 1)
-
+(transient-mark-mode t)
+(delete-selection-mode t)
 (savehist-mode 1)
 (setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
-
 (winner-mode 1)
-
 (if (fboundp 'blink-cursor-mode)
     (blink-cursor-mode -1))
 (if (fboundp 'tool-bar-mode)
     (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode)
     (scroll-bar-mode -1))
+(auto-compression-mode 1)
 
-;; when running in a terminal
+;; when running in a terminal, turn of menu bar and make sure mouse-wheel
+;; works correctly
 (unless window-system
   (menu-bar-mode -1)
   (xterm-mouse-mode 1)
@@ -80,15 +91,6 @@
 (setq frame-title-format 
       (list '(buffer-file-name "%f" ("%b -- " default-directory))))
 
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'post-forward)
-
-;; Don't let Custom modify this .emacs file
-(setq custom-file "~/.emacs-custom.el")
-(load custom-file 'noerror)
-
-(auto-compression-mode 1)
-
 ;; Use <shift>+<arrow> to move between windows
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
@@ -97,14 +99,10 @@
 (eval-after-load 'compile
   '(setq compilation-scroll-output t))
 
-;; Show unfinished commands in the minibufer
-(setq echo-keystrokes 0.1)
 
-;; jump to last location when reopening a file
-(require 'saveplace)
-(setq-default save-place t)
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Colors & syntax highlighting
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (set-foreground-color "black")
 (set-background-color "white")
 (set-cursor-color "black")
@@ -124,11 +122,10 @@
 (set-face-foreground 'font-lock-constant-face "black")
 (make-face-bold 'font-lock-function-name-face)
 
-;; highlight marked text (use C-space C-g to set a mark without highlighting)
-(transient-mark-mode t)
-(delete-selection-mode t)
 
-;; Some handy functions
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Helper functions and key-bindings
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun diff-buffer-against-disk ()
   "Compare current buffer to saved version on disk"
   (interactive)
@@ -252,8 +249,9 @@
 (global-set-key [f12] 'switch-to-notes)
 
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Modes and language-specific settings
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'xscheme)
 
 (setq auto-mode-alist
@@ -266,7 +264,7 @@
                 ) auto-mode-alist))
 
 ;; I want Makefile.foobar to open in makefile-gmake-mode, but not
-;; Makefile.py.
+;; Makefile.py, so we'll put these at the end of the alist
 (add-to-list 'auto-mode-alist '("[Mm]akefile.*" . makefile-gmake-mode) t)
 (add-to-list 'auto-mode-alist '("[Mm]ake\\..*" . makefile-gmake-mode) t)
 
@@ -310,7 +308,9 @@
 (add-hook 'python-mode-hook 'hl-todo-fixme)
 
 
-;; BEGIN ORG-MODE CUSTOMIZATIONS ----------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; org-mode customizations
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (when (require 'org-install nil t)
   ;; Make windmove work in org-mode:
   (setq org-disputed-keys '(([(shift up)] . [(meta p)])
@@ -369,14 +369,16 @@
                              (local-set-key "\C-cy" 'org-yank-code)
                              (make-local-variable 'comment-start)
                              (setq comment-start nil))))
-;; END ORG-MODE CUSTOMIZATIONS ------------------------------------
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Version control and development tools
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; need perforce for some work projects, so load p4.el if available
+(require 'magit nil t)
+
 (when (locate-library "p4")
   (load-library "p4"))
-
-(require 'magit nil t)
 
 ;; CEDET setup
 ;; load recent version of CEDET if possible
