@@ -21,6 +21,27 @@
       desktop-base-file-name "emacs-desktop")
 (make-directory "~/.emacs.d/autosaves/" t)
 
+;; Some mode-line settings and other preferences
+(line-number-mode t)
+(column-number-mode t)
+(which-func-mode t)
+(show-paren-mode 1)
+(transient-mark-mode t)
+(delete-selection-mode t)
+(savehist-mode 1)
+(setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
+(winner-mode 1)
+(auto-compression-mode 1)
+(mouse-wheel-mode t)
+(if (fboundp 'blink-cursor-mode)
+    (blink-cursor-mode -1))
+(if (fboundp 'tool-bar-mode)
+    (tool-bar-mode -1))
+(if (fboundp 'scroll-bar-mode)
+    (scroll-bar-mode -1))
+(if (fboundp 'global-font-lock-mode)
+    (global-font-lock-mode 1))
+
 (require 'saveplace)
 (require 'uniquify)
 
@@ -46,27 +67,6 @@
               indent-tabs-mode nil
               save-place t)
 
-(when (fboundp 'global-font-lock-mode)
-    (global-font-lock-mode 1))
-
-;; Some mode-line settings and other preferences
-(line-number-mode t)
-(column-number-mode t)
-(which-func-mode t)
-(show-paren-mode 1)
-(transient-mark-mode t)
-(delete-selection-mode t)
-(savehist-mode 1)
-(setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
-(winner-mode 1)
-(if (fboundp 'blink-cursor-mode)
-    (blink-cursor-mode -1))
-(if (fboundp 'tool-bar-mode)
-    (tool-bar-mode -1))
-(if (fboundp 'scroll-bar-mode)
-    (scroll-bar-mode -1))
-(auto-compression-mode 1)
-
 ;; when running in a terminal, turn of menu bar and make sure mouse-wheel
 ;; works correctly
 (unless window-system
@@ -78,7 +78,6 @@
   (global-set-key [mouse-5] '(lambda ()
                                (interactive)
                                (scroll-up 1))))
-(mouse-wheel-mode t)
 
 ;; use server/emacsclient when possible
 (require 'server)
