@@ -29,7 +29,6 @@
 (transient-mark-mode t)
 (delete-selection-mode t)
 (savehist-mode 1)
-(setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
 (winner-mode 1)
 (auto-compression-mode 1)
 (mouse-wheel-mode t)
@@ -59,6 +58,7 @@
       font-lock-maximum-decoration 2
       echo-keystrokes 0.1
       uniquify-buffer-name-style 'post-forward
+      savehist-additional-variables '(kill-ring search-ring regexp-search-ring)
       custom-file "~/.emacs-custom.el")
 
 (load custom-file 'noerror)
