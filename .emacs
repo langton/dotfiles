@@ -43,6 +43,7 @@
 
 (require 'saveplace)
 (require 'uniquify)
+(require 'tramp)
 
 (setq enable-local-variables :safe
       enable-local-eval nil
@@ -59,7 +60,8 @@
       echo-keystrokes 0.1
       uniquify-buffer-name-style 'post-forward
       savehist-additional-variables '(kill-ring search-ring regexp-search-ring)
-      custom-file "~/.emacs-custom.el")
+      custom-file "~/.emacs-custom.el"
+      tramp-default-method "ssh")
 
 (load custom-file 'noerror)
 
