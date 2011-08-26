@@ -41,9 +41,11 @@
 (if (fboundp 'global-font-lock-mode)
     (global-font-lock-mode 1))
 
+
 (require 'saveplace)
 (require 'uniquify)
 (require 'tramp)
+(require 'paren)
 
 (setq enable-local-variables :safe
       enable-local-eval nil
@@ -120,18 +122,28 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Colors & syntax highlighting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Cocoa Emacs doesn't invert the cursor glyph properly, so I'll make t
+;; a red bar instead of a black box.
+(defvar curscolor "black")
+(when (eq window-system 'ns)
+  (setq-default cursor-type 'bar)
+  (setq curscolor "red"))
+
 (set-foreground-color "black")
 (set-background-color "white")
-(set-cursor-color "black")
+(set-cursor-color curscolor)
 (set-mouse-color "black")
 (add-to-list 'default-frame-alist '(background-color . "white"))
 (add-to-list 'default-frame-alist '(foreground-color . "black"))
+(add-to-list 'default-frame-alist `(cursor-color . ,curscolor))
 (set-face-foreground 'font-lock-string-face "chocolate4")
 (set-face-foreground 'font-lock-comment-face "forest green")
 (set-face-foreground 'font-lock-keyword-face "MidnightBlue")
 (set-face-foreground 'font-lock-function-name-face "blue")
 (set-face-foreground 'font-lock-preprocessor-face "red")
 (set-face-foreground 'font-lock-warning-face "red")
+(set-face-background 'show-paren-match "light gray")
 ;; override all other syntax highlighting:
 (set-face-foreground 'font-lock-type-face "black")
 (set-face-foreground 'font-lock-variable-name-face "black")
