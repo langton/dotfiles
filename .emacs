@@ -95,8 +95,11 @@
       (list '(buffer-file-name "%f" ("%b -- " default-directory))))
 
 ;; Use <shift>+<arrow> to move between windows
-(when (fboundp 'windmove-default-keybindings)
+(when (require 'windmove nil t)
   (windmove-default-keybindings))
+
+(when (require 'framemove nil t)
+  (setq framemove-hook-into-windmove t))
 
 ;; follow compilation output
 (eval-after-load 'compile
