@@ -355,19 +355,6 @@
   (setq org-replace-disputed-keys t)
   (setq org-log-done t)
   (setq org-hide-leading-stars t)
-  (setq org-todo-keywords (quote ((sequence "TODO(t)" "NEXT(n)" "|" 
-                                            "DONE(d)")
-                                  (sequence "WAITING(w)" "SOMEDAY(s)" "|" 
-                                            "CANCELLED(c)"))))
-  (setq org-todo-keyword-faces
-        (quote (("TODO" :foreground "red" :weight bold)
-                ("NEXT" :foreground "blue" :weight bold)
-                ("DONE" :foreground "forest green" :weight bold)
-                ("WAITING" :foreground "orange" :weight bold)
-                ("SOMEDAY" :foreground "magenta" :weight bold)
-                ("CANCELLED" :foreground "forest green" :weight bold))))
-  (setq org-agenda-files (list "~/Notes/work.org"
-                               "~/personal/personal.org"))
   (setq org-export-with-sub-superscripts nil)
   (setq org-export-copy-to-kill-ring nil)
   
@@ -388,13 +375,7 @@
     (insert "#+BEGIN_EXAMPLE\n")
     (yank)
     (insert "\n#+END_EXAMPLE\n"))
-  
-  ;; Dropbox support for MobileOrg
-  (when (file-accessible-directory-p "~/Dropbox")
-    (setq org-directory "~/personal")
-    (setq org-mobile-inbox-for-pull "~/personal/flagged.org")
-    (setq org-mobile-directory "~/Dropbox/MobileOrg"))
-  
+    
   (add-hook 'org-mode-hook (lambda ()
                              (local-set-key "\C-ce" 'wrap-org-ex)
                              (local-set-key "\C-c0" 'org-export-as-html)
