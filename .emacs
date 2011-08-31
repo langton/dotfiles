@@ -200,16 +200,6 @@
   (byte-compile-file "~/.emacs")
   (load-file "~/.emacs.elc"))
 
-(defun switch-to-personal ()
-  "Switch to personal todo list."
-  (interactive)
-  (find-file "~/personal/personal.org"))
-
-(defun switch-to-todo ()
-  "Switch to todo list."
-  (interactive)
-  (find-file "~/Notes/work.org"))
-
 (defun switch-to-notes ()
   "Switch to note file."
   (interactive)
@@ -272,12 +262,6 @@
 (global-set-key [f1] 'save-buffer)
 (global-set-key [f2] 'find-file)
 (global-set-key [f3] 'buffer-menu)
-(global-set-key [f4] 'bury-buffer)
-(global-set-key [f5] 'other-window)
-(global-set-key [f6] 'other-frame)
-(global-set-key [f9] 'kill-buffer)
-(global-set-key [f10] 'switch-to-personal)
-(global-set-key [f11] 'switch-to-todo)
 (global-set-key [f12] 'switch-to-notes)
 
 
