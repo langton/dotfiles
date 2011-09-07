@@ -64,7 +64,8 @@
       uniquify-buffer-name-style 'post-forward
       savehist-additional-variables '(kill-ring search-ring regexp-search-ring)
       custom-file "~/.emacs-custom.el"
-      tramp-default-method "ssh")
+      tramp-default-method "ssh"
+      scroll-preserve-screen-position t)
 
 (load custom-file 'noerror)
 
