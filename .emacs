@@ -142,6 +142,8 @@
 (add-to-list 'default-frame-alist '(background-color . "white"))
 (add-to-list 'default-frame-alist '(foreground-color . "black"))
 (add-to-list 'default-frame-alist `(cursor-color . ,curscolor))
+(set-face-attribute 'mode-line nil 
+                    :box '(:line-width 2 :color "red" :style nil))
 (set-face-foreground 'font-lock-string-face "chocolate4")
 (set-face-foreground 'font-lock-comment-face "forest green")
 (set-face-foreground 'font-lock-keyword-face "MidnightBlue")
