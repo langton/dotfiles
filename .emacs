@@ -71,7 +71,8 @@
 
 (setq-default tab-width 8
               indent-tabs-mode nil
-              save-place t)
+              save-place t
+              show-trailing-whitespace t)
 
 ;; when running in a terminal, turn of menu bar and make sure mouse-wheel
 ;; works correctly
@@ -92,8 +93,8 @@
       (server-start)))
 
 ;; For files, show the full path in the frame title. For all other buffers,
-;; show the buffer name and default directory. 
-(setq frame-title-format 
+;; show the buffer name and default directory.
+(setq frame-title-format
       (list '(buffer-file-name "%f" ("%b -- " default-directory))))
 
 ;; Use <shift>+<arrow> to move between windows
@@ -142,8 +143,9 @@
 (add-to-list 'default-frame-alist '(background-color . "white"))
 (add-to-list 'default-frame-alist '(foreground-color . "black"))
 (add-to-list 'default-frame-alist `(cursor-color . ,curscolor))
-(set-face-attribute 'mode-line nil 
+(set-face-attribute 'mode-line nil
                     :box '(:line-width 2 :color "red" :style nil))
+(set-face-background 'fringe "gray85")
 (set-face-foreground 'font-lock-string-face "chocolate4")
 (set-face-foreground 'font-lock-comment-face "forest green")
 (set-face-foreground 'font-lock-keyword-face "MidnightBlue")
@@ -218,7 +220,7 @@
 (defun swap-windows ()
  "If you have 2 windows, it swaps them."
  (interactive)
- (cond ((not (= (count-windows) 2)) 
+ (cond ((not (= (count-windows) 2))
         (message "You need exactly 2 windows to do this."))
        (t
         (let* ((w1 (elt (window-list) 0))
@@ -233,7 +235,7 @@
           (set-window-start w2 s1)))))
 
 ;; Work-around to maximize frame on OS X
-(defun maximize-frame () 
+(defun maximize-frame ()
   (interactive)
   (set-frame-position (selected-frame) 0 0)
   (set-frame-size (selected-frame) 1000 1000))
@@ -290,7 +292,7 @@
 
 ;; Use d-mode for D if it exists; otherwise fall back to Java mode
 (if (locate-library "d-mode")
-    (progn 
+    (progn
       (autoload 'd-mode "d-mode" "Major mode for editing D code." t)
       (add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . d-mode)))
   (add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . java-mode)))
@@ -321,7 +323,7 @@
 
 ;; Make TODO, FIXME, BUG easy to spot
 (defun hl-todo-fixme ()
-  (font-lock-add-keywords 
+  (font-lock-add-keywords
    nil
    '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t))))
 (add-hook 'c-mode-common-hook 'hl-todo-fixme)
@@ -345,7 +347,7 @@
   (setq org-hide-leading-stars t)
   (setq org-export-with-sub-superscripts nil)
   (setq org-export-copy-to-kill-ring nil)
-  
+
   (define-key global-map "\C-co" 'org-agenda)
 
   (defun wrap-org-ex (b e)
@@ -363,7 +365,7 @@
     (insert "#+BEGIN_EXAMPLE\n")
     (yank)
     (insert "\n#+END_EXAMPLE\n"))
-    
+
   (add-hook 'org-mode-hook (lambda ()
                              (local-set-key "\C-ce" 'wrap-org-ex)
                              (local-set-key "\C-c0" 'org-export-as-html)
