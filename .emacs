@@ -321,6 +321,13 @@
 (add-hook 'shell-script-mode-hook (function newline-indents))
 (add-hook 'fortran-mode-hook (function newline-indents))
 
+;; Disable show-trailing-whitespace in a few modes
+(defun hide-whitespace ()
+  (setq show-trailing-whitespace nil))
+(add-hook 'shell-mode-hook (function hide-whitespace))
+(add-hook 'org-mode-hook (function hide-whitespace))
+(add-hook 'compilation-minor-mode-hook (function hide-whitespace))
+
 ;; Make TODO, FIXME, BUG easy to spot
 (defun hl-todo-fixme ()
   (font-lock-add-keywords
