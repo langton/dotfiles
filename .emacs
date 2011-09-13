@@ -327,6 +327,7 @@
 (add-hook 'shell-mode-hook (function hide-whitespace))
 (add-hook 'org-mode-hook (function hide-whitespace))
 (add-hook 'compilation-minor-mode-hook (function hide-whitespace))
+(add-hook 'term-mode-hook (function hide-whitespace))
 
 ;; Make TODO, FIXME, BUG easy to spot
 (defun hl-todo-fixme ()
