@@ -129,10 +129,10 @@
 ;; Colors & syntax highlighting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Cocoa Emacs doesn't invert the cursor glyph properly, so I'll make t
+;; Cocoa Emacs 23 doesn't invert the cursor glyph properly, so I'll make t
 ;; a red bar instead of a black box.
 (defvar curscolor "black")
-(when (eq window-system 'ns)
+(when (and (eq emacs-major-version 23) (eq window-system 'ns))
   (setq-default cursor-type 'bar)
   (setq curscolor "red"))
 
