@@ -240,6 +240,10 @@
   (set-frame-position (selected-frame) 0 0)
   (set-frame-size (selected-frame) 1000 1000))
 
+(defun toggle-show-trailing-whitespace ()
+  (interactive)
+  (setq show-trailing-whitespace (not show-trailing-whitespace)))
+
 ;; Global shortcuts
 (global-set-key "\C-cg" 'goto-line)
 (global-set-key "\M-g" 'goto-line)
@@ -258,6 +262,7 @@
 (global-set-key "\C-ct" 'toggle-tabs-mode)
 (global-set-key "\C-cw" 'toggle-current-window-dedication)
 (global-set-key "\C-cl" 'dotemacs)
+(global-set-key "\C-c " 'toggle-show-trailing-whitespace)
 ;; Alternate ways to get M-x
 (global-set-key "\C-x\C-m" 'execute-extended-command)
 (global-set-key "\C-xm" 'execute-extended-command)
@@ -328,6 +333,7 @@
 (add-hook 'org-mode-hook (function hide-whitespace))
 (add-hook 'compilation-minor-mode-hook (function hide-whitespace))
 (add-hook 'term-mode-hook (function hide-whitespace))
+(add-hook 'calendar-mode-hook (function hide-whitespace))
 
 ;; Make TODO, FIXME, BUG easy to spot
 (defun hl-todo-fixme ()
