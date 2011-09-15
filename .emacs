@@ -125,6 +125,11 @@
         (if (not (null matching-text))
             (message matching-text)))))
 
+; A couple of customizations for when I'm running Aquamacs
+(when (boundp 'aquamacs-version)
+  (tabbar-mode -1)
+  (one-buffer-one-frame-mode -1))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Colors & syntax highlighting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
