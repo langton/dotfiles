@@ -307,6 +307,9 @@
       (add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . d-mode)))
   (add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . java-mode)))
 
+(when (require 'gas-mode nil t)
+  (add-to-list 'auto-mode-alist '("\\.[sS]\\'" . gas-mode)))
+
 ;; ansi-term mode
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
