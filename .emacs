@@ -45,7 +45,7 @@
 (iswitchb-mode 1)
 (setq iswitchb-default-method 'samewindow)
 (setq iswitchb-buffer-ignore '("^ " "*Buffer" "*Messages" "*Help" "*Calendar"
-                               "*Compile" "*Completions"))
+                               "*Compile" "*Completions" "*vc" "*tramp"))
 (defun iswitchb-local-keys ()
   (mapc (lambda (K)
           (let* ((key (car K)) (fun (cdr K)))
