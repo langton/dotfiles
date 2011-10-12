@@ -96,8 +96,7 @@
 
 (setq-default tab-width 8
               indent-tabs-mode nil
-              save-place t
-              show-trailing-whitespace t)
+              save-place t)
 
 ;; when running in a terminal, turn of menu bar and make sure mouse-wheel
 ;; works correctly
@@ -358,15 +357,6 @@
 (add-hook 'python-mode-hook (function newline-indents))
 (add-hook 'shell-script-mode-hook (function newline-indents))
 (add-hook 'fortran-mode-hook (function newline-indents))
-
-;; Disable show-trailing-whitespace in a few modes
-(defun hide-whitespace ()
-  (setq show-trailing-whitespace nil))
-(add-hook 'shell-mode-hook (function hide-whitespace))
-(add-hook 'org-mode-hook (function hide-whitespace))
-(add-hook 'compilation-minor-mode-hook (function hide-whitespace))
-(add-hook 'term-mode-hook (function hide-whitespace))
-(add-hook 'calendar-mode-hook (function hide-whitespace))
 
 ;; Make TODO, FIXME, BUG easy to spot
 (defun hl-todo-fixme ()
