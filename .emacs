@@ -296,7 +296,6 @@
 ;; Alternate ways to get M-x
 (global-set-key "\C-x\C-m" 'execute-extended-command)
 (global-set-key "\C-xm" 'execute-extended-command)
-(global-set-key [C-tab] 'other-window)
 (global-set-key "\C-cn" 'now)
 (global-set-key "\C-cu" 'swap-windows)
 (global-set-key "\C-ch" 'python-shell)
@@ -432,4 +431,4 @@
       (semantic-load-enable-code-helpers))
   (when (fboundp 'global-semantic-idle-summary-mode)
     (global-semantic-idle-summary-mode 1))
-  (global-set-key "\C-c\t" 'semantic-ia-complete-symbol-menu))
+  (global-set-key [C-tab] 'semantic-ia-complete-symbol-menu))
