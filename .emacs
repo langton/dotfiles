@@ -99,6 +99,12 @@
               indent-tabs-mode nil
               save-place t)
 
+; Monaco font is nice on OS X; on Linux, use Anon Pro if possible
+(when (and (eq window-system 'x)
+           (x-list-fonts "Anonymous Pro"))
+  (set-face-attribute 'default nil :family "Anonymous Pro" :height 120))
+
+
 ;; when running in a terminal, turn of menu bar and make sure mouse-wheel
 ;; works correctly
 (unless window-system
@@ -299,6 +305,7 @@
 (global-set-key "\C-cn" 'now)
 (global-set-key "\C-cu" 'swap-windows)
 (global-set-key "\C-ch" 'python-shell)
+(global-set-key "\C-cf" 'auto-revert-tail-mode)
 (global-set-key [f1] 'save-buffer)
 (global-set-key [f2] 'find-file)
 (global-set-key [f3] 'buffer-menu)
