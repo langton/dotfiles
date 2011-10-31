@@ -438,4 +438,11 @@
       (semantic-load-enable-code-helpers))
   (when (fboundp 'global-semantic-idle-summary-mode)
     (global-semantic-idle-summary-mode 1))
-  (global-set-key [C-tab] 'semantic-ia-complete-symbol-menu))
+  (global-set-key [C-tab] 'semantic-ia-complete-symbol-menu)
+  (when (file-exists-p "~/.emacs.d/projects.el")
+    (load-file "~/.emacs.d/projects.el")))
+
+(setq eshell-save-history-on-exit t)
+(setq eshell-history-size 512)
+(setq eshell-hist-ignoredups t)
+(setq eshell-cmpl-cycle-completions nil)
