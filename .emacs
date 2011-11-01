@@ -99,10 +99,10 @@
               indent-tabs-mode nil
               save-place t)
 
-; Monaco font is nice on OS X; on Linux, use Anon Pro if possible
+; Monaco font is nice on OS X; try to use it on Linux too.
 (when (and (eq window-system 'x)
-           (x-list-fonts "Anonymous Pro"))
-  (set-face-attribute 'default nil :family "Anonymous Pro" :height 120))
+           (x-list-fonts "Monaco"))
+  (set-face-attribute 'default nil :family "Monaco" :height 110))
 
 
 ;; when running in a terminal, turn of menu bar and make sure mouse-wheel
@@ -439,6 +439,7 @@
   (when (fboundp 'global-semantic-idle-summary-mode)
     (global-semantic-idle-summary-mode 1))
   (global-set-key [C-tab] 'semantic-ia-complete-symbol-menu)
+  (global-set-key "\C-cj" 'semantic-ia-fast-jump)
   (when (file-exists-p "~/.emacs.d/projects.el")
     (load-file "~/.emacs.d/projects.el")))
 
