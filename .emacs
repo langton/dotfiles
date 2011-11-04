@@ -103,6 +103,9 @@
 (when (and (eq window-system 'x)
            (x-list-fonts "Monaco"))
   (set-face-attribute 'default nil :family "Monaco" :height 110))
+;; Fonts show up smaller on OS X. Make them bigger.
+(when (eq window-system 'ns)
+  (set-face-attribute 'default nil :family "Monaco" :height 130))
 
 
 ;; when running in a terminal, turn of menu bar and make sure mouse-wheel
