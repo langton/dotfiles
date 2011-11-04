@@ -129,7 +129,8 @@
 ;; For files, show the full path in the frame title. For all other buffers,
 ;; show the buffer name and default directory.
 (setq frame-title-format
-      (list '(buffer-file-name "%f" ("%b -- " default-directory))))
+      (list system-name " -- " 
+            '(buffer-file-name "%f" ("%b -- " default-directory))))
 
 ;; Use <shift>+<arrow> to move between windows
 (when (require 'windmove nil t)
