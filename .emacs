@@ -431,21 +431,21 @@
 (when (locate-library "p4")
   (load-library "p4"))
 
-;; CEDET setup
-;; load recent version of CEDET if possible
-(if (file-exists-p "~/.emacs.d/site-lisp/cedet/common/cedet.el")
-    (load-file "~/.emacs.d/site-lisp/cedet/common/cedet.el")
-  (require 'cedet nil t))
-;; if we managed to load cedet, set things up
-(when (featurep 'cedet)
-  (if (require 'cedet-load nil t)
-      (semantic-load-enable-code-helpers))
-  (when (fboundp 'global-semantic-idle-summary-mode)
-    (global-semantic-idle-summary-mode 1))
-  (global-set-key [C-tab] 'semantic-ia-complete-symbol-menu)
-  (global-set-key "\C-cj" 'semantic-ia-fast-jump)
-  (when (file-exists-p "~/.emacs.d/projects.el")
-    (load-file "~/.emacs.d/projects.el")))
+;; ;; CEDET setup
+;; ;; load recent version of CEDET if possible
+;; (if (file-exists-p "~/.emacs.d/site-lisp/cedet/common/cedet.el")
+;;     (load-file "~/.emacs.d/site-lisp/cedet/common/cedet.el")
+;;   (require 'cedet nil t))
+;; ;; if we managed to load cedet, set things up
+;; (when (featurep 'cedet)
+;;   (if (require 'cedet-load nil t)
+;;       (semantic-load-enable-code-helpers))
+;;   (when (fboundp 'global-semantic-idle-summary-mode)
+;;     (global-semantic-idle-summary-mode 1))
+;;   (global-set-key [C-tab] 'semantic-ia-complete-symbol-menu)
+;;   (global-set-key "\C-cj" 'semantic-ia-fast-jump)
+;;   (when (file-exists-p "~/.emacs.d/projects.el")
+;;     (load-file "~/.emacs.d/projects.el")))
 
 (setq eshell-save-history-on-exit t)
 (setq eshell-history-size 512)
