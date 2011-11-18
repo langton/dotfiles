@@ -93,7 +93,9 @@
       savehist-additional-variables '(kill-ring search-ring regexp-search-ring)
       custom-file "~/.emacs-custom.el"
       tramp-default-method "ssh"
-      scroll-preserve-screen-position t)
+      scroll-preserve-screen-position t
+      mouse-wheel-progressive-speed nil
+      mouse-wheel-scroll-amount '(3 ((shift) . 1)))
 
 (load custom-file 'noerror)
 
