@@ -314,10 +314,6 @@
 (global-set-key "\C-cu" 'swap-windows)
 (global-set-key "\C-ch" 'python-shell)
 (global-set-key "\C-cf" 'auto-revert-tail-mode)
-(global-set-key [f1] 'save-buffer)
-(global-set-key [f2] 'find-file)
-(global-set-key [f3] 'buffer-menu)
-(global-set-key [f12] 'switch-to-notes)
 (global-set-key [C-return] 'newline) ; handy when return auto-indents
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
