@@ -1,6 +1,9 @@
 This repository contains the location-independent parts of my most
-essential config files. Feel free to use or modify anything here in
-any way that suits you.
+essential config files so I can quickly set up my development
+environment on a new machine. I modify my .emacs file often; the rest
+of the files rarely change. I try to maintain compatibility with GNU
+Emacs 22+; some of code in .emacs won't work on XEmacs or older
+versions of GNU Emacs.
 
--Asher Langton
-langton@gmail.com
+Feel free to use anything in this repository. Comments, questions, or
+bug fixes? Email me at langton@gmail.com.
