@@ -260,15 +260,15 @@
   (interactive)
   (insert (format-time-string "%Y_%m_%d_%H_%M_%S")))
 
-;; Stolen from Steve Yegge's .emacs, slightly modified
+;; Stolen from Steve Yegge's .emacs
 (defun swap-windows ()
  "If you have 2 windows, it swaps them."
  (interactive)
  (cond ((not (= (count-windows) 2))
         (message "You need exactly 2 windows to do this."))
        (t
-        (let* ((w1 (elt (window-list) 0))
-               (w2 (elt (window-list) 1))
+        (let* ((w1 (first (window-list)))
+               (w2 (second (window-list)))
                (b1 (window-buffer w1))
                (b2 (window-buffer w2))
                (s1 (window-start w1))
