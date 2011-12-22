@@ -107,7 +107,7 @@
 ; Monaco font is nice on OS X; try to use it on Linux too.
 (when (and (eq window-system 'x)
            (x-list-fonts "Monaco"))
-  (set-face-attribute 'default nil :family "Monaco" :height 110))
+  (set-face-attribute 'default nil :family "Monaco" :height 100))
 ;; Fonts show up smaller on OS X. Make them bigger.
 (when (eq window-system 'ns)
   (set-face-attribute 'default nil :family "Monaco" :height 130))

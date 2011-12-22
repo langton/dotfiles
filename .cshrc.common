@@ -18,6 +18,7 @@ if ( $?prompt ) then
     set histdup=erase
     stty erase '^?'
     set nobeep
+    set autoexpand
     set autolist
     set add suffix
     set ignoreeof
