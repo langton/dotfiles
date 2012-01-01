@@ -96,7 +96,8 @@
       tramp-default-method "ssh"
       scroll-preserve-screen-position t
       mouse-wheel-progressive-speed nil
-      mouse-wheel-scroll-amount '(3 ((shift) . 1)))
+      mouse-wheel-scroll-amount '(3 ((shift) . 1))
+      set-mark-command-repeat-pop t)
 
 (load custom-file 'noerror)
 
