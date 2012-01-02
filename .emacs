@@ -30,6 +30,7 @@
 (show-paren-mode 1)
 (transient-mark-mode t)
 (delete-selection-mode t)
+(menu-bar-mode -1)
 (if (fboundp 'savehist-mode)
     (savehist-mode 1))
 (winner-mode 1)
@@ -114,10 +115,9 @@
   (set-face-attribute 'default nil :family "Monaco" :height 130))
 
 
-;; when running in a terminal, turn of menu bar and make sure mouse-wheel
+;; when running in a terminal make sure mouse-wheel
 ;; works correctly
 (unless window-system
-  (menu-bar-mode -1)
   (xterm-mouse-mode 1)
   (global-set-key [mouse-4] '(lambda ()
                                (interactive)
