@@ -317,6 +317,9 @@
 (global-set-key "\C-ch" 'python-shell)
 (global-set-key "\C-cf" 'auto-revert-tail-mode)
 (global-set-key [C-return] 'newline) ; handy when return auto-indents
+(when (require 'rainbow-delimiters nil 'noerror)
+  (global-set-key "\C-cq" 'rainbow-delimiters-mode))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Modes and language-specific settings
