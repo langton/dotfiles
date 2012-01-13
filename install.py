@@ -16,7 +16,7 @@ dryrun = "--dryrun" in flags
 # --dryrun implies --verbose
 verbose = dryrun or "--verbose" in flags
 
-dotfiles = [".emacs",".cshrc.common",".dir_colors",".Xdefaults",".vimrc"]
+dotfiles = [".emacs",".cshrc.common",".dir_colors",".Xdefaults"]
 
 # this script should be in the same directory as the dotfiles
 df_path = os.path.dirname(os.path.realpath(__file__))
