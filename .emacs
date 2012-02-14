@@ -98,7 +98,8 @@
       scroll-preserve-screen-position t
       mouse-wheel-progressive-speed nil
       mouse-wheel-scroll-amount '(3 ((shift) . 1))
-      set-mark-command-repeat-pop t)
+      set-mark-command-repeat-pop t
+      bookmark-save-flag 1)
 
 (load custom-file 'noerror)
 
@@ -109,7 +110,7 @@
 ; Monaco font is nice on OS X; try to use it on Linux too.
 (when (and (eq window-system 'x)
            (x-list-fonts "Monaco"))
-  (set-face-attribute 'default nil :family "Monaco" :height 100))
+  (set-face-attribute 'default nil :family "Monaco" :height 110))
 ;; Fonts show up smaller on OS X. Make them bigger.
 (when (eq window-system 'ns)
   (set-face-attribute 'default nil :family "Monaco" :height 130))
