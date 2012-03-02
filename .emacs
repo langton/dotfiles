@@ -247,22 +247,6 @@
              (if dedicated "no longer " "")
              (buffer-name))))
 
-(defun dotemacs ()
-  "Byte-compile and load ~/.emacs"
-  (interactive)
-  (byte-compile-file "~/.emacs")
-  (load-file "~/.emacs.elc"))
-
-(defun switch-to-notes ()
-  "Switch to note file."
-  (interactive)
-  (find-file "~/Notes/notes.org"))
-
-(defun now ()
-  "Insert string for the current date time to be used as a filename, tag, etc."
-  (interactive)
-  (insert (format-time-string "%Y_%m_%d_%H_%M_%S")))
-
 ;; Stolen from Steve Yegge's .emacs
 (defun swap-windows ()
  "If you have 2 windows, it swaps them."
@@ -308,19 +292,16 @@
 (global-set-key "\C-cm" 'maximize-frame)
 (global-set-key "\C-ct" 'toggle-tabs-mode)
 (global-set-key "\C-cw" 'toggle-current-window-dedication)
-(global-set-key "\C-cl" 'dotemacs)
 (global-set-key "\C-c " 'toggle-show-trailing-whitespace)
 ;; Alternate ways to get M-x
 (global-set-key "\C-x\C-m" 'execute-extended-command)
 (global-set-key "\C-xm" 'execute-extended-command)
-(global-set-key "\C-cn" 'now)
 (global-set-key "\C-cu" 'swap-windows)
 (global-set-key "\C-ch" 'python-shell)
 (global-set-key "\C-cf" 'auto-revert-tail-mode)
 (global-set-key [C-return] 'newline) ; handy when return auto-indents
 (when (require 'rainbow-delimiters nil 'noerror)
   (global-set-key "\C-cq" 'rainbow-delimiters-mode))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Modes and language-specific settings
