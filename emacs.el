@@ -99,7 +99,8 @@
       mouse-wheel-progressive-speed nil
       mouse-wheel-scroll-amount '(3 ((shift) . 1))
       set-mark-command-repeat-pop t
-      bookmark-save-flag 1)
+      bookmark-save-flag 1
+      xterm-mouse-mode 1)
 
 (load custom-file 'noerror)
 
@@ -107,25 +108,15 @@
               indent-tabs-mode nil
               save-place t)
 
-; Monaco font is nice on OS X; try to use it on Linux too.
+; Monaco font is nice on OS X; try to use it on Linux too. (This
+; doesn't get read in when running in daemon mode, so we need to set
+; this in .Xdefaults as well.)
 (when (and (eq window-system 'x)
            (x-list-fonts "Monaco"))
   (set-face-attribute 'default nil :family "Monaco" :height 110))
 ;; Fonts show up smaller on OS X. Make them bigger.
 (when (eq window-system 'ns)
   (set-face-attribute 'default nil :family "Monaco" :height 130))
-
-
-;; when running in a terminal make sure mouse-wheel
-;; works correctly
-(unless window-system
-  (xterm-mouse-mode 1)
-  (global-set-key [mouse-4] '(lambda ()
-                               (interactive)
-                               (scroll-down 1)))
-  (global-set-key [mouse-5] '(lambda ()
-                               (interactive)
-                               (scroll-up 1))))
 
 ;; use server/emacsclient when possible
 (require 'server)

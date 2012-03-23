@@ -9,6 +9,8 @@ if ( $?prompt ) then
     setenv HOSTNAME `hostname | sed -e s/\\..\*//`
     setenv EDITOR "emacsclient --alternate-editor emacs"
     alias ecl "emacsclient --alternate-editor emacs"
+    alias eclient "emacsclient -c -n"
+    alias eclient-nw "emacsclient -t"
     alias enw "emacs -nw"
     set path = ( ~/local/bin $path )
     setenv CLICOLOR 1
