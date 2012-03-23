@@ -108,13 +108,14 @@
               indent-tabs-mode nil
               save-place t)
 
-; Monaco font is nice on OS X; try to use it on Linux too. (This
-; doesn't get read in when running in daemon mode, so we need to set
-; this in .Xdefaults as well.) Also, fonts show up smaller on OS X.
-; Make them bigger.
+; Monaco font is nice on OS X; try to use it on Linux too.
 (if (eq window-system 'ns)
-    (add-to-list 'default-frame-alist '(font . "Monaco-13"))
-  (add-to-list 'default-frame-alist '(font . "Monaco-11")))
+    (add-to-list 
+     'default-frame-alist 
+     '(font . "-*-Monaco-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1"))
+  (add-to-list 
+   'default-frame-alist 
+   '(font . "-*-Monaco-normal-normal-normal-*-15-*-*-*-m-0-iso10646-1")))
 
 ;; use server/emacsclient when possible
 (require 'server)

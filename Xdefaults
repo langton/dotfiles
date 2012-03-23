@@ -6,4 +6,3 @@ xterm*saveLines: 2000
 Xterm*background: white
 XTerm*termName:  xterm-256color
 Emacs.fontBackend: xft
-Emacs.font: Monaco-11
