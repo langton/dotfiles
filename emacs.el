@@ -110,13 +110,11 @@
 
 ; Monaco font is nice on OS X; try to use it on Linux too. (This
 ; doesn't get read in when running in daemon mode, so we need to set
-; this in .Xdefaults as well.)
-(when (and (eq window-system 'x)
-           (x-list-fonts "Monaco"))
-  (set-face-attribute 'default nil :family "Monaco" :height 110))
-;; Fonts show up smaller on OS X. Make them bigger.
-(when (eq window-system 'ns)
-  (set-face-attribute 'default nil :family "Monaco" :height 130))
+; this in .Xdefaults as well.) Also, fonts show up smaller on OS X.
+; Make them bigger.
+(if (eq window-system 'ns)
+    (add-to-list 'default-frame-alist '(font . "Monaco-13"))
+  (add-to-list 'default-frame-alist '(font . "Monaco-11")))
 
 ;; use server/emacsclient when possible
 (require 'server)
