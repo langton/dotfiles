@@ -109,7 +109,7 @@
               save-place t)
 
 ; Monaco font is nice on OS X; try to use it on Linux too.
-(if (eq window-system 'ns)
+(if (eq system-type 'darwin)
     (add-to-list 
      'default-frame-alist 
      '(font . "-*-Monaco-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1"))
