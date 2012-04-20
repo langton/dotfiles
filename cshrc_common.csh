@@ -14,6 +14,9 @@ if ( $?prompt ) then
     alias eclient-nw "emacsclient -t"
     alias enw "emacs -nw"
     set path = ( ~/local/bin $path )
+    if ( $?SYS_TYPE) then
+        set path = ( ~/local/${SYS_TYPE}/bin $path )
+    endif
     setenv CLICOLOR 1
     set history=2000
     set filec
