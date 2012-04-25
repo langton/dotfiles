@@ -402,27 +402,29 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Version control and development tools
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; need perforce for some work projects, so load p4.el if available
 (require 'magit nil t)
 
+;; need perforce for some work projects, so load p4.el if available
 (when (locate-library "p4")
   (load-library "p4"))
 
-;; ;; CEDET setup
-;; ;; load recent version of CEDET if possible
-;; (if (file-exists-p "~/.emacs.d/site-lisp/cedet/common/cedet.el")
-;;     (load-file "~/.emacs.d/site-lisp/cedet/common/cedet.el")
-;;   (require 'cedet nil t))
-;; ;; if we managed to load cedet, set things up
-;; (when (featurep 'cedet)
-;;   (if (require 'cedet-load nil t)
-;;       (semantic-load-enable-code-helpers))
-;;   (when (fboundp 'global-semantic-idle-summary-mode)
-;;     (global-semantic-idle-summary-mode 1))
-;;   (global-set-key [C-tab] 'semantic-ia-complete-symbol-menu)
-;;   (global-set-key "\C-cj" 'semantic-ia-fast-jump)
-;;   (when (file-exists-p "~/.emacs.d/projects.el")
-;;     (load-file "~/.emacs.d/projects.el")))
+
+;; if we managed to load cedet, set things up
+;; CEDET setup
+;; load recent version of CEDET if possible
+(if (file-exists-p "~/.emacs.d/site-lisp/cedet/common/cedet.el")
+    (load-file "~/.emacs.d/site-lisp/cedet/common/cedet.el")
+  (require 'cedet nil t))
+;; if we managed to load cedet, set things up
+(when (featurep 'cedet)
+  (if (require 'cedet-load nil t)
+      (semantic-load-enable-code-helpers))
+  (when (fboundp 'global-semantic-idle-completions-mode)
+    (global-semantic-idle-completions-mode 1)))
+
+(when (require 'auto-complete-config)
+  (add-to-list 'ac-dictionary-directories "~/.emacs.d/site-lisp/ac-dict")
+   (ac-config-default))
 
 (setq eshell-save-history-on-exit t)
 (setq eshell-history-size 512)
