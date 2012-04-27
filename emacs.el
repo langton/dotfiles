@@ -422,7 +422,7 @@
   (when (fboundp 'global-semantic-idle-completions-mode)
     (global-semantic-idle-completions-mode 1)))
 
-(when (require 'auto-complete-config)
+(when (require 'auto-complete-config nil t)
   (add-to-list 'ac-dictionary-directories "~/.emacs.d/site-lisp/ac-dict")
    (ac-config-default))
 
