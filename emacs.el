@@ -100,7 +100,9 @@
       mouse-wheel-scroll-amount '(3 ((shift) . 1))
       set-mark-command-repeat-pop t
       bookmark-save-flag 1
-      xterm-mouse-mode 1)
+      xterm-mouse-mode 1
+      gdb-create-source-file-list nil
+      gdb-many-windows t)
 
 (load custom-file 'noerror)
 
