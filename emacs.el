@@ -75,7 +75,7 @@
 
 (require 'saveplace)
 (require 'uniquify)
-(require 'tramp)
+(require 'tramp nil t)
 (require 'paren)
 
 (setq enable-local-variables :safe
@@ -109,15 +109,6 @@
 (setq-default tab-width 8
               indent-tabs-mode nil
               save-place t)
-
-; Monaco font is nice on OS X; try to use it on Linux too.
-(if (eq system-type 'darwin)
-    (add-to-list 
-     'default-frame-alist 
-     '(font . "-*-Monaco-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1"))
-  (add-to-list 
-   'default-frame-alist 
-   '(font . "-*-Monaco-normal-normal-normal-*-15-*-*-*-m-0-iso10646-1")))
 
 ;; use server/emacsclient when possible
 (require 'server)
@@ -189,9 +180,11 @@
 (set-face-foreground 'font-lock-comment-face "forest green")
 (set-face-foreground 'font-lock-keyword-face "MidnightBlue")
 (set-face-foreground 'font-lock-function-name-face "blue")
-(set-face-foreground 'font-lock-preprocessor-face "red")
 (set-face-foreground 'font-lock-warning-face "red")
-(set-face-background 'show-paren-match "light gray")
+(when (boundp 'font-lock-preprocessor-face) ;; for older emacs versions
+  (set-face-foreground 'font-lock-preprocessor-face "red"))
+(when (boundp 'show-paren-match)
+  (set-face-background 'show-paren-match "light gray"))
 ;; override all other syntax highlighting:
 (set-face-foreground 'font-lock-type-face "black")
 (set-face-foreground 'font-lock-variable-name-face "black")
@@ -292,8 +285,6 @@
 (global-set-key "\C-ch" 'python-shell)
 (global-set-key "\C-cf" 'auto-revert-tail-mode)
 (global-set-key [C-return] 'newline) ; handy when return auto-indents
-(when (require 'rainbow-delimiters nil 'noerror)
-  (global-set-key "\C-cq" 'rainbow-delimiters-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Modes and language-specific settings
@@ -410,23 +401,33 @@
 (when (locate-library "p4")
   (load-library "p4"))
 
+;; emacs version dependent stuff
+(when (>= emacs-major-version 23)
+  ;; if we managed to load cedet, set things up
+  ;; CEDET setup
+  ;; load recent version of CEDET if possible
+  (if (file-exists-p "~/.emacs.d/site-lisp/cedet/common/cedet.el")
+      (load-file "~/.emacs.d/site-lisp/cedet/common/cedet.el")
+    (require 'cedet nil t))
+  ;; if we managed to load cedet, set things up
+  (when (featurep 'cedet)
+    (if (require 'cedet-load nil t)
+        (semantic-load-enable-code-helpers))
+    (when (fboundp 'global-semantic-idle-completions-mode)
+      (global-semantic-idle-completions-mode 1)))
 
-;; if we managed to load cedet, set things up
-;; CEDET setup
-;; load recent version of CEDET if possible
-(if (file-exists-p "~/.emacs.d/site-lisp/cedet/common/cedet.el")
-    (load-file "~/.emacs.d/site-lisp/cedet/common/cedet.el")
-  (require 'cedet nil t))
-;; if we managed to load cedet, set things up
-(when (featurep 'cedet)
-  (if (require 'cedet-load nil t)
-      (semantic-load-enable-code-helpers))
-  (when (fboundp 'global-semantic-idle-completions-mode)
-    (global-semantic-idle-completions-mode 1)))
+  (when (require 'auto-complete-config nil t)
+    (add-to-list 'ac-dictionary-directories "~/.emacs.d/site-lisp/ac-dict")
+    (ac-config-default))
 
-(when (require 'auto-complete-config nil t)
-  (add-to-list 'ac-dictionary-directories "~/.emacs.d/site-lisp/ac-dict")
-   (ac-config-default))
+  ;; Monaco font is nice on OS X; try to use it on Linux too.
+  (if (eq system-type 'darwin)
+      (add-to-list 
+       'default-frame-alist 
+       '(font . "-*-Monaco-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1"))
+    (add-to-list 
+     'default-frame-alist 
+     '(font . "-*-Monaco-normal-normal-normal-*-15-*-*-*-m-0-iso10646-1"))))
 
 (setq eshell-save-history-on-exit t)
 (setq eshell-history-size 512)
