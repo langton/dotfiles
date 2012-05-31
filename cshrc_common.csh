@@ -8,7 +8,7 @@
 if ( $?prompt ) then
     setenv HOSTNAME `hostname | sed -e s/\\..\*//`
     setenv EDITOR "emacsclient --alternate-editor emacs"
-    alias edaemon "nohup emacs --daemon < /dev/null > & /dev/null &"
+    setenv ALTERNATE_EDITOR ""
     alias ecl "emacsclient --alternate-editor emacs"
     alias eclient "emacsclient -c -n"
     alias eclient-nw "emacsclient -t"

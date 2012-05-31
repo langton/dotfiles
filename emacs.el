@@ -7,6 +7,29 @@
 ;; Local lisp files
 (require 'cl) ; framemove.el needs common lisp
 
+
+;; emacs version dependent stuff
+(when (>= emacs-major-version 23)
+  ;; if we managed to load cedet, set things up
+  ;; CEDET setup
+  ;; load recent version of CEDET if possible
+  (when (file-exists-p "~/.emacs.d/site-lisp/cedet/common/cedet.el")
+    (load-file "~/.emacs.d/site-lisp/cedet/common/cedet.el")
+    (semantic-load-enable-code-helpers))
+
+  (when (require 'auto-complete-config nil t)
+    (add-to-list 'ac-dictionary-directories "~/.emacs.d/site-lisp/ac-dict")
+    (ac-config-default))
+
+  ;; Monaco font is nice on OS X; try to use it on Linux too.
+  (if (eq system-type 'darwin)
+      (add-to-list 
+       'default-frame-alist 
+       '(font . "-*-Monaco-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1"))
+    (add-to-list 
+     'default-frame-alist 
+     '(font . "-*-Monaco-normal-normal-normal-*-15-*-*-*-m-0-iso10646-1"))))
+
 (make-directory "~/.emacs.d/site-lisp/" t)
 (add-to-list 'load-path "~/.emacs.d/site-lisp/")
 
@@ -400,34 +423,6 @@
 ;; need perforce for some work projects, so load p4.el if available
 (when (locate-library "p4")
   (load-library "p4"))
-
-;; emacs version dependent stuff
-(when (>= emacs-major-version 23)
-  ;; if we managed to load cedet, set things up
-  ;; CEDET setup
-  ;; load recent version of CEDET if possible
-  (if (file-exists-p "~/.emacs.d/site-lisp/cedet/common/cedet.el")
-      (load-file "~/.emacs.d/site-lisp/cedet/common/cedet.el")
-    (require 'cedet nil t))
-  ;; if we managed to load cedet, set things up
-  (when (featurep 'cedet)
-    (if (require 'cedet-load nil t)
-        (semantic-load-enable-code-helpers))
-    (when (fboundp 'global-semantic-idle-completions-mode)
-      (global-semantic-idle-completions-mode 1)))
-
-  (when (require 'auto-complete-config nil t)
-    (add-to-list 'ac-dictionary-directories "~/.emacs.d/site-lisp/ac-dict")
-    (ac-config-default))
-
-  ;; Monaco font is nice on OS X; try to use it on Linux too.
-  (if (eq system-type 'darwin)
-      (add-to-list 
-       'default-frame-alist 
-       '(font . "-*-Monaco-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1"))
-    (add-to-list 
-     'default-frame-alist 
-     '(font . "-*-Monaco-normal-normal-normal-*-15-*-*-*-m-0-iso10646-1"))))
 
 (setq eshell-save-history-on-exit t)
 (setq eshell-history-size 512)
