@@ -46,29 +46,6 @@
       desktop-base-file-name "emacs-desktop")
 (make-directory "~/.emacs.d/autosaves/" t)
 
-;; Some mode-line settings and other preferences
-(line-number-mode t)
-(column-number-mode t)
-(which-func-mode t)
-(show-paren-mode 1)
-(transient-mark-mode t)
-(delete-selection-mode t)
-(menu-bar-mode -1)
-(if (fboundp 'savehist-mode)
-    (savehist-mode 1))
-(winner-mode 1)
-(auto-compression-mode 1)
-(if (fboundp 'mouse-wheel-mode)
-    (mouse-wheel-mode t))
-(if (fboundp 'blink-cursor-mode)
-    (blink-cursor-mode -1))
-(if (fboundp 'tool-bar-mode)
-    (tool-bar-mode -1))
-(if (fboundp 'scroll-bar-mode)
-    (scroll-bar-mode -1))
-(if (fboundp 'global-font-lock-mode)
-    (global-font-lock-mode 1))
-
 (iswitchb-mode 1)
 (setq iswitchb-default-method 'samewindow)
 (setq iswitchb-buffer-ignore '("^ " "*Buffer" "*Messages" "*Help" "*Calendar"
@@ -125,13 +102,39 @@
       bookmark-save-flag 1
       xterm-mouse-mode 1
       gdb-create-source-file-list nil
-      gdb-many-windows t)
+      gdb-many-windows t
+      display-time-day-and-date t
+      display-time-default-load-average nil)
 
 (load custom-file 'noerror)
 
 (setq-default tab-width 8
               indent-tabs-mode nil
               save-place t)
+
+;; Some mode-line settings and other preferences
+(line-number-mode t)
+(column-number-mode t)
+(which-func-mode t)
+(show-paren-mode 1)
+(transient-mark-mode t)
+(delete-selection-mode t)
+(menu-bar-mode -1)
+(display-time-mode t)
+(if (fboundp 'savehist-mode)
+    (savehist-mode 1))
+(winner-mode 1)
+(auto-compression-mode 1)
+(if (fboundp 'mouse-wheel-mode)
+    (mouse-wheel-mode t))
+(if (fboundp 'blink-cursor-mode)
+    (blink-cursor-mode -1))
+(if (fboundp 'tool-bar-mode)
+    (tool-bar-mode -1))
+(if (fboundp 'scroll-bar-mode)
+    (scroll-bar-mode -1))
+(if (fboundp 'global-font-lock-mode)
+    (global-font-lock-mode 1))
 
 ;; use server/emacsclient when possible
 (require 'server)

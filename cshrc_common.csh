@@ -8,6 +8,7 @@
 if ( $?prompt ) then
     setenv HOSTNAME `hostname | sed -e s/\\..\*//`
     setenv EDITOR "emacsclient --alternate-editor emacs"
+    setenv PYTHONSTARTUP $HOME/.pystartup
     setenv ALTERNATE_EDITOR ""
     alias ecl "emacsclient --alternate-editor emacs"
     alias eclient "emacsclient -c -n"
