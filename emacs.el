@@ -12,11 +12,14 @@
 (when (>= emacs-major-version 23)
   ;; if we managed to load cedet, set things up
   ;; CEDET setup
-  ;; load recent version of CEDET if possible
+  ;; load recent version of CEDET if possible. With the next CEDET release,
+  ;; maybe I can remove some of this and rely on a version installed by the 
+  ;; emacs package manager.
   (when (file-exists-p "~/.emacs.d/site-lisp/cedet/common/cedet.el")
     (load-file "~/.emacs.d/site-lisp/cedet/common/cedet.el")
     (semantic-load-enable-code-helpers))
 
+  ;; TODO: manage this via ELPA, when possible
   (when (require 'auto-complete-config nil t)
     (add-to-list 'ac-dictionary-directories "~/.emacs.d/site-lisp/ac-dict")
     (ac-config-default))
@@ -152,6 +155,7 @@
 (when (require 'windmove nil t)
   (windmove-default-keybindings))
 
+;; TODO: manage this via ELPA, when possible
 (when (require 'framemove nil t)
   (setq framemove-hook-into-windmove t))
 
