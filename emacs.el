@@ -280,6 +280,13 @@
           (set-window-start w1 s2)
           (set-window-start w2 s1)))))
 
+;; put the name of the current buffer on the kill ring; useful
+;; for putting error log info and test failures into my daily
+;; notes file
+(defun buffername-to-killring ()
+  (interactive)
+  (kill-new (buffer-name)))
+
 ;; Work-around to maximize frame on OS X
 (defun maximize-frame ()
   (interactive)
