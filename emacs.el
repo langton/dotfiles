@@ -280,6 +280,24 @@
           (set-window-start w1 s2)
           (set-window-start w2 s1)))))
 
+;; uptime (From David N. Welton's uptime.el)
+(setq uptime-time-init (current-time))
+
+(defun uptime ()
+  "Emacs uptime."
+  (interactive)
+  (when (boundp 'uptime-time-init)
+    (let* ((tm (current-time))
+           (diff (list (- (car tm) (car uptime-time-init))
+                       (- (cadr tm) (cadr uptime-time-init))))
+           (seconds (+ (* (float (car diff)) 65536) (float (cadr diff))))
+           (days  (floor (/ seconds 86400)))
+           (hours (progn (decf seconds (* days  86400)) 
+                         (floor (/ seconds 3600))))
+           (mins  (progn (decf seconds (* hours 3600))
+                         (floor (/ seconds 60)))))
+      (message (format "up %d days,  %02d:%02d" days hours mins)))))
+
 ;; put the name of the current buffer on the kill ring; useful
 ;; for putting error log info and test failures into my daily
 ;; notes file
