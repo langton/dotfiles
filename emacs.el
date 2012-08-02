@@ -281,7 +281,8 @@
           (set-window-start w2 s1)))))
 
 ;; uptime (From David N. Welton's uptime.el)
-(setq uptime-time-init (current-time))
+(unless (boundp 'uptime-time-init)
+  (setq uptime-time-init (current-time)))
 
 (defun uptime ()
   "Emacs uptime."
