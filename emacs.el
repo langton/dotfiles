@@ -10,8 +10,6 @@
 
 ;; emacs version dependent stuff
 (when (>= emacs-major-version 23)
-  ;; if we managed to load cedet, set things up
-  ;; CEDET setup
   ;; load recent version of CEDET if possible. With the next CEDET release,
   ;; maybe I can remove some of this and rely on a version installed by the 
   ;; emacs package manager.
@@ -19,10 +17,12 @@
     (load-file "~/.emacs.d/site-lisp/cedet/common/cedet.el")
     (semantic-load-enable-code-helpers))
 
+  ;; Something is opening header files and reopening closed buffers. I think
+  ;; it's auto-complete, so I'm disabling it for now.
   ;; TODO: manage this via ELPA, when possible
-  (when (require 'auto-complete-config nil t)
-    (add-to-list 'ac-dictionary-directories "~/.emacs.d/site-lisp/ac-dict")
-    (ac-config-default))
+  ;(when (require 'auto-complete-config nil t)
+  ;  (add-to-list 'ac-dictionary-directories "~/.emacs.d/site-lisp/ac-dict")
+  ;  (ac-config-default))
 
   ;; Monaco font is nice on OS X; try to use it on Linux too.
   (if (eq system-type 'darwin)
