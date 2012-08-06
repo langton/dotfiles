@@ -231,19 +231,21 @@
   (interactive)
   (diff-buffer-with-file (current-buffer)))
 
+(defun update-term-name ()
+  (rename-buffer (concat "term:" (abbreviate-file-name 
+                                  default-directory)) t))
+
 ;; Launch a terminal without being prompted for the shell type
 (defun launch-ansi-term ()
   "Launch an ansi-term running /bin/tcsh with no prompts"
   (interactive)
-  (ansi-term "/bin/tcsh"))
+  (ansi-term "/bin/tcsh")
+  (update-term-name))
 
-;; Launch 3 ansi-terms, titled source, build, and test
-(defun launch-sbt-terms ()
-  "Launch an ansi-term running /bin/tcsh with no prompts"
-  (interactive)
-  (ansi-term "/bin/tcsh" "term-source")
-  (ansi-term "/bin/tcsh" "term-build")
-  (ansi-term "/bin/tcsh" "term-test"))
+(defadvice term-handle-ansi-terminal-messages (after fix-term-buffer-name)
+  (update-term-name))
+
+(ad-activate 'term-handle-ansi-terminal-messages)
 
 ;; gfortran uses tabs, so it helps to be able to quickly switch to tab mode
 (defun toggle-tabs-mode ()
@@ -329,7 +331,6 @@
 (global-set-key "\M- " 'hippie-expand)
 (global-set-key "\C-cd" 'diff-buffer-against-disk)
 (global-set-key "\C-ca" 'launch-ansi-term)
-(global-set-key "\C-c1" 'launch-sbt-terms)
 (global-set-key "\C-cm" 'maximize-frame)
 (global-set-key "\C-ct" 'toggle-tabs-mode)
 (global-set-key "\C-cw" 'toggle-current-window-dedication)
