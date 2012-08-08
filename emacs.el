@@ -145,11 +145,11 @@
     (unless (server-running-p)
       (server-start)))
 
-;; For files, show the full path in the frame title. For all other buffers,
-;; show the buffer name and default directory.
-(setq frame-title-format
-      `(,system-name ": " (buffer-file-name 
-                           "%f" ("%b (" default-directory ")"))))
+(setq hostname (car (split-string system-name "\\\.")))
+(setq frame-title-format `(,hostname
+                           ": " (buffer-file-name
+                                 ,(abbreviate-file-name buffer-file-name)
+                                 ("%b"))))
 
 ;; Use <shift>+<arrow> to move between windows
 (when (require 'windmove nil t)
