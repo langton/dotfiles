@@ -232,8 +232,8 @@
   (diff-buffer-with-file (current-buffer)))
 
 (defun update-term-name ()
-  (rename-buffer (concat "term:" (abbreviate-file-name 
-                                  default-directory)) t))
+  (rename-buffer (concat "terminal:[" (abbreviate-file-name 
+                                  default-directory) "]") t))
 
 ;; Launch a terminal without being prompted for the shell type
 (defun launch-ansi-term ()
