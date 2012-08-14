@@ -146,10 +146,10 @@
       (server-start)))
 
 (setq hostname (car (split-string system-name "\\\.")))
-(setq frame-title-format `(,hostname
-                           ": " (buffer-file-name
-                                 ,(abbreviate-file-name buffer-file-name)
-                                 ("%b"))))
+(setq frame-title-format 
+      '((:eval hostname) ": " (:eval (if (buffer-file-name)
+                                  (abbreviate-file-name (buffer-file-name))
+                                "%b"))))
 
 ;; Use <shift>+<arrow> to move between windows
 (when (require 'windmove nil t)
