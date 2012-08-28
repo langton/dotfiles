@@ -197,10 +197,10 @@
   (setq curscolor "red"))
 
 (set-foreground-color "black")
-(set-background-color "white")
+(set-background-color "gray93")
 (set-cursor-color curscolor)
 (set-mouse-color "black")
-(add-to-list 'default-frame-alist '(background-color . "white"))
+(add-to-list 'default-frame-alist '(background-color . "gray93"))
 (add-to-list 'default-frame-alist '(foreground-color . "black"))
 (add-to-list 'default-frame-alist `(cursor-color . ,curscolor))
 (set-face-attribute 'mode-line nil
