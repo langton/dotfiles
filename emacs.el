@@ -25,13 +25,9 @@
   ;  (ac-config-default))
 
   ;; Monaco font is nice on OS X; try to use it on Linux too.
-  (if (eq system-type 'darwin)
-      (add-to-list 
-       'default-frame-alist 
-       '(font . "-*-Monaco-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1"))
-    (add-to-list 
-     'default-frame-alist 
-     '(font . "-*-Monaco-normal-normal-normal-*-15-*-*-*-m-0-iso10646-1"))))
+  (add-to-list 
+   'default-frame-alist 
+   '(font . "-*-Monaco-normal-normal-normal-*-15-*-*-*-m-0-iso10646-1")))
 
 (make-directory "~/.emacs.d/site-lisp/" t)
 (add-to-list 'load-path "~/.emacs.d/site-lisp/")
