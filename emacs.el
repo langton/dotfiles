@@ -13,9 +13,9 @@
   ;; load recent version of CEDET if possible. With the next CEDET release,
   ;; maybe I can remove some of this and rely on a version installed by the 
   ;; emacs package manager.
-  (when (file-exists-p "~/.emacs.d/site-lisp/cedet/common/cedet.el")
-    (load-file "~/.emacs.d/site-lisp/cedet/common/cedet.el")
-    (semantic-load-enable-code-helpers))
+;  (when (file-exists-p "~/.emacs.d/site-lisp/cedet/common/cedet.el")
+;    (load-file "~/.emacs.d/site-lisp/cedet/common/cedet.el")
+;    (semantic-load-enable-code-helpers))
 
   ;; Something is opening header files and reopening closed buffers. I think
   ;; it's auto-complete, so I'm disabling it for now.
