@@ -68,6 +68,12 @@ if ( $?prompt ) then
  		  echo 'AnSiTu' $user_hack ;echo 'AnSiTc' $cwd_hack"
            end
            alias popd 'popd ;echo "AnSiTc" $cwd'
+           # for some reason, the $user line below doesn't 
+           # work properly on Ubuntu without an extra echo 
+           # in front of it.
+           if (`uname -v` =~ "*Ubuntu*") then
+                echo "Applying Ubuntu workaround"
+           endif
            echo "AnSiTu" $user
            echo "AnSiTh" $host
            echo "AnSiTc" $cwd
