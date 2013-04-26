@@ -377,6 +377,9 @@
 (when (require 'gas-mode nil t)
   (add-to-list 'auto-mode-alist '("\\.[sS]\\'" . gas-mode)))
 
+(when (require 'nasm-mode nil t)
+  (add-to-list 'auto-mode-alist '("\\.asm\\'" . nasm-mode)))
+
 ;; ansi-term mode
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
