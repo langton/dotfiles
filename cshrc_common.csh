@@ -20,7 +20,17 @@ if ( $?prompt ) then
         set path = ( ~/local/${SYS_TYPE}/bin $path )
     endif
     setenv CLICOLOR 1
-    set history=2000
+    set history=10000
+    # since .history gets corrupted periodically, back it up
+    if ( ! -d ~/.old_history ) then
+        mkdir ~/.old_history
+    endif
+    # want at most one per day
+    set tmp_date = `date '+%Y_%m_%d'`
+    if ( ! -e  ~/.old_history/${tmp_date}.gz ) then 
+       gzip -c ~/.history > ~/.old_history/${tmp_date}.gz
+    endif
+    unset tmp_date
     set filec
     set savehist=( 2000 merge )
     set histdup=erase
