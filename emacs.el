@@ -314,6 +314,13 @@
   (interactive)
   (setq show-trailing-whitespace (not show-trailing-whitespace)))
 
+(defun insert-date ()
+  "Insert current date as 'dd Month yyyy (day)'."
+  (interactive)
+  (when (region-active-p)
+    (delete-region (region-beginning) (region-end)))
+  (insert (format-time-string "%d %B %Y (%A)")))
+
 ;; Global shortcuts
 (global-set-key "\C-cg" 'goto-line)
 (global-set-key "\M-g" 'goto-line)
@@ -332,6 +339,7 @@
 (global-set-key "\C-cw" 'toggle-current-window-dedication)
 (global-set-key "\C-c " 'toggle-show-trailing-whitespace)
 (global-set-key "\C-x9" 'other-frame)
+(global-set-key "\C-c0" 'insert-date)
 ;; Alternate ways to get M-x
 (global-set-key "\C-x\C-m" 'execute-extended-command)
 (global-set-key "\C-xm" 'execute-extended-command)
