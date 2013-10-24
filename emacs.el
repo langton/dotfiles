@@ -297,6 +297,16 @@
                          (floor (/ seconds 60)))))
       (message (format "up %d days,  %02d:%02d" days hours mins)))))
 
+(defun linkify ()
+  "Make selected text into a HTML link."
+  (interactive)
+  (let (url)
+    (progn
+      (setq url 
+            (buffer-substring-no-properties (region-beginning) (region-end))))
+    (delete-region (region-beginning) (region-end))
+    (insert (concat "<a href=\"" url "\">" url "</a>"))))
+
 ;; put the name of the current buffer on the kill ring; useful
 ;; for putting error log info and test failures into my daily
 ;; notes file
