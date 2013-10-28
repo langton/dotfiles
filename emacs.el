@@ -488,7 +488,10 @@
 (require 'magit nil t)
 
 ;; need perforce for some work projects, so load p4.el if available
-(when (locate-library "p4")
+;; if p4.el is available, but there's no p4 executable, p4.el interferes
+;; with opening files, so avoid this.
+(when (and (locate-library "p4") 
+           (eq 0 (call-process "which" nil nil nil "p4")))
   (load-library "p4"))
 
 (setq eshell-save-history-on-exit t)
