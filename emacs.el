@@ -312,7 +312,9 @@
 ;; notes file
 (defun buffername-to-killring ()
   (interactive)
-  (kill-new (buffer-name)))
+  (if (buffer-file-name)
+      (kill-new (abbreviate-file-name 
+                 (buffer-file-name)))))
 
 ;; Work-around to maximize frame on OS X
 (defun maximize-frame ()
@@ -350,6 +352,7 @@
 (global-set-key "\C-c " 'toggle-show-trailing-whitespace)
 (global-set-key "\C-x9" 'other-frame)
 (global-set-key "\C-c0" 'insert-date)
+(global-set-key "\C-c1" 'buffername-to-killring)
 ;; Alternate ways to get M-x
 (global-set-key "\C-x\C-m" 'execute-extended-command)
 (global-set-key "\C-xm" 'execute-extended-command)
