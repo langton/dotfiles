@@ -316,6 +316,15 @@
       (kill-new (abbreviate-file-name 
                  (buffer-file-name)))))
 
+;; same as previous function, except trim:
+;; /long/pathname/src/foo to src/foo
+;; and
+;; ~/long/pathname/src/foo to src/foo
+(defun trim-bname-to-killring ()
+  (interactive)
+  (if (buffer-file-name)
+      (let ((bfn (abbreviate-file-name (buffer-file-name))))
+        (kill-new (replace-regexp-in-string "^~?/.*/src/" "src/" bfn)))))
 ;; Work-around to maximize frame on OS X
 (defun maximize-frame ()
   (interactive)
@@ -353,6 +362,7 @@
 (global-set-key "\C-x9" 'other-frame)
 (global-set-key "\C-c0" 'insert-date)
 (global-set-key "\C-c1" 'buffername-to-killring)
+(global-set-key "\C-c2" 'trim-bname-to-killring)
 ;; Alternate ways to get M-x
 (global-set-key "\C-x\C-m" 'execute-extended-command)
 (global-set-key "\C-xm" 'execute-extended-command)
