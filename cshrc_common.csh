@@ -7,6 +7,15 @@
 
 if ( $?prompt ) then
     setenv HOSTNAME `hostname | sed -e s/\\..\*//`
+    if ( `uname` == Darwin ) then
+        if (! $?TERMPATH ) then
+            setenv TERMPATH /usr/share/terminfo:/opt/local/share/terminfo
+        endif
+        if ( -d /Applications/Emacs.app/Contents/MacOS/ ) then
+            set path = ( /Applications/Emacs.app/Contents/MacOS/bin $path )
+            alias emacs /Applications/Emacs.app/Contents/MacOS/Emacs
+        endif
+    endif
     setenv EDITOR "emacsclient --alternate-editor emacs"
     setenv PYTHONSTARTUP $HOME/.pystartup
     setenv ALTERNATE_EDITOR ""

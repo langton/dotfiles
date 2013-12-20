@@ -297,6 +297,27 @@
                          (floor (/ seconds 60)))))
       (message (format "up %d days,  %02d:%02d" days hours mins)))))
 
+;; MacOSX - open current file in finder
+;; from http://stackoverflow.com/questions/20510333/in-emacs-how-to-show-current-file-in-finder
+(defun open-finder ()
+(interactive)
+  (let ((path (buffer-file-name))
+          dir file)
+    (when (and (eq window-system 'ns) path)
+      (setq dir (file-name-directory path))
+      (setq file (file-name-nondirectory path))
+      (open-finder-1 dir file))))
+
+(defun open-finder-1 (dir file)
+  (let ((script
+         (concat
+          "tell application \"Finder\"\n"
+          " set frontmost to true\n"
+          " make new Finder window to (POSIX file \"" dir "\")\n"
+          " select file \"" file "\"\n"
+          "end tell\n")))
+    (start-process "osascript-getinfo" nil "osascript" "-e" script)))
+
 (defun linkify ()
   "Make selected text into a HTML link."
   (interactive)
@@ -363,6 +384,7 @@
 (global-set-key "\C-c0" 'insert-date)
 (global-set-key "\C-c1" 'buffername-to-killring)
 (global-set-key "\C-c2" 'trim-bname-to-killring)
+(global-set-key "\C-c9" 'open-finder)
 ;; Alternate ways to get M-x
 (global-set-key "\C-x\C-m" 'execute-extended-command)
 (global-set-key "\C-xm" 'execute-extended-command)
