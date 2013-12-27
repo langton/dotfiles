@@ -398,6 +398,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'xscheme)
 
+(setq c-default-style
+      '((java-mode . "java")
+        (awk-mode . "awk")
+        (other . "linux")))
+
 (setq auto-mode-alist
       (append '(("\\.f95\\'" . fortran-mode)
                 ("\\.m\\'" . objc-mode)
@@ -427,6 +432,11 @@
       (autoload 'd-mode "d-mode" "Major mode for editing D code." t)
       (add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . d-mode)))
   (add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . java-mode)))
+
+(add-hook 'java-mode-hook (lambda ()
+                            (setq c-basic-offset 4
+                                  tab-width 4
+                                  indent-tabs-mode t)))
 
 (when (locate-library "markdown-mode")
   (autoload 'markdown-mode "markdown-mode"
