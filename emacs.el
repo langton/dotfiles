@@ -17,12 +17,9 @@
 ;    (load-file "~/.emacs.d/site-lisp/cedet/common/cedet.el")
 ;    (semantic-load-enable-code-helpers))
 
-  ;; Something is opening header files and reopening closed buffers. I think
-  ;; it's auto-complete, so I'm disabling it for now.
-  ;; TODO: manage this via ELPA, when possible
-  ;(when (require 'auto-complete-config nil t)
-  ;  (add-to-list 'ac-dictionary-directories "~/.emacs.d/site-lisp/ac-dict")
-  ;  (ac-config-default))
+  ;; (when (require 'auto-complete-config nil t)
+  ;;   (add-to-list 'ac-dictionary-directories "~/.emacs.d/site-lisp/ac-dict")
+  ;;   (ac-config-default))
 
   ;; Monaco font is nice on OS X; try to use it on Linux too.
   (add-to-list 
@@ -31,6 +28,7 @@
 
 (make-directory "~/.emacs.d/site-lisp/" t)
 (add-to-list 'load-path "~/.emacs.d/site-lisp/")
+
 
 ;; Keep all backups and autosave files hidden away
 (setq backup-by-copying t
@@ -160,21 +158,16 @@
   '(setq compilation-scroll-output t))
 
 (defadvice show-paren-function
-  (after show-matching-paren-offscreen activate)
+    (after show-matching-paren-offscreen activate)
   "If the matching paren is offscreen, show the matching line in the
-        echo area. Has no effect if the character before point is not of
-        the syntax class ')'."
+   echo area. Has no effect if the character before point is not of
+   the syntax class ')'."
   (interactive)
-  (if (not (minibuffer-prompt))
-      (let ((matching-text nil))
-        ;; Only call `blink-matching-open' if the character before point
-        ;; is a close parentheses type character. Otherwise, there's not
-        ;; really any point, and `blink-matching-open' would just echo
-        ;; "Mismatched parentheses", which gets really annoying.
-        (if (char-equal (char-syntax (char-before (point))) ?\))
-            (setq matching-text (blink-matching-open)))
-        (if (not (null matching-text))
-            (message matching-text)))))
+  (let* ((cb (char-before (point)))
+         (matching-text (and cb
+                             (char-equal (char-syntax cb) ?\) )
+                             (blink-matching-open))))
+    (when matching-text (message matching-text))))
 
 ; A couple of customizations for when I'm running Aquamacs
 (when (boundp 'aquamacs-version)
@@ -437,6 +430,32 @@
                             (setq c-basic-offset 4
                                   tab-width 4
                                   indent-tabs-mode t)))
+
+; from https://github.com/skybert/.../tkj-java.el
+;; (add-to-list 'load-path "~/.emacs.d/site-lisp/emacs-eclim")
+;; (when (require 'eclim nil t)
+;;   (global-eclim-mode)
+
+;;   ;; Variables
+;;   (setq eclim-auto-save t
+;;         eclim-executable "/opt/eclipse/eclim"
+;;         eclimd-executable "/opt/eclipse/eclimd"
+;;         eclimd-wait-for-process nil
+;;         eclimd-default-workspace "~/Code"
+;;         eclim-use-yasnippet nil
+;;         help-at-pt-display-when-idle t
+;;         help-at-pt-timer-delay 0.1
+;;         )
+
+;;   ;; Call the help framework with the settings above & activate
+;;   ;; eclim-mode
+;;   (help-at-pt-set-timer)
+  
+;;   ;; Hook eclim up with auto complete mode
+;;   (when (require 'auto-complete-config nil t)
+;;     (ac-config-default)
+;;     (require 'ac-emacs-eclim-source)
+;;     (ac-emacs-eclim-config)))
 
 (when (locate-library "markdown-mode")
   (autoload 'markdown-mode "markdown-mode"
