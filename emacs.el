@@ -405,14 +405,17 @@
                 ("\\.h\\'" . c++-mode)
                 ) auto-mode-alist))
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/python-mode")
-(when (locate-library "python-mode")
-  (autoload 'python-mode "python-mode" "Python Mode." t)
-  (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
-  (add-to-list 'interpreter-mode-alist '("python" . python-mode))
-  (when (require 'ipython nil t)
-    (setq py-python-command-args '( "--colors" "Linux"))
-    (setq py-shell-name "ipython")))
+(require 'python)
+(setq python-shell-interpreter "ipython"
+      python-shell-interpreter-args "" ; add colors here?
+      python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+      python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+      python-shell-completion-setup-code
+      "from IPython.core.completerlib import module_completion"
+      python-shell-completion-module-string-code
+      "';'.join(module_completion('''%s'''))\n"
+      python-shell-completion-string-code
+      "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
 
 ;; I want Makefile.foobar to open in makefile-gmake-mode, but not
 ;; Makefile.py, so we'll put these at the end of the alist

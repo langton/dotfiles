@@ -24,10 +24,7 @@ if ( $?prompt ) then
     alias eclient-nw "emacsclient -t"
     alias enw "emacs -nw"
     alias timestamp "date '+%Y_%m_%d_%H_%M_%S'"
-    set path = ( ~/local/bin $path )
-    if ( $?SYS_TYPE) then
-        set path = ( ~/local/${SYS_TYPE}/bin $path )
-    endif
+    set path = ( ~/local/bin /anaconda/bin /opt/local/bin /opt/local/sbin $path )
     setenv CLICOLOR 1
     set history=10000
     # since .history gets corrupted periodically, back it up
