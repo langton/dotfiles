@@ -11,7 +11,7 @@
 ;; emacs version dependent stuff
 (when (>= emacs-major-version 23)
   ;; load recent version of CEDET if possible. With the next CEDET release,
-  ;; maybe I can remove some of this and rely on a version installed by the 
+  ;; maybe I can remove some of this and rely on a version installed by the
   ;; emacs package manager.
 ;  (when (file-exists-p "~/.emacs.d/site-lisp/cedet/common/cedet.el")
 ;    (load-file "~/.emacs.d/site-lisp/cedet/common/cedet.el")
@@ -22,13 +22,13 @@
   ;;   (ac-config-default))
 
   ;; Monaco font is nice on OS X; try to use it on Linux too.
-  (add-to-list 
-   'default-frame-alist 
-   '(font . "-*-Monaco-normal-normal-normal-*-15-*-*-*-m-0-iso10646-1")))
+  (when (or (eq window-system 'x) (eq window-system 'ns))
+    (add-to-list
+     'default-frame-alist
+     '(font . "-*-Monaco-normal-normal-normal-*-15-*-*-*-m-0-iso10646-1"))))
 
 (make-directory "~/.emacs.d/site-lisp/" t)
 (add-to-list 'load-path "~/.emacs.d/site-lisp/")
-
 
 ;; Keep all backups and autosave files hidden away
 (setq backup-by-copying t
@@ -116,7 +116,9 @@
 (show-paren-mode 1)
 (transient-mark-mode t)
 (delete-selection-mode t)
-(menu-bar-mode -1)
+;; Keep menu on OSX, since the bar is there anyway
+(unless (eq window-system 'ns)
+  (menu-bar-mode -1))
 (display-time-mode t)
 (if (fboundp 'savehist-mode)
     (savehist-mode 1))
@@ -140,7 +142,7 @@
       (server-start)))
 
 (setq hostname (car (split-string system-name "\\\.")))
-(setq frame-title-format 
+(setq frame-title-format
       '((:eval hostname) ": " (:eval (if (buffer-file-name)
                                   (abbreviate-file-name (buffer-file-name))
                                 "%b"))))
@@ -211,6 +213,10 @@
 (set-face-foreground 'font-lock-constant-face "black")
 (make-face-bold 'font-lock-function-name-face)
 
+(when (require 'whitespace nil t)
+  (setq whitespace-style '(face tabs lines-tail trailing))
+  (global-whitespace-mode t))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Helper functions and key-bindings
@@ -221,7 +227,7 @@
   (diff-buffer-with-file (current-buffer)))
 
 (defun update-term-name ()
-  (rename-buffer (concat "terminal:[" (abbreviate-file-name 
+  (rename-buffer (concat "terminal:[" (abbreviate-file-name
                                   default-directory) "]") t))
 
 ;; Launch a terminal without being prompted for the shell type
@@ -284,14 +290,14 @@
                        (- (cadr tm) (cadr uptime-time-init))))
            (seconds (+ (* (float (car diff)) 65536) (float (cadr diff))))
            (days  (floor (/ seconds 86400)))
-           (hours (progn (decf seconds (* days  86400)) 
+           (hours (progn (decf seconds (* days  86400))
                          (floor (/ seconds 3600))))
            (mins  (progn (decf seconds (* hours 3600))
                          (floor (/ seconds 60)))))
       (message (format "up %d days,  %02d:%02d" days hours mins)))))
 
 ;; MacOSX - open current file in finder
-;; from http://stackoverflow.com/questions/20510333/in-emacs-how-to-show-current-file-in-finder
+;; from http://stackoverflow.com/questions/20510333
 (defun open-finder ()
 (interactive)
   (let ((path (buffer-file-name))
@@ -316,7 +322,7 @@
   (interactive)
   (let (url)
     (progn
-      (setq url 
+      (setq url
             (buffer-substring-no-properties (region-beginning) (region-end))))
     (delete-region (region-beginning) (region-end))
     (insert (concat "<a href=\"" url "\">" url "</a>"))))
@@ -327,7 +333,7 @@
 (defun buffername-to-killring ()
   (interactive)
   (if (buffer-file-name)
-      (kill-new (abbreviate-file-name 
+      (kill-new (abbreviate-file-name
                  (buffer-file-name)))))
 
 ;; same as previous function, except trim:
@@ -453,7 +459,7 @@
 ;;   ;; Call the help framework with the settings above & activate
 ;;   ;; eclim-mode
 ;;   (help-at-pt-set-timer)
-  
+
 ;;   ;; Hook eclim up with auto complete mode
 ;;   (when (require 'auto-complete-config nil t)
 ;;     (ac-config-default)
@@ -486,7 +492,7 @@
 ;;Turn on documentation in elisp mode
 (add-hook 'emacs-lisp-mode-hook
           '(lambda ()
-	     (turn-on-eldoc-mode)))
+             (turn-on-eldoc-mode)))
 
 ;; Auto-indent in C, Python, etc.
 (defun newline-indents ()
@@ -500,7 +506,7 @@
 (defun hl-todo-fixme ()
   (font-lock-add-keywords
    nil
-   '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t))))
+   '(("\\<\\(FIXME\\|TODO\\|BUG\\|XXX\\):" 1 font-lock-warning-face t))))
 (add-hook 'c-mode-common-hook 'hl-todo-fixme)
 (add-hook 'python-mode-hook 'hl-todo-fixme)
 
@@ -557,7 +563,7 @@
 ;; need perforce for some work projects, so load p4.el if available
 ;; if p4.el is available, but there's no p4 executable, p4.el interferes
 ;; with opening files, so avoid this.
-(when (and (locate-library "p4") 
+(when (and (locate-library "p4")
            (eq 0 (call-process "which" nil nil nil "p4")))
   (load-library "p4"))
 
