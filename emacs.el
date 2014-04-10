@@ -25,7 +25,7 @@
   (when (or (eq window-system 'x) (eq window-system 'ns))
     (add-to-list
      'default-frame-alist
-     '(font . "-*-Monaco-normal-normal-normal-*-15-*-*-*-m-0-iso10646-1"))))
+     '(font . "-*-Monaco-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1"))))
 
 (make-directory "~/.emacs.d/site-lisp/" t)
 (add-to-list 'load-path "~/.emacs.d/site-lisp/")
@@ -105,7 +105,7 @@
 
 (load custom-file 'noerror)
 
-(setq-default tab-width 8
+(setq-default tab-width 4
               indent-tabs-mode nil
               save-place t)
 
@@ -214,8 +214,7 @@
 (make-face-bold 'font-lock-function-name-face)
 
 (when (require 'whitespace nil t)
-  (setq whitespace-style '(face tabs lines-tail trailing))
-  (global-whitespace-mode t))
+  (setq whitespace-style '(face tabs lines-tail trailing)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -401,6 +400,7 @@
       '((java-mode . "java")
         (awk-mode . "awk")
         (other . "linux")))
+(setq-default c-basic-offset 4)
 
 (setq auto-mode-alist
       (append '(("\\.f95\\'" . fortran-mode)
@@ -434,6 +434,14 @@
       (autoload 'd-mode "d-mode" "Major mode for editing D code." t)
       (add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . d-mode)))
   (add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . java-mode)))
+
+;; Same for C#:
+(if (locate-library "csharp-mode")
+    (progn
+      (autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
+      (add-to-list 'auto-mode-alist '("\\.cs\\'" . csharp-mode)))
+  (add-to-list 'auto-mode-alist '("\\.cs\\'" . java-mode)))
+
 
 (add-hook 'java-mode-hook (lambda ()
                             (setq c-basic-offset 4
