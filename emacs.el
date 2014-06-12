@@ -27,6 +27,14 @@
      'default-frame-alist
      '(font . "-*-Monaco-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1"))))
 
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (package-initialize)
+  (add-to-list 'package-archives
+               '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  (add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/")))
+
 (make-directory "~/.emacs.d/site-lisp/" t)
 (add-to-list 'load-path "~/.emacs.d/site-lisp/")
 
@@ -43,32 +51,8 @@
       desktop-base-file-name "emacs-desktop")
 (make-directory "~/.emacs.d/autosaves/" t)
 
-(iswitchb-mode 1)
-(setq iswitchb-default-method 'samewindow)
-(setq iswitchb-buffer-ignore '("^ " "*Buffer" "*Messages" "*Help" "*Calendar"
-                               "*Compile" "*Completions" "*vc" "*tramp"))
-(require 'edmacro)
-(defun iswitchb-local-keys ()
-  (mapc (lambda (K)
-          (let* ((key (car K)) (fun (cdr K)))
-            (define-key iswitchb-mode-map (edmacro-parse-keys key) fun)))
-        '(("<right>" . iswitchb-next-match)
-          ("<left>"  . iswitchb-prev-match)
-          ("<up>"    . ignore             )
-          ("<down>"  . ignore             ))))
-
-(add-hook 'iswitchb-define-mode-map-hook 'iswitchb-local-keys)
-(defadvice iswitchb-kill-buffer (after rescan-after-kill activate)
-  "*Regenerate the list of matching buffer names after a kill.
-    Necessary if using `uniquify' with `uniquify-after-kill-buffer-p'
-    set to non-nil."
-  (setq iswitchb-buflist iswitchb-matches)
-  (iswitchb-rescan))
-(defun iswitchb-rescan ()
-  "*Regenerate the list of matching buffer names."
-  (interactive)
-  (iswitchb-make-buflist iswitchb-default)
-  (setq iswitchb-rescan t))
+(icomplete-mode 99)
+(ido-mode t)
 
 (require 'saveplace)
 (require 'uniquify)
@@ -116,9 +100,7 @@
 (show-paren-mode 1)
 (transient-mark-mode t)
 (delete-selection-mode t)
-;; Keep menu on OSX, since the bar is there anyway
-(unless (eq window-system 'ns)
-  (menu-bar-mode -1))
+(menu-bar-mode -1)
 (display-time-mode t)
 (if (fboundp 'savehist-mode)
     (savehist-mode 1))
@@ -390,6 +372,8 @@
 (global-set-key "\C-ch" 'python-shell)
 (global-set-key "\C-cf" 'auto-revert-tail-mode)
 (global-set-key [C-return] 'newline) ; handy when return auto-indents
+;; fullscreen for OS X
+(global-set-key [s-escape] 'toggle-frame-fullscreen)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Modes and language-specific settings
@@ -413,7 +397,7 @@
 
 (require 'python)
 (setq python-shell-interpreter "ipython"
-      python-shell-interpreter-args "" ; add colors here?
+      python-shell-interpreter-args "--pylab" ; add colors here?
       python-shell-prompt-regexp "In \\[[0-9]+\\]: "
       python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
       python-shell-completion-setup-code
@@ -518,6 +502,8 @@
 (add-hook 'c-mode-common-hook 'hl-todo-fixme)
 (add-hook 'python-mode-hook 'hl-todo-fixme)
 
+(require 'epa-file)
+(epa-file-enable)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org-mode customizations

@@ -24,7 +24,7 @@ if ( $?prompt ) then
     alias eclient-nw "emacsclient -t"
     alias enw "emacs -nw"
     alias timestamp "date '+%Y_%m_%d_%H_%M_%S'"
-    set path = ( ~/local/bin /anaconda/bin /opt/local/bin /opt/local/sbin $path )
+    set path = ( ~/local/bin /opt/local/bin /opt/local/sbin $path )
     setenv CLICOLOR 1
     set history=10000
     # since .history gets corrupted periodically, back it up
@@ -48,17 +48,14 @@ if ( $?prompt ) then
     set ignoreeof
     set promptchars = '$#'
     set ellipsis
-    set prompt = "%B%U${HOSTNAME}:%c3(\!)%#%b%u "
+    set prompt = "%{\033[1;34m%}%B%U${HOSTNAME}:(\!)%#%b%u%{\033[0m%} "
+    set rprompt = "%{\033[1;34m%}%B%~%b%{\033[0m%}"    
     set host = `hostname -f`
     set user = `whoami`
     if ($?TERM) then
         if ($TERM == xterm || $TERM == xterm-color || $TERM == xterm-256color) then
             # define 'mytitle' alias to set title bars on xterms
-            alias icon_name 'set icon_name = /`echo $cwd | sed -e s-.\*/--`'
-            alias mytitle 'icon_name; echo -n ]1\;$icon_name\]2\;$USER@$HOSTNAME\: $cwd\'
-            alias name 'echo -n ]0\;\!*\'
-            alias icon 'echo -n ]1\;\!*\'
-            alias title 'echo -n ]2\;\!*\'
+            alias mytitle 'echo -n ]1\;$USER@$HOSTNAME\: $cwd\]2\;$USER@$HOSTNAME\: $cwd\'
 		
             # use xrs (resize) to reset your window size after you have resized 
             # an xterm.
