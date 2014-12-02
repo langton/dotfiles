@@ -158,6 +158,20 @@
   (tabbar-mode -1)
   (one-buffer-one-frame-mode -1))
 
+(require 'recentf)
+
+;; From http://www.masteringemacs.org/...
+(global-set-key (kbd "C-x C-r") 'ido-recentf-open)
+(recentf-mode t)
+(setq recentf-max-saved-items 100)
+
+(defun ido-recentf-open ()
+  "Use `ido-completing-read' to \\[find-file] a recent file"
+  (interactive)
+  (if (find-file (ido-completing-read "Find recent file: " recentf-list))
+      (message "Opening file...")
+    (message "Aborting")))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Colors & syntax highlighting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -411,6 +425,9 @@
 ;; Makefile.py, so we'll put these at the end of the alist
 (add-to-list 'auto-mode-alist '("[Mm]akefile.*" . makefile-gmake-mode) t)
 (add-to-list 'auto-mode-alist '("[Mm]ake\\..*" . makefile-gmake-mode) t)
+
+;; Arduino source files
+(add-to-list 'auto-mode-alist '("\\.ino\\'" . c-mode))
 
 ;; Use d-mode for D if it exists; otherwise fall back to Java mode
 (if (locate-library "d-mode")

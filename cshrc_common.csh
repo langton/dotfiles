@@ -12,9 +12,19 @@ if ( $?prompt ) then
             setenv TERMPATH /usr/share/terminfo:/opt/local/share/terminfo
         endif
         if ( -d /Applications/Emacs.app/Contents/MacOS/ ) then
-            set path = ( /Applications/Emacs.app/Contents/MacOS/bin $path )
+            if ( -d /Applications/Emacs.app/Contents/MacOS/bin/ ) then
+                set path = ( /Applications/Emacs.app/Contents/MacOS/bin $path )
+            # appears there's no way to get (marketing) release version
+            # of OS X from uname. Argh. Hardcoding it.
+            else if ( -d /Applications/Emacs.app/Contents/MacOS/bin-x86_64-10.9 ) then
+                set path = ( /Applications/Emacs.app/Contents/MacOS/bin-x86_64-10.9 $path )
+            endif
             alias emacs /Applications/Emacs.app/Contents/MacOS/Emacs
         endif
+        if ( -d /Applications/TemperatureMonitor.app/Contents/MacOS/ ) then
+            alias temps "/Applications/TemperatureMonitor.app/Contents/MacOS/tempmonitor -f -l -a"
+        endif
+        alias qlf 'qlmanage -p \!:1 >& /dev/null'
     endif
     setenv EDITOR "emacsclient --alternate-editor emacs"
     setenv PYTHONSTARTUP $HOME/.pystartup
@@ -24,6 +34,8 @@ if ( $?prompt ) then
     alias eclient-nw "emacsclient -t"
     alias enw "emacs -nw"
     alias timestamp "date '+%Y_%m_%d_%H_%M_%S'"
+    alias ll 'ls -lh'
+    alias lla 'ls -alh'
     set path = ( ~/local/bin /opt/local/bin /opt/local/sbin $path )
     setenv CLICOLOR 1
     set history=10000
@@ -33,7 +45,7 @@ if ( $?prompt ) then
     endif
     # want at most one per day
     set tmp_date = `date '+%Y_%m_%d'`
-    if ( ! -e  ~/.old_history/${tmp_date}.gz ) then 
+    if ( -e ~/.history && ! -e  ~/.old_history/${tmp_date}.gz ) then
        gzip -c ~/.history > ~/.old_history/${tmp_date}.gz
     endif
     unset tmp_date
