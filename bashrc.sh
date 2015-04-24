@@ -15,13 +15,11 @@ alias timestamp="date '+%Y_%m_%d_%H_%M_%S'"
 
 if ls --color -d . >/dev/null 2>&1; then
     alias ls='ls --color=auto'
-    echo "got here!"
 elif ls -G -d . >/dev/null 2>&1; then
     alias ls='ls -G'
 fi
 
 # some more ls aliases
-alias ls="ls -G"
 alias ll='ls -lh'
 alias lla='ls -alh'
 export PATH="~/local/bin:/usr/local/bin:$PATH"
