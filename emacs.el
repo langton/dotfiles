@@ -7,7 +7,6 @@
 ;; Local lisp files
 (require 'cl) ; framemove.el needs common lisp
 
-
 ;; emacs version dependent stuff
 (when (>= emacs-major-version 23)
   ;; load recent version of CEDET if possible. With the next CEDET release,
@@ -21,11 +20,11 @@
   ;;   (add-to-list 'ac-dictionary-directories "~/.emacs.d/site-lisp/ac-dict")
   ;;   (ac-config-default))
 
-  ;; Monaco font is nice on OS X; try to use it on Linux too.
-  (when (or (eq window-system 'x) (eq window-system 'ns))
+  ;; Monaco font is nice on OS X (no longer use on Linux)
+  (when (eq window-system 'ns)
     (add-to-list
      'default-frame-alist
-     '(font . "-*-Monaco-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1"))))
+     '(font . "-*-Monaco-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1"))))
 
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -50,6 +49,9 @@
       desktop-dirname "~/.emacs.d/"
       desktop-base-file-name "emacs-desktop")
 (make-directory "~/.emacs.d/autosaves/" t)
+
+;; Emacs.app on OS X doesn't pick up path properly if started from Dock
+(setq exec-path (append exec-path '("/usr/local/bin")))
 
 (icomplete-mode 99)
 (ido-mode t)
@@ -227,15 +229,18 @@
 
 ;; Launch a terminal without being prompted for the shell type
 (defun launch-ansi-term ()
-  "Launch an ansi-term running /bin/tcsh with no prompts"
+  "Launch an ansi-term running /bin/bash with no prompts"
   (interactive)
-  (ansi-term "/bin/tcsh")
+  (ansi-term "/bin/bash")
   (update-term-name))
 
 (defadvice term-handle-ansi-terminal-messages (after fix-term-buffer-name)
   (update-term-name))
 
 (ad-activate 'term-handle-ansi-terminal-messages)
+
+;; Use Emacs terminfo, not system terminfo
+(setq system-uses-terminfo nil)
 
 ;; gfortran uses tabs, so it helps to be able to quickly switch to tab mode
 (defun toggle-tabs-mode ()

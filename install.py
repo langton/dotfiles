@@ -21,6 +21,7 @@ dotfiles = [("emacs.el","~/.emacs"),
             ("dir_colors","~/.dir_colors"),
             ("Xdefaults","~/.Xdefaults"),
             ("pystartup.py","~/.pystartup"),
+            ("bashrc.sh","~/.bashrc"),
             ("Monaco.ttf","~/.fonts/Monaco.ttf")]
 
 # this script should be in the same directory as the dotfiles
