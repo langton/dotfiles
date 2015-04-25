@@ -58,8 +58,10 @@ if [[ -n "$SSH_CONNECTION" && "$TERM" == "eterm-color" ]]; then
     ssh_str_tmp=( $SSH_CONNECTION )
     ssh_tmp=${ssh_str_tmp[2]}
     ip_tmp=$(dig +short $(hostname -f))
-    # use hostname iff it resolves; grab IP address from ssh string otherwise
-    if [[ -z "$ip_tmp" && -n "$ssh_tmp" ]]
+    # use hostname iff it resolves; grab IP address from ssh string otherwise. We check
+    # to make sure $ssh_tmp is IP addr-ish, but this is sloppy. We're just trying to rule
+    # out cases like $ssh_tmp == "::1", as happens with ssh connections to localhost
+    if [[ -z "$ip_tmp" && $ssh_tmp =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]
     then
         tramp_host=$ssh_tmp
     else
