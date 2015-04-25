@@ -242,6 +242,19 @@
 ;; Use Emacs terminfo, not system terminfo
 (setq system-uses-terminfo nil)
 
+;; from http://oremacs.com/2015/01/01/three-ansi-term-tips/
+(defun isdead-term-exec-hook ()
+  (let* ((buff (current-buffer))
+         (proc (get-buffer-process buff)))
+    (set-process-sentinel
+     proc
+     `(lambda (process event)
+        (if (string= event "finished\n")
+            (kill-buffer ,buff))))))
+
+(add-hook 'term-exec-hook 'isdead-term-exec-hook)
+
+
 ;; gfortran uses tabs, so it helps to be able to quickly switch to tab mode
 (defun toggle-tabs-mode ()
   "Toggle indent-tabs-mode between t and nil."
