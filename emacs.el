@@ -28,11 +28,9 @@
 
 (when (>= emacs-major-version 24)
   (require 'package)
-  (package-initialize)
   (add-to-list 'package-archives
-               '("melpa" . "http://melpa.milkbox.net/packages/") t)
-  (add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/")))
+               '("melpa" . "http://melpa.org/packages/") t)
+  (package-initialize))
 
 (make-directory "~/.emacs.d/site-lisp/" t)
 (add-to-list 'load-path "~/.emacs.d/site-lisp/")

@@ -39,9 +39,7 @@ case $TERM in
         export PS1='\[\e[1;4;34m\]\u@\h:\W$\[\e[0m\] '
         ;;
  esac
-# set up title bar?
 
-#export TERMINFO=${HOME}/.terminfo
 
 # do not call directly; should only be set as PROMPT_COMMAND via following
 function set-eterm-dir {
@@ -49,6 +47,11 @@ function set-eterm-dir {
     echo -e "\033AnSiTc" "$(pwd)"
     # check to see if hostname -i matches val in SSH_CONNECTION
     echo -e "\033AnSiTh" "$tramp_host"
+}
+
+# disable blinking on a console that can't (easily) be configured otherwise
+function noblink {
+    echo -e '\033[?17;0;127c'
 }
 
 # Track directory, username, and cwd for remote logons.
