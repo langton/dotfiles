@@ -176,38 +176,7 @@
 ;; Colors & syntax highlighting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Cocoa Emacs 23 doesn't invert the cursor glyph properly, so I'll make t
-;; a red bar instead of a black box.
-(defvar curscolor "black")
-(when (and (eq emacs-major-version 23) (eq window-system 'ns))
-  (setq-default cursor-type 'bar)
-  (setq curscolor "red"))
-
-(set-foreground-color "black")
-(set-background-color "gray93")
-(set-cursor-color curscolor)
-(set-mouse-color "black")
-(add-to-list 'default-frame-alist '(background-color . "gray93"))
-(add-to-list 'default-frame-alist '(foreground-color . "black"))
-(add-to-list 'default-frame-alist `(cursor-color . ,curscolor))
-(set-face-attribute 'mode-line nil
-                    :box '(:line-width 2 :color "red" :style nil))
-(set-face-background 'fringe "gray85")
-(set-face-foreground 'font-lock-string-face "chocolate4")
-(set-face-foreground 'font-lock-comment-face "forest green")
-(set-face-foreground 'font-lock-keyword-face "MidnightBlue")
-(set-face-foreground 'font-lock-function-name-face "blue")
-(set-face-foreground 'font-lock-warning-face "red")
-(when (boundp 'font-lock-preprocessor-face) ;; for older emacs versions
-  (set-face-foreground 'font-lock-preprocessor-face "red"))
-(when (boundp 'show-paren-match)
-  (set-face-background 'show-paren-match "light gray"))
-;; override all other syntax highlighting:
-(set-face-foreground 'font-lock-type-face "black")
-(set-face-foreground 'font-lock-variable-name-face "black")
-(set-face-foreground 'font-lock-builtin-face "black")
-(set-face-foreground 'font-lock-constant-face "black")
-(make-face-bold 'font-lock-function-name-face)
+(ignore-errors (load-theme 'solarized-dark t))
 
 (when (require 'whitespace nil t)
   (setq whitespace-style '(face tabs lines-tail trailing)))
@@ -597,6 +566,7 @@
 ;; Version control and development tools
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'magit nil t)
+(setq magit-last-seen-setup-instructions "1.4.0")
 
 ;; need perforce for some work projects, so load p4.el if available
 ;; if p4.el is available, but there's no p4 executable, p4.el interferes
