@@ -176,7 +176,8 @@
 ;; Colors & syntax highlighting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(ignore-errors (load-theme 'solarized-dark t))
+(when (display-graphic-p)
+  (ignore-errors (load-theme 'solarized-dark t)))
 
 (when (require 'whitespace nil t)
   (setq whitespace-style '(face tabs lines-tail trailing)))
