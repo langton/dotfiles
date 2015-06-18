@@ -75,3 +75,10 @@ if [[ -n "$SSH_CONNECTION" && "$TERM" == "eterm-color" ]]; then
     unset ip_tmp
     PROMPT_COMMAND=set-eterm-dir
 fi
+
+if hash brew 2>/dev/null && [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+fi
+
+alias aes256="openssl aes-256-cbc -salt"
+

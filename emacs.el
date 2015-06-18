@@ -85,7 +85,8 @@
       gdb-create-source-file-list nil
       gdb-many-windows t
       display-time-day-and-date t
-      display-time-default-load-average nil)
+      display-time-default-load-average nil
+      rng-nxml-auto-validate-flag nil)
 
 (load custom-file 'noerror)
 
@@ -177,7 +178,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (when (display-graphic-p)
-  (ignore-errors (load-theme 'solarized-dark t)))
+  (ignore-errors
+    (setq solarized-distinct-fringe-background t)
+    (setq solarized-use-less-bold t)
+    (load-theme 'solarized-dark t)
+    (set-cursor-color "#eee8d5")))
 
 (when (require 'whitespace nil t)
   (setq whitespace-style '(face tabs lines-tail trailing)))
