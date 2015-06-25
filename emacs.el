@@ -182,7 +182,10 @@
     (setq solarized-distinct-fringe-background t)
     (setq solarized-use-less-bold t)
     (load-theme 'solarized-dark t)
-    (set-cursor-color "#eee8d5")))
+    (setq-default cursor-type '(bar . 2))
+    (set-face-attribute 'mode-line nil
+                        :box '(:line-width 2 :color "#fdf6e3" :style nil))
+    (set-cursor-color "#e9e2cb")))
 
 (when (require 'whitespace nil t)
   (setq whitespace-style '(face tabs lines-tail trailing)))
