@@ -382,6 +382,9 @@
 (global-set-key [C-return] 'newline) ; handy when return auto-indents
 ;; fullscreen for OS X
 (global-set-key [s-escape] 'toggle-frame-fullscreen)
+(global-set-key (kbd "s-+") 'text-scale-increase)
+(global-set-key (kbd "s--") 'text-scale-decrease)
+(global-set-key (kbd "s-_") 'text-scale-decrease)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Modes and language-specific settings

@@ -8,10 +8,12 @@ export EDITOR="emacsclient --alternate-editor emacs"
 export PYTHONSTARTUP="$HOME/.pystartup"
 export ALTERNATE_EDITOR=""
 alias ecl="emacsclient --alternate-editor emacs"
-alias eclient="emacsclient -c -n"
+alias eclient="emacsclient -n"
 alias eclient-nw="emacsclient -t"
 alias enw="emacs -nw"
 alias timestamp="date '+%Y_%m_%d_%H_%M_%S'"
+alias py3=python3
+alias ipy3=ipython3
 
 if ls --color -d . >/dev/null 2>&1; then
     alias ls='ls --color=auto'
