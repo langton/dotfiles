@@ -24,13 +24,17 @@
   (when (eq window-system 'ns)
     (add-to-list
      'default-frame-alist
-     '(font . "-*-Monaco-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1"))))
+     '(font . "-*-Monaco-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1"))))
 
 (when (>= emacs-major-version 24)
   (require 'package)
   (add-to-list 'package-archives
                '("melpa" . "http://melpa.org/packages/") t)
-  (package-initialize))
+  (package-initialize)
+  (setq package-list '(color-theme color-theme-solarized))
+  (dolist (package package-list)
+  (unless (package-installed-p package)
+    (message (format "Package %s is missing." package)))))
 
 (make-directory "~/.emacs.d/site-lisp/" t)
 (add-to-list 'load-path "~/.emacs.d/site-lisp/")
@@ -177,15 +181,14 @@
 ;; Colors & syntax highlighting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(when (display-graphic-p)
-  (ignore-errors
-    (setq solarized-distinct-fringe-background t)
-    (setq solarized-use-less-bold t)
-    (load-theme 'solarized-dark t)
-    (setq-default cursor-type '(bar . 2))
-    (set-face-attribute 'mode-line nil
-                        :box '(:line-width 2 :color "#fdf6e3" :style nil))
-    (set-cursor-color "#e9e2cb")))
+(condition-case nil
+    (progn
+      (set-frame-parameter nil 'background-mode 'dark)
+      (set-terminal-parameter nil 'background-mode 'dark)
+      (load-theme 'solarized t))
+  (error
+   (message "Couldn't load solarized theme.")))
+
 
 (when (require 'whitespace nil t)
   (setq whitespace-style '(face tabs lines-tail trailing)))
