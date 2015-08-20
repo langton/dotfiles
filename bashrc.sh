@@ -7,12 +7,13 @@ esac
 export EDITOR="emacsclient --alternate-editor emacs"
 export PYTHONSTARTUP="$HOME/.pystartup"
 export ALTERNATE_EDITOR=""
-alias ecl="emacsclient --alternate-editor emacs"
+alias ecl="emacsclient -n --alternate-editor emacs"
 alias eclient="emacsclient -n"
 alias eclient-nw="emacsclient -t"
 alias enw="emacs -nw"
 alias timestamp="date '+%Y_%m_%d_%H_%M_%S'"
-alias py3=python3
+alias py34=python3.4
+alias ipy2=ipython2
 alias ipy3=ipython3
 
 if ls --color -d . >/dev/null 2>&1; then
