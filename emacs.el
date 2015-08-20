@@ -85,12 +85,17 @@
       mouse-wheel-scroll-amount '(3 ((shift) . 1))
       set-mark-command-repeat-pop t
       bookmark-save-flag 1
-      xterm-mouse-mode 1
       gdb-create-source-file-list nil
       gdb-many-windows t
       display-time-day-and-date t
       display-time-default-load-average nil
       rng-nxml-auto-validate-flag nil)
+
+(unless window-system
+  (require 'mouse)
+  (xterm-mouse-mode t)
+  (defun track-mouse (e)) 
+  (setq mouse-sel-mode t))
 
 (load custom-file 'noerror)
 
