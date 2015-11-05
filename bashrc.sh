@@ -15,13 +15,24 @@ alias timestamp="date '+%Y_%m_%d_%H_%M_%S'"
 alias py34=python3.4
 alias ipy2=ipython2
 alias ipy3=ipython3
+alias twt="t timeline -r"
+alias mentions="t mentions -r"
 
-if ls --color -d . >/dev/null 2>&1; then
+# On Mac/Homebrew, use 'gls' if it's available
+if gls --color=auto . >/dev/null 2>&1; then
+    alias ls='gls --color=auto'
+elif ls --color -d . >/dev/null 2>&1; then
     alias ls='ls --color=auto'
 elif ls -G -d . >/dev/null 2>&1; then
     alias ls='ls -G'
 fi
 
+if gdircolors . >/dev/null 2>&1; then
+    eval `gdircolors ~/.dir_colors`
+elif dircolors . >/dev/null 2>&1; then
+    eval `dircolors ~/.dir_colors`
+fi
+    
 # some more ls aliases
 alias ll='ls -lh'
 alias lla='ls -alh'
@@ -36,10 +47,10 @@ set bell-style none
 
 case $TERM in
      xterm*)
-        export PS1='\[\033]0;\u@\h: \w\007\]\[\e[1;4;34m\]\u@\h:\W$\[\e[0m\] '
+        export PS1='\[\033]0;\u@\h: \w\007\]\[\e[4;34m\]\u@\h:\W$\[\e[0m\] '
         ;;
      *)
-        export PS1='\[\e[1;4;34m\]\u@\h:\W$\[\e[0m\] '
+        export PS1='\[\e[4;34m\]\u@\h:\W$\[\e[0m\] '
         ;;
  esac
 
