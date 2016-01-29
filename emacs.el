@@ -60,7 +60,7 @@
 
 (require 'saveplace)
 (require 'uniquify)
-(require 'tramp nil t)
+;;(require 'tramp nil t)
 (require 'paren)
 
 (setq enable-local-variables :safe

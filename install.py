@@ -17,7 +17,6 @@ dryrun = "--dryrun" in flags
 verbose = dryrun or "--verbose" in flags
 
 dotfiles = [("emacs.el","~/.emacs"),
-            ("cshrc_common.csh","~/.cshrc.common"),
             ("dir_colors","~/.dir_colors"),
             ("Xdefaults","~/.Xdefaults"),
             ("pystartup.py","~/.pystartup"),
