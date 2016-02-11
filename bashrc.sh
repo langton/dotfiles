@@ -95,10 +95,11 @@ if hash brew 2>/dev/null && [ -f $(brew --prefix)/etc/bash_completion ]; then
 fi
 
 alias aes256="openssl aes-256-cbc -salt"
+if which 
 gpg-agent > /dev/null 2>&1
 if [ $? -ne 0 ]; then
     gpg-agent --daemon --enable-ssh-support \
-              --write-env-file "${HOME}/.gpg-agent-info" >/dev/null
+              --write-env-file "${HOME}/.gpg-agent-info" >/dev/null 2>&1
 fi
 if [ -f "${HOME}/.gpg-agent-info" ]; then
    . "${HOME}/.gpg-agent-info"
