@@ -22,7 +22,7 @@ dotfiles = [("emacs.el","~/.emacs"),
             ("pystartup.py","~/.pystartup"),
             ("bashrc.sh","~/.bashrc"),
             ("Monaco.ttf","~/.fonts/Monaco.ttf"),
-            ("minttyrc","~.minttyrc")]
+            ("minttyrc","~/.minttyrc")]
 
 # this script should be in the same directory as the dotfiles
 df_path = os.path.dirname(os.path.realpath(__file__))
