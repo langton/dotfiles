@@ -12,11 +12,36 @@ alias eclient="emacsclient -n"
 alias eclient-nw="emacsclient -t"
 alias enw="emacs -nw"
 alias timestamp="date '+%Y_%m_%d_%H_%M_%S'"
-alias py34=python3.4
-alias ipy2=ipython2
-alias ipy3=ipython3
-alias twt="t timeline -r"
-alias mentions="t mentions -r"
+alias jsonpaths="jq -c -r paths"
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias less="less -FSRX"
+alias more="less"
+extract () {
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.bz2)  tar xjf $1      ;;
+            *.tar.gz)   tar xzf $1      ;;
+            *.bz2)      bunzip2 $1      ;;
+            *.rar)      rar x $1        ;;
+            *.gz)       gunzip $1       ;;
+            *.tar)      tar xf $1       ;;
+            *.tbz2)     tar xjf $1      ;;
+            *.tgz)      tar xzf $1      ;;
+            *.zip)      unzip $1        ;;
+            *.Z)        uncompress $1   ;;
+            *)          echo "'$1' cannot be extracted via extract()" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
+alias youtube-dl-audio="youtube-dl -f bestaudio"
+
+
+[[ -r ~/.bash_aliases ]] && . ~/.bash_aliases
 
 # On Mac/Homebrew, use 'gls' if it's available
 if gls --color=auto . >/dev/null 2>&1; then
