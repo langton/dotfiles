@@ -581,6 +581,10 @@
                              (make-local-variable 'comment-start)
                              (setq comment-start nil))))
 
+(when (require 'todotxt-mode nil t)
+  (add-to-list 'auto-mode-alist '("\\todo.txt\\'" . todotxt-mode))
+  (setq todotxt-hide-is-invisible nil))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Version control and development tools
