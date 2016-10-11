@@ -4,9 +4,9 @@ case $- in
       *) return;;
 esac
 
-export EDITOR="emacsclient --alternate-editor emacs"
+export EDITOR="emacsclient"
 export PYTHONSTARTUP="$HOME/.pystartup"
-export ALTERNATE_EDITOR=""
+export ALTERNATE_EDITOR="emacs"
 alias ecl="emacsclient -n --alternate-editor emacs"
 alias eclient="emacsclient -n"
 alias eclient-nw="emacsclient -t"
@@ -39,6 +39,9 @@ extract () {
     fi
 }
 alias youtube-dl-audio="youtube-dl -f bestaudio"
+ljq () {
+    jq -C '.' $1 | less -R
+}
 
 
 [[ -r ~/.bash_aliases ]] && . ~/.bash_aliases
@@ -61,7 +64,7 @@ fi
 # some more ls aliases
 alias ll='ls -lh'
 alias lla='ls -alh'
-export PATH="~/local/bin:/usr/local/bin:$PATH"
+export PATH="~/local/bin:/usr/local/bin:/usr/local/sbin:$PATH"
 # Avoid duplicates
 export HISTCONTROL=ignoredups:erasedups  
 # When the shell exits, append to the history file instead of overwriting it
@@ -135,3 +138,14 @@ fi
 GPG_TTY=$(tty)
 export GPG_TTY
 
+function renamesha256 {
+    for source in "$@"; do
+        local sha256=$(shasum -a 256 -- ${source} | cut -d " " -f 1)
+        local dest="$(dirname -- $source)/${sha256}.bin"
+        if [ -a ${dest} ]; then
+            echo "${source} exists; skipping"
+        else
+            mv -- ${source} ${dest}
+        fi
+    done
+}

@@ -9,17 +9,6 @@
 
 ;; emacs version dependent stuff
 (when (>= emacs-major-version 23)
-  ;; load recent version of CEDET if possible. With the next CEDET release,
-  ;; maybe I can remove some of this and rely on a version installed by the
-  ;; emacs package manager.
-;  (when (file-exists-p "~/.emacs.d/site-lisp/cedet/common/cedet.el")
-;    (load-file "~/.emacs.d/site-lisp/cedet/common/cedet.el")
-;    (semantic-load-enable-code-helpers))
-
-  ;; (when (require 'auto-complete-config nil t)
-  ;;   (add-to-list 'ac-dictionary-directories "~/.emacs.d/site-lisp/ac-dict")
-  ;;   (ac-config-default))
-
   ;; Monaco font is nice on OS X (no longer use on Linux)
   (when (eq window-system 'ns)
     (add-to-list
@@ -30,11 +19,9 @@
   (require 'package)
   (add-to-list 'package-archives
                '("melpa" . "http://melpa.org/packages/") t)
-  (package-initialize)
-  (setq package-list '(color-theme color-theme-solarized))
-  (dolist (package package-list)
-  (unless (package-installed-p package)
-    (message (format "Package %s is missing." package)))))
+  (add-to-list 'package-archives
+               '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
+  (package-initialize))
 
 (make-directory "~/.emacs.d/site-lisp/" t)
 (add-to-list 'load-path "~/.emacs.d/site-lisp/")
@@ -414,17 +401,17 @@
                 ("\\.h\\'" . c++-mode)
                 ) auto-mode-alist))
 
-(require 'python)
-(setq python-shell-interpreter "ipython"
-      python-shell-interpreter-args "--pylab" ; add colors here?
-      python-shell-prompt-regexp "In \\[[0-9]+\\]: "
-      python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
-      python-shell-completion-setup-code
-      "from IPython.core.completerlib import module_completion"
-      python-shell-completion-module-string-code
-      "';'.join(module_completion('''%s'''))\n"
-      python-shell-completion-string-code
-      "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
+;; (require 'python)
+;; (setq python-shell-interpreter "ipython"
+;;       python-shell-interpreter-args "--pylab" ; add colors here?
+;;       python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+;;       python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+;;       python-shell-completion-setup-code
+;;       "from IPython.core.completerlib import module_completion"
+;;       python-shell-completion-module-string-code
+;;       "';'.join(module_completion('''%s'''))\n"
+;;       python-shell-completion-string-code
+;;       "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
 
 ;; I want Makefile.foobar to open in makefile-gmake-mode, but not
 ;; Makefile.py, so we'll put these at the end of the alist
@@ -453,38 +440,6 @@
                             (setq c-basic-offset 4
                                   tab-width 4
                                   indent-tabs-mode t)))
-
-; from https://github.com/skybert/.../tkj-java.el
-;; (add-to-list 'load-path "~/.emacs.d/site-lisp/emacs-eclim")
-;; (when (require 'eclim nil t)
-;;   (global-eclim-mode)
-
-;;   ;; Variables
-;;   (setq eclim-auto-save t
-;;         eclim-executable "/opt/eclipse/eclim"
-;;         eclimd-executable "/opt/eclipse/eclimd"
-;;         eclimd-wait-for-process nil
-;;         eclimd-default-workspace "~/Code"
-;;         eclim-use-yasnippet nil
-;;         help-at-pt-display-when-idle t
-;;         help-at-pt-timer-delay 0.1
-;;         )
-
-;;   ;; Call the help framework with the settings above & activate
-;;   ;; eclim-mode
-;;   (help-at-pt-set-timer)
-
-;;   ;; Hook eclim up with auto complete mode
-;;   (when (require 'auto-complete-config nil t)
-;;     (ac-config-default)
-;;     (require 'ac-emacs-eclim-source)
-;;     (ac-emacs-eclim-config)))
-
-(when (locate-library "markdown-mode")
-  (autoload 'markdown-mode "markdown-mode"
-    "Major mode for editing Markdown files" t)
-  (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-  (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode)))
 
 (when (require 'gas-mode nil t)
   (add-to-list 'auto-mode-alist '("\\.[sS]\\'" . gas-mode)))
@@ -527,17 +482,17 @@
 (require 'epa-file)
 (epa-file-enable)
 
-(when (load "flymake" t)
-  (defun flymake-pylint-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-           (local-file (file-relative-name
-                        temp-file
-                        (file-name-directory buffer-file-name))))
-      (list "epylint-3.4" (list local-file))))
+;; (when (load "flymake" t)
+;;   (defun flymake-pylint-init ()
+;;     (let* ((temp-file (flymake-init-create-temp-buffer-copy
+;;                        'flymake-create-temp-inplace))
+;;            (local-file (file-relative-name
+;;                         temp-file
+;;                         (file-name-directory buffer-file-name))))
+;;       (list "epylint-3.4" (list local-file))))
 
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.py\\'" flymake-pylint-init)))
+;;   (add-to-list 'flymake-allowed-file-name-masks
+;;                '("\\.py\\'" flymake-pylint-init)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org-mode customizations
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -591,13 +546,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'magit nil t)
 (setq magit-last-seen-setup-instructions "1.4.0")
-
-;; need perforce for some work projects, so load p4.el if available
-;; if p4.el is available, but there's no p4 executable, p4.el interferes
-;; with opening files, so avoid this.
-(when (and (locate-library "p4")
-           (eq 0 (call-process "which" nil nil nil "p4")))
-  (load-library "p4"))
 
 (setq eshell-save-history-on-exit t)
 (setq eshell-history-size 512)
