@@ -175,8 +175,8 @@
 
 (condition-case nil
     (progn
-      (set-frame-parameter nil 'background-mode 'dark)
-      (set-terminal-parameter nil 'background-mode 'dark)
+      (set-frame-parameter nil 'background-mode 'light)
+      (set-terminal-parameter nil 'background-mode 'light)
       (load-theme 'solarized t))
   (error
    (message "Couldn't load solarized theme.")))
