@@ -129,12 +129,12 @@ export GPG_TTY
 
 function renamesha256 {
     for source in "$@"; do
-        local sha256=$(shasum -a 256 -- ${source} | cut -d " " -f 1)
-        local dest="$(dirname -- $source)/${sha256}.bin"
-        if [ -a ${dest} ]; then
+        local sha256=$(shasum -a 256 -- "${source}" | cut -d " " -f 1)
+        local dest=$(dirname -- "$source")/${sha256}.bin
+        if [ -a "${dest}" ]; then
             echo "${source} exists; skipping"
         else
-            mv -- ${source} ${dest}
+            mv -- "${source}" "${dest}"
         fi
     done
 }
