@@ -41,12 +41,8 @@ ljq () {
     jq -C '.' $1 | less -R
 }
 
-
 [[ -r ~/.bash_aliases ]] && . ~/.bash_aliases
 [[ -r ~/.iterm2_shell_integration.bash ]] && . ~/.iterm2_shell_integration.bash
-
-
-
 
 # On Mac/Homebrew, use 'gls' if it's available
 if gls --color=auto . >/dev/null 2>&1; then
@@ -77,8 +73,15 @@ set bell-style none
 export PS1='\[\e[4;34m\]\u@\h:\W$\[\e[0m\] '
 
 function title {
-    echo -ne "\033]0;"$*"\007"
+    if [ "$1" ]
+    then
+        echo -ne "\033]0;${*}\007"
+    else
+        echo -ne "\033]0;$(hostname -s)\007"
+    fi
 }
+
+title
 
 # do not call directly; should only be set as PROMPT_COMMAND via following
 function set-eterm-dir {
