@@ -4,9 +4,7 @@ case $- in
       *) return;;
 esac
 
-export EDITOR="emacsclient"
 export PYTHONSTARTUP="$HOME/.pystartup"
-export ALTERNATE_EDITOR="emacs"
 alias ecl="emacsclient -n --alternate-editor emacs"
 alias eclient="emacsclient -n"
 alias eclient-nw="emacsclient -t"
@@ -45,6 +43,10 @@ ljq () {
 
 
 [[ -r ~/.bash_aliases ]] && . ~/.bash_aliases
+[[ -r ~/.iterm2_shell_integration.bash ]] && . ~/.iterm2_shell_integration.bash
+
+
+
 
 # On Mac/Homebrew, use 'gls' if it's available
 if gls --color=auto . >/dev/null 2>&1; then
@@ -72,16 +74,11 @@ shopt -s histappend
 export HISTSIZE=10000
 stty erase '^?'
 set bell-style none
+export PS1='\[\e[4;34m\]\u@\h:\W$\[\e[0m\] '
 
-case $TERM in
-     xterm*)
-        export PS1='\[\033]0;\u@\h: \w\007\]\[\e[4;34m\]\u@\h:\W$\[\e[0m\] '
-        ;;
-     *)
-        export PS1='\[\e[4;34m\]\u@\h:\W$\[\e[0m\] '
-        ;;
- esac
-
+function title {
+    echo -ne "\033]0;"$*"\007"
+}
 
 # do not call directly; should only be set as PROMPT_COMMAND via following
 function set-eterm-dir {
